@@ -1,0 +1,12 @@
+[
+	{
+		"signUp": "true",
+		"countryCode": "45",
+		"countryName": "Denmark",
+		"phoneNumber":"NOT IN USE",
+		"fullName": "My Full Name",
+		"username": "NOT IN USE",
+		"aboutUser": "A very nice person",
+		"websiteUrl": "www.mywebsite.io"
+	}
+]
