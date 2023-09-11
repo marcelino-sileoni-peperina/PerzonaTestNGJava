@@ -158,7 +158,7 @@ public class Test01_SignUp extends AndroidTestBase {
 				// Close the FileWriter
 				fileWriter.close();
 
-//				System.out.println("Data has been written to " + jsonFilePath);
+				System.out.println("Data has been written to " + jsonFilePath);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
