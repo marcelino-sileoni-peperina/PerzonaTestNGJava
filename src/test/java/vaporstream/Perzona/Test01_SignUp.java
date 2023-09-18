@@ -7,9 +7,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -22,6 +25,8 @@ import vaporstream.Perzona.utils.*;
 import java.io.FileWriter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class Test01_SignUp extends AndroidTestBase {
 
@@ -43,20 +48,23 @@ public class Test01_SignUp extends AndroidTestBase {
 	@Test(dataProvider = "userData")
 	public void SignUpTest(String countryCode, String countryName, String fullName, String username, String aboutUser,
 			String websiteUrl) throws MalformedURLException, InterruptedException {
-		System.out.println("SignUp Test Initiated ----------------------");
-		// Phone Number Generation
-		String phoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode);
-		// GET OTP CODE
-		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
-
+		System.out.println("SignUp Test Started ----------------------");
+		
 		// On Boarding Screen
 		OnBoardingScreen onBoardingScreen = new OnBoardingScreen(driver);
 		onBoardingScreen.getStartedClick();
-
+		
+		// Phone Number Generation
+		String phoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode);
+		
 		// Sign up Screen
 		SignUpScreen singUpScreen = new SignUpScreen(driver);
 		singUpScreen.setCountrySelection(countryName, countryCode);
 		singUpScreen.setPhoneNumber(phoneNumber);
+		
+		// GET OTP CODE
+//		OTPGenerator.newOTP(countryCode, phoneNumber);
+		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
 
 		// Verify Screen
 		VerifyScreen verifyScreen = new VerifyScreen(driver);
@@ -66,14 +74,18 @@ public class Test01_SignUp extends AndroidTestBase {
 
 		// Your Information Screen
 		YourInformationScreen yourInformationScreen = new YourInformationScreen(driver);
-		yourInformationScreen.setAvatar();
-		Thread.sleep(300);
 		yourInformationScreen.setFullName(fullName);
+
 		// Sobrescribimos el username definido en el json hasta que no se genere uno
-		// aleatorio porque se resolvio la posibilidad de dar de baja una linea y
-		// username.
+		// aleatorio porque se resolvio la posibilidad de dar de baja una linea y username.
 		username = "u" + countryCode + phoneNumber;
-		yourInformationScreen.setMoreInfo(aboutUser, websiteUrl, username);
+		yourInformationScreen.setUsername(username);
+
+		yourInformationScreen.setAvatar();
+	
+		Thread.sleep(3000);
+		
+		yourInformationScreen.setMoreInfo(aboutUser, websiteUrl);
 
 		Thread.sleep(1000);
 
@@ -90,6 +102,13 @@ public class Test01_SignUp extends AndroidTestBase {
 
 	// JSON DATA PROVIDER - Toma todos los elementos del JSON con los parametros de prueba
 
+	@AfterMethod
+	public void ScreenCaptureForFailures () {
+		TakesScreenshot screenshot = (TakesScreenshot) driver;
+		File source = screenshot.getScreenshotAs(OutputType.FILE);
+		File destination = new File(System.getProperty("user.dir"));
+	}
+	
 	public class JsonDataProvider {
 
 		public static Iterator<Object[]> provideTestData() throws IOException {

@@ -1,12 +1,12 @@
 [
 	{
 		"signUp": "true",
-		"countryCode": "54",
-		"countryName": "Argentina",
+		"countryCode": "1",
+		"countryName": "United States",
 		"phoneNumber":"NOT IN USE",
 		"fullName": "My Full Name",
 		"username": "NOT IN USE",
-		"aboutUser": "A very nice person",
+		"aboutUser": "A description of me",
 		"websiteUrl": "www.mywebsite.io"
 	}
 ]
