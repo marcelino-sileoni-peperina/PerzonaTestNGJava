@@ -33,7 +33,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Test01_SignUp extends AndroidTestBase {
-	
+
 	@SuppressWarnings("deprecation")
 	@BeforeMethod
 	public void SetupTest() {
@@ -102,15 +102,14 @@ public class Test01_SignUp extends AndroidTestBase {
 			String invalidPhoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, false);
 			singUpScreen.setPhoneNumber(invalidPhoneNumber);
 			singUpScreen.verifyInvalidPhoneMessage(softAssert);
+			singUpScreen.setPhoneNumber(phoneNumber);
 			System.out.println("--- End of Invalid Phone Number Test ---");
+		} else {
+			System.out.println("--- Sign Up with Given Phone Number Test ---");
+			singUpScreen.setPhoneNumber(phoneNumber);
 		}
-//		Thread.sleep(500);
-		System.out.println("--- Sign Up with Given Phone Number Test ---");
-		singUpScreen.setPhoneNumber(phoneNumber);
-//		Thread.sleep(100);
-
-		// GET OTP CODE
-//		OTPGenerator.newOTP(countryCode, phoneNumber); // NO ES NECESARIO SOLICITAR POR FUERA DE LA APP QUE SE GENERE UN NUEVO OTP
+		System.out.println("--- Start of OTP Test ---");
+		// Get OTP Code
 		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
 
 		// Verify Screen (OTP Validation)
@@ -136,28 +135,29 @@ public class Test01_SignUp extends AndroidTestBase {
 			System.out.println("--- End of Timeout OTP Test ---");
 		}
 		// Normal OTP Test
-		Thread.sleep(2000);
 		verifyScreen.setCodeField(otpCode);
-		System.out.println("--- End of Sign Up with Given Phone Number Test ---");
-
-		Thread.sleep(3000);
+		System.out.println("--- End of OTP Test ---");
 
 		// Your Information Screen -------------------------
 		System.out.println("--- Starting Profile Screen Test ---");
 		ProfileScreen profileScreen = new ProfileScreen(driver);
+
 		profileScreen.setFullName(fullName); // Set Full Name
 
 		if (randomUsername) {
 			username = User.generateRandomUsername();
 		}
 		profileScreen.setUserName(username); // Set Username predefined in json file
-		Boolean userAlreadytaken = profileScreen.usernameTakenMessage(softAssert);
+		Thread.sleep(500);
+		Boolean userAlreadyTaken = profileScreen.usernameTakenMessage(softAssert);
 
-		while (userAlreadytaken) {
+		while (userAlreadyTaken) {
 			username = User.generateRandomUsername();
 			profileScreen.setUserName(username); // Set aleatory Username
-			userAlreadytaken = profileScreen.usernameTakenMessage(softAssert);
+			Thread.sleep(500);
+			userAlreadyTaken = profileScreen.usernameTakenMessage(softAssert);
 		}
+
 		if (setAvatar) {
 			profileScreen.setAvatar();
 		}
@@ -168,7 +168,7 @@ public class Test01_SignUp extends AndroidTestBase {
 
 		profileScreen.continueToNextScreen();
 		System.out.println("--- End of Profile Screen Test ---");
-		
+
 		// Connections Screen -------------------------
 		System.out.println("--- Starting Connections Screen Test ---");
 		ConnectionsScreen connectionsScreen = new ConnectionsScreen(driver);
@@ -185,7 +185,7 @@ public class Test01_SignUp extends AndroidTestBase {
 
 		Thread.sleep(500);
 		System.out.println("--- End of Connections Screen Test ---");
-		
+
 		System.out.println("---- SignUp Test Finished ----");
 	}
 

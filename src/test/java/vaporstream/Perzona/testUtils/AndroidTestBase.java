@@ -45,7 +45,7 @@ public class AndroidTestBase extends AppiumUtils{
 //		driver = new AndroidDriver(service.getUrl(), options);
 		driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
 		// Fijamos un timeout para la busqueda de elementos de 10 segundos:
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); 
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); 
 //		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90));
 //		driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(90));
 	}

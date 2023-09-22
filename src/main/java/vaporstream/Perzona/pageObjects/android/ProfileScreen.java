@@ -2,6 +2,7 @@ package vaporstream.Perzona.pageObjects.android;
 
 import java.time.Duration;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -85,14 +86,17 @@ public class ProfileScreen extends AndroidActions {
 // 
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[7]")
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[8]/android.widget.TextView") // si se completan los campos previos en v60
-	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]")
+//	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]")
+	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Continue']")
 	private WebElement continueButton;
 
 	// ACTIONS METHODS
 
 	public void setFullName(String fullName) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOf(fullNameField)).clear();
 		fullNameField.sendKeys(fullName);
-//		driver.hideKeyboard();
+		driver.hideKeyboard();
 	}
 
 	public void setAvatar() {
@@ -105,18 +109,17 @@ public class ProfileScreen extends AndroidActions {
 
 	public void setMoreInfo(String aboutUser, String websiteUrl) throws InterruptedException {
 		moreInformation.click();
-		Thread.sleep(1000);
+//		Thread.sleep(1000);
 		aboutYouField.sendKeys(aboutUser);
-		Thread.sleep(1000);
+//		Thread.sleep(1000);
 		websiteField.sendKeys(websiteUrl);
-		Thread.sleep(1000);
+//		Thread.sleep(1000);
 //		scrollToEndAction();
 //		scrollToText("Continue");
-//		Thread.sleep(2000);
-//		continueButton.click();
 	}
 
 	public void setUserName(String username) throws InterruptedException {
+		usernameField.clear();
 		usernameField.sendKeys(username);
 		driver.hideKeyboard();
 		verifyLink.click();
@@ -124,7 +127,9 @@ public class ProfileScreen extends AndroidActions {
 	}
 
 	public boolean usernameTakenMessage(SoftAssert softAssert) throws InterruptedException {
-//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(2100));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(1100));
+//		wait.until(ExpectedConditions.invisibilityOf(usernameTaken));
+//		wait.until(ExpectedConditions.presenceOfElementLocated((By) usernameTaken));
 //		wait.until(ExpectedConditions.visibilityOf(usernameTaken));
 		Boolean usernameAlreadyTaken = false;
 //		Boolean messageDisplayed = usernameTaken.isDisplayed();
@@ -132,7 +137,8 @@ public class ProfileScreen extends AndroidActions {
 //			wait.until(ExpectedConditions.visibilityOf(usernameTaken));
 //			Boolean messageDisplayed = usernameTaken.isDisplayed();
 //			System.out.println("Username is taken: " + messageDisplayed.toString());
-			String message = usernameTaken.getText();
+//			String message = usernameTaken.getText();
+			String message = wait.until(ExpectedConditions.visibilityOf(usernameTaken)).getText();
 			System.out.println("Message after username introduced: " + message);
 			System.out.println("Username is TAKEN.");
 			softAssert.assertEquals(message, "Username is already taken",
@@ -143,7 +149,7 @@ public class ProfileScreen extends AndroidActions {
 			System.out.println("Username is NOT TAKEN.");
 		} finally {
 //			System.out.println("Username Taken Message Verified.");
-			Thread.sleep(300);
+			Thread.sleep(3);
 		}
 		return usernameAlreadyTaken;
 	}
