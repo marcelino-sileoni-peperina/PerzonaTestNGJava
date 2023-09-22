@@ -1,1 +1,1 @@
-﻿# PerzonaTest_JAVA
+﻿# JAVA Scripts to Test Perzona App
