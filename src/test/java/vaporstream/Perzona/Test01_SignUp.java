@@ -1,6 +1,7 @@
 package vaporstream.Perzona;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -27,9 +28,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Test01_SignUp extends AndroidTestBase {
-
+	
 	@SuppressWarnings("deprecation")
 	@BeforeMethod
 	public void SetupTest() {
@@ -75,7 +79,6 @@ public class Test01_SignUp extends AndroidTestBase {
 		System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 
 		SoftAssert softAssert = new SoftAssert();
-
 		// On Boarding Screen
 		OnBoardingScreen onBoardingScreen = new OnBoardingScreen(driver);
 		onBoardingScreen.getStartedClick();
@@ -147,12 +150,13 @@ public class Test01_SignUp extends AndroidTestBase {
 		if (randomUsername) {
 			username = User.generateRandomUsername();
 		}
-		profileScreen.setUserName(username); // Set Username
+		profileScreen.setUserName(username); // Set Username predefined in json file
 		Boolean userAlreadytaken = profileScreen.usernameTakenMessage(softAssert);
 
 		while (userAlreadytaken) {
 			username = User.generateRandomUsername();
-			profileScreen.setUserName(username); // Set Username
+			profileScreen.setUserName(username); // Set aleatory Username
+			userAlreadytaken = profileScreen.usernameTakenMessage(softAssert);
 		}
 		if (setAvatar) {
 			profileScreen.setAvatar();

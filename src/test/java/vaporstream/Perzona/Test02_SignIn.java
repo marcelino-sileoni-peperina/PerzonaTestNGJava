@@ -38,15 +38,17 @@ public class Test02_SignIn extends AndroidTestBase {
 	@SuppressWarnings("deprecation")
 	@BeforeMethod
 	public void SetupTest() {
-		Activity firstPage = new Activity("vaporstream.perzonas_tst", "vaporstream.perzonas_tst.MainActivity");
-		driver.startActivity(firstPage);
+//		Activity firstPage = new Activity("vaporstream.perzonas_tst", "vaporstream.perzonas_tst.MainActivity");
+//		driver.startActivity(firstPage);
+		driver.resetApp();
 	}
 
 	@Test(dataProvider = "userData")
-	public void SignInTest(String phoneNumber,String countryCode, String countryName) throws MalformedURLException, InterruptedException {
+	public void SignInTest(String phoneNumber, String countryCode, String countryName)
+			throws MalformedURLException, InterruptedException {
 
 		System.out.println("SignIn Test Started ----------------------");
-		System.out.println("Phone Number: +"+countryCode+phoneNumber);
+		System.out.println("Phone Number: +" + countryCode + phoneNumber);
 		// GET OTP CODE
 		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
 
@@ -67,41 +69,31 @@ public class Test02_SignIn extends AndroidTestBase {
 		System.out.println("SignIn Test Finished ----------------------");
 	}
 
-	// JSON DATA PROVIDER - Toma todos los elementos del JSON con los parametros de prueba
-
-	public class JsonDataProvider {
-
-		public static Iterator<Object[]> provideTestData() throws IOException {
-			List<Object[]> testDataList = new ArrayList<>();
-
-			// Specify the path to your JSON file
-			String jsonFilePath = System.getProperty("user.dir")
-					+ "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
-
-			// Use Gson to parse the JSON file
-			JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
-			JsonArray jsonArray = jsonData.getAsJsonArray();
-
-			for (JsonElement element : jsonArray) {
-				String phoneNumber = element.getAsJsonObject().get("phoneNumber").getAsString();
-				String countryCode = element.getAsJsonObject().get("countryCode").getAsString();
-				String countryName = element.getAsJsonObject().get("countryName").getAsString();
-
-
-				// Add the test data as an object array to the list
-				testDataList.add(new Object[] { phoneNumber, countryCode, countryName});
-			}
-
-			return testDataList.iterator();
-		}
-	}
+	// JSON DATA PROVIDER - Toma todos los elementos del JSON con los parametros de
+	// prueba
 
 	@DataProvider(name = "userData")
-	public Iterator<Object[]> provideTestData() throws IOException {
-		return JsonDataProvider.provideTestData();
+	public static Iterator<Object[]> provideTestData() throws IOException {
+		List<Object[]> testDataList = new ArrayList<>();
 
+		// Specify the path to your JSON file
+		String jsonFilePath = System.getProperty("user.dir")
+				+ "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
+
+		// Use Gson to parse the JSON file
+		JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
+		JsonArray jsonArray = jsonData.getAsJsonArray();
+
+		for (JsonElement element : jsonArray) {
+			String phoneNumber = element.getAsJsonObject().get("phoneNumber").getAsString();
+			String countryCode = element.getAsJsonObject().get("countryCode").getAsString();
+			String countryName = element.getAsJsonObject().get("countryName").getAsString();
+
+			// Add the test data as an object array to the list
+			testDataList.add(new Object[] { phoneNumber, countryCode, countryName });
+		}
+
+		return testDataList.iterator();
 	}
 
-
-	
 }

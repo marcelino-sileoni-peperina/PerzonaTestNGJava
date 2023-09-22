@@ -6,6 +6,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -39,12 +40,12 @@ public class AndroidTestBase extends AppiumUtils{
 		options.setCapability("platformVersion", platformVersion);
 //		String noReset = prop.getProperty("noReset");
 //		options.setCapability("noReset", noReset);
-		String fullReset = prop.getProperty("fullReset");
-		options.setCapability("fullReset", fullReset);
+//		String fullReset = prop.getProperty("fullReset");
+//		options.setCapability("fullReset", fullReset);
 //		driver = new AndroidDriver(service.getUrl(), options);
 		driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
 		// Fijamos un timeout para la busqueda de elementos de 10 segundos:
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(90)); 
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); 
 //		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90));
 //		driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(90));
 	}
