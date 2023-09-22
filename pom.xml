@@ -71,6 +71,12 @@
 			<artifactId>gson</artifactId>
 			<version>2.10.1</version>
 		</dependency>
+		<!-- POR QUE ME SUGIERE AGREGAR ESTA DEPENDENCIA ??? -->
+		<dependency>
+		  <groupId>MSGroup</groupId>
+		  <artifactId>Appium</artifactId>
+		  <version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

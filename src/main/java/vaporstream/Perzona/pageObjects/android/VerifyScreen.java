@@ -23,10 +23,26 @@ public class VerifyScreen extends AndroidActions{
 	@AndroidFindBy(accessibility="verifyScreen:codeField")
 	private WebElement codeField;
 	
+	@AndroidFindBy(id="android:id/button1")
+	private WebElement invalidCodeOK;
+	
+//	@AndroidFindBy(accessibility="verifyScreen.requestNewCode")
+//	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Request a new one ']")
+	private WebElement newOTP;
+
 	// ACTIONS METHODS
 	
 	public void setCodeField(String otpCode) {
 		codeField.sendKeys(otpCode);
-//		driver.hideKeyboard();
+	}
+	
+	public void clickOK() {
+		invalidCodeOK.click();;
+	}
+	
+	public void requestNewOTP() {
+		System.out.println("Asking for new OTP");
+		newOTP.click();
 	}
 }

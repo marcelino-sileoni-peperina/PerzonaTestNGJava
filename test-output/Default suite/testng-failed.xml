@@ -5,6 +5,7 @@
     <classes>
       <class name="vaporstream.Perzona.Test01_SignUp">
         <methods>
+          <include name="ScreenCaptureForFailures"/>
           <include name="tearDownAndroidDriver"/>
           <include name="tearDownAppiumServer"/>
           <include name="ConfigureAppium"/>

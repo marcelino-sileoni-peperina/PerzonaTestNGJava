@@ -1,9 +1,7 @@
 
-test-output/**
-reports/**
-target/**
-src/test/java/vaporstream/Perzona/testData/PerzonaTestData_SignUp.json
-src/test/java/vaporstream/Perzona/testData/PerzonaTestData_SignIn.json
+test-output/*
+reports/*
+target/*
 target/classes/META-INF/maven/vaporstream/Perzona/pom.properties
 src/test/java/resources/Perzona_latest.apk
 test-output/testng-results.xml

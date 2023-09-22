@@ -37,19 +37,23 @@ public class AndroidTestBase extends AppiumUtils{
 		options.setPlatformName(PlatformName);
 		String platformVersion = prop.getProperty("platformVersion");
 		options.setCapability("platformVersion", platformVersion);
-		String noReset = prop.getProperty("noReset");
-		options.setCapability("noReset", noReset);
+//		String noReset = prop.getProperty("noReset");
+//		options.setCapability("noReset", noReset);
+		String fullReset = prop.getProperty("fullReset");
+		options.setCapability("fullReset", fullReset);
 //		driver = new AndroidDriver(service.getUrl(), options);
 		driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
 		// Fijamos un timeout para la busqueda de elementos de 10 segundos:
-//		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); 
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(90)); 
+//		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90));
+//		driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(90));
 	}
 	
 
 	@AfterClass
 	public void tearDownAndroidDriver() {
 		//Cerramos la app en el celular:
+//		driver.resetApp();
 		driver.quit(); 
 
 	}

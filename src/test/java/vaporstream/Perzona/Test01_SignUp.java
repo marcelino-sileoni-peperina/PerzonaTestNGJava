@@ -1,7 +1,6 @@
 package vaporstream.Perzona;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -16,6 +15,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import io.appium.java_client.android.Activity;
 import vaporstream.Perzona.pageObjects.android.*;
@@ -30,126 +30,210 @@ import org.openqa.selenium.TakesScreenshot;
 
 public class Test01_SignUp extends AndroidTestBase {
 
-	// To find App Package & App Activity:
-	// 1- Open the app on the emulator and leave it on the page you want to identify
-	// 2- Run the following command:
-	// Windows: adb shell dumpsys window | findstr "mCurrentFocus"
-	// Linux/Mac: adb shell dumpsys window | grep -e "mCurrentFocus"
-	// The result would be of the form:
-	// mCurrentFocus=Window{c04cf29 u0 PACKAGE/ACTIVITY}
-
 	@SuppressWarnings("deprecation")
 	@BeforeMethod
 	public void SetupTest() {
-		Activity firstPage = new Activity("vaporstream.perzonas_tst", "vaporstream.perzonas_tst.MainActivity");
+		// To find App Package & App Activity:
+		// 1- Open the app on the emulator and leave it on the page you want to identify
+		// 2- Run the following command:
+		// Windows: adb shell dumpsys window | findstr "mCurrentFocus"
+		// Linux/Mac: adb shell dumpsys window | grep -e "mCurrentFocus"
+		// The result would be of the form:
+		// mCurrentFocus=Window{c04cf29 u0 PACKAGE/ACTIVITY}
+		driver.resetApp(); // deprecado pero funciona !!
+//		Activity firstPage = new Activity("vaporstream.perzonas_tst", "vaporstream.perzonas_tst.MainActivity");
 //		driver.startActivity(firstPage);
 	}
 
 	@Test(dataProvider = "userData")
-	public void SignUpTest(String countryCode, String countryName, String fullName, String username, String aboutUser,
-			String websiteUrl) throws MalformedURLException, InterruptedException {
-		System.out.println("SignUp Test Started ----------------------");
-		
+	public void SignUpTest(String countryCode, String countryName, String phoneNumber, String fullName, String username,
+			String aboutUser, String websiteUrl, boolean randomPhoneNumber, boolean invalidPhoneNumberTest,
+			boolean wrongOTPTest, boolean delayedOTPTest, boolean randomUsername, boolean setAvatar,
+			boolean setAdditionalInfo, boolean contactSyncTest) throws InterruptedException, IOException {
+
+		System.out.println("---- SignUp Test Started ----");
+		System.out.println("Testing Paramaters:");
+		System.out.println("Country Code: " + countryCode);
+		System.out.println("Country Name: " + countryName);
+		System.out.println("Use Aleatory Phone Number: " + (randomPhoneNumber == true ? "Yes" : "No"));
+		if (!randomPhoneNumber)
+			System.out.println("Phone Number: " + phoneNumber);
+		System.out.println("Test Invalid Phone Number: " + (invalidPhoneNumberTest == true ? "Yes" : "No"));
+		System.out.println("Test Invalid OTP: " + (wrongOTPTest == true ? "Yes" : "No"));
+		System.out.println("Test OTP timeout: " + (delayedOTPTest == true ? "Yes" : "No"));
+		System.out.println("Full Name: " + fullName);
+		System.out.println("Use Aleatory Username Value: " + (randomUsername == true ? "Yes" : "No"));
+		if (!randomUsername)
+			System.out.println("User Name: " + username);
+		System.out.println("Include Avatar on Test: " + (setAvatar == true ? "Yes" : "No"));
+		System.out.println("Add User Additional Information: " + (setAdditionalInfo == true ? "Yes" : "No"));
+		if (setAdditionalInfo) {
+			System.out.println("About User Info: " + aboutUser);
+			System.out.println("WebSite of User: " + websiteUrl);
+		}
+		System.out.println("Add Contacts Syncronizaton Test: " + (contactSyncTest == true ? "Yes" : "No"));
+		System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+
+		SoftAssert softAssert = new SoftAssert();
+
 		// On Boarding Screen
 		OnBoardingScreen onBoardingScreen = new OnBoardingScreen(driver);
 		onBoardingScreen.getStartedClick();
-		
-		// Phone Number Generation
-		String phoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode);
-		
+
+		// Aleatory Phone Number Generator
+		if (randomPhoneNumber) {
+			phoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, true);
+		}
+		// Delete Phone Number Registered from Database
+		User.deletePhoneNumberFromDB(countryCode, phoneNumber);
+
+		// Validate Pre-existing User
+//		boolean SignUped = User.validatePreviousSignUp(countryCode, phoneNumber);
+
 		// Sign up Screen
 		SignUpScreen singUpScreen = new SignUpScreen(driver);
 		singUpScreen.setCountrySelection(countryName, countryCode);
+
+		if (invalidPhoneNumberTest) {
+			System.out.println("--- Starting Invalid Phone Number Test ---");
+			String invalidPhoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, false);
+			singUpScreen.setPhoneNumber(invalidPhoneNumber);
+			singUpScreen.verifyInvalidPhoneMessage(softAssert);
+			System.out.println("--- End of Invalid Phone Number Test ---");
+		}
+//		Thread.sleep(500);
+		System.out.println("--- Sign Up with Given Phone Number Test ---");
 		singUpScreen.setPhoneNumber(phoneNumber);
-		
+//		Thread.sleep(100);
+
 		// GET OTP CODE
-//		OTPGenerator.newOTP(countryCode, phoneNumber);
+//		OTPGenerator.newOTP(countryCode, phoneNumber); // NO ES NECESARIO SOLICITAR POR FUERA DE LA APP QUE SE GENERE UN NUEVO OTP
 		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
 
-		// Verify Screen
+		// Verify Screen (OTP Validation)
 		VerifyScreen verifyScreen = new VerifyScreen(driver);
+		// Wrong OTP TEST
+		if (wrongOTPTest) {
+			System.out.println("--- Starting Invalid OTP Test ---");
+			String invalidOtpCode = OTPGenerator.invalidOTP(otpCode);
+			verifyScreen.setCodeField(invalidOtpCode);
+//			Thread.sleep(1000);
+			verifyScreen.clickOK();
+			System.out.println("--- End of Invalid OTP Test ---");
+		}
+		// Delayed OTP TEST
+		if (delayedOTPTest) {
+			System.out.println("--- Starting Timeout OTP Test ---");
+			Thread.sleep(55000); // ESTA SALTANDO POR TIMEOUT TODO EL SCRIPT - REVISAR !!!
+//			verifyScreen.setCodeField(otpCode); // ESTE DEBERIA FALLAR PERO AL 19/09/23 NO FALLA PORQUE LO HAN CONFIGURADO ASI EN LA APP
+//			verifyScreen.clickOK(); // SE COMENTA HASTA QUE SE RESUELVA LO COMENTADO ARRIBA
+			verifyScreen.requestNewOTP();
+			Thread.sleep(2000);
+			otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
+			System.out.println("--- End of Timeout OTP Test ---");
+		}
+		// Normal OTP Test
+		Thread.sleep(2000);
 		verifyScreen.setCodeField(otpCode);
+		System.out.println("--- End of Sign Up with Given Phone Number Test ---");
 
 		Thread.sleep(3000);
 
-		// Your Information Screen
-		YourInformationScreen yourInformationScreen = new YourInformationScreen(driver);
-		yourInformationScreen.setFullName(fullName);
+		// Your Information Screen -------------------------
+		System.out.println("--- Starting Profile Screen Test ---");
+		ProfileScreen profileScreen = new ProfileScreen(driver);
+		profileScreen.setFullName(fullName); // Set Full Name
 
-		// Sobrescribimos el username definido en el json hasta que no se genere uno
-		// aleatorio porque se resolvio la posibilidad de dar de baja una linea y username.
-		username = "u" + countryCode + phoneNumber;
-		yourInformationScreen.setUsername(username);
+		if (randomUsername) {
+			username = User.generateRandomUsername();
+		}
+		profileScreen.setUserName(username); // Set Username
+		Boolean userAlreadytaken = profileScreen.usernameTakenMessage(softAssert);
 
-		yourInformationScreen.setAvatar();
-	
-		Thread.sleep(3000);
+		while (userAlreadytaken) {
+			username = User.generateRandomUsername();
+			profileScreen.setUserName(username); // Set Username
+		}
+		if (setAvatar) {
+			profileScreen.setAvatar();
+		}
+
+		if (setAdditionalInfo) {
+			profileScreen.setMoreInfo(aboutUser, websiteUrl);
+		}
+
+		profileScreen.continueToNextScreen();
+		System.out.println("--- End of Profile Screen Test ---");
 		
-		yourInformationScreen.setMoreInfo(aboutUser, websiteUrl);
-
-		Thread.sleep(1000);
-
-		// Connections Screen
+		// Connections Screen -------------------------
+		System.out.println("--- Starting Connections Screen Test ---");
 		ConnectionsScreen connectionsScreen = new ConnectionsScreen(driver);
-		connectionsScreen.continueWithoutSyncContacts();
+		if (contactSyncTest) {
+			// TODO:
+		} else {
+			connectionsScreen.continueWithoutSyncContacts();
+		}
+
+		softAssert.assertAll();
 
 		// Save Login Data Data to Test SignIN
 		WriteJSONToFile.save(countryCode, countryName, phoneNumber);
+
+		Thread.sleep(500);
+		System.out.println("--- End of Connections Screen Test ---");
 		
-		Thread.sleep(5000);
-		System.out.println("SignUp Test Finished ----------------------");
+		System.out.println("---- SignUp Test Finished ----");
 	}
 
-	// JSON DATA PROVIDER - Toma todos los elementos del JSON con los parametros de prueba
-
 	@AfterMethod
-	public void ScreenCaptureForFailures () {
+	public void ScreenCaptureForFailures() {
 		TakesScreenshot screenshot = (TakesScreenshot) driver;
 		File source = screenshot.getScreenshotAs(OutputType.FILE);
 		File destination = new File(System.getProperty("user.dir"));
 	}
-	
-	public class JsonDataProvider {
-
-		public static Iterator<Object[]> provideTestData() throws IOException {
-			List<Object[]> testDataList = new ArrayList<>();
-
-			// Specify the path to your JSON file
-			String jsonFilePath = System.getProperty("user.dir")
-					+ "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignUp.json";
-
-			// Use Gson to parse the JSON file
-			JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
-			JsonArray jsonArray = jsonData.getAsJsonArray();
-
-			for (JsonElement element : jsonArray) {
-				String countryCode = element.getAsJsonObject().get("countryCode").getAsString();
-				String countryName = element.getAsJsonObject().get("countryName").getAsString();
-				String fullName = element.getAsJsonObject().get("fullName").getAsString();
-				String username = element.getAsJsonObject().get("username").getAsString();
-				String aboutUser = element.getAsJsonObject().get("aboutUser").getAsString();
-				String websiteUrl = element.getAsJsonObject().get("websiteUrl").getAsString();
-
-				// Add the test data as an object array to the list
-				testDataList.add(new Object[] { countryCode, countryName, fullName, username, aboutUser, websiteUrl });
-			}
-
-			return testDataList.iterator();
-		}
-	}
 
 	@DataProvider(name = "userData")
-	public Iterator<Object[]> provideTestData() throws IOException {
-		return JsonDataProvider.provideTestData();
+	public static Iterator<Object[]> provideTestData() throws IOException {
+		List<Object[]> testDataList = new ArrayList<>();
 
+		// Specify the path to your JSON file
+		String jsonFilePath = System.getProperty("user.dir")
+				+ "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignUp.json";
+
+		// Use Json to parse the JSON file
+		JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
+		JsonArray jsonArray = jsonData.getAsJsonArray();
+
+		for (JsonElement element : jsonArray) {
+			String countryCode = element.getAsJsonObject().get("countryCode").getAsString();
+			String countryName = element.getAsJsonObject().get("countryName").getAsString();
+			String phoneNumber = element.getAsJsonObject().get("phoneNumber").getAsString();
+			String fullName = element.getAsJsonObject().get("fullName").getAsString();
+			String username = element.getAsJsonObject().get("username").getAsString();
+			String aboutUser = element.getAsJsonObject().get("aboutUser").getAsString();
+			String websiteUrl = element.getAsJsonObject().get("websiteUrl").getAsString();
+			boolean randomPhoneNumber = element.getAsJsonObject().get("randomPhoneNumber").getAsBoolean();
+			boolean invalidPhoneNumberTest = element.getAsJsonObject().get("invalidPhoneNumberTest").getAsBoolean();
+			boolean wrongOTPTest = element.getAsJsonObject().get("wrongOTPTest").getAsBoolean();
+			boolean delayedOTPTest = element.getAsJsonObject().get("delayedOTPTest").getAsBoolean();
+			boolean randomUsername = element.getAsJsonObject().get("randomUsername").getAsBoolean();
+			boolean setAvatar = element.getAsJsonObject().get("setAvatar").getAsBoolean();
+			boolean setAdditionalInfo = element.getAsJsonObject().get("setAdditionalInfo").getAsBoolean();
+			boolean contactSyncTest = element.getAsJsonObject().get("contactSyncTest").getAsBoolean();
+
+			// Add the test data as an object array to the list
+			testDataList.add(new Object[] { countryCode, countryName, phoneNumber, fullName, username, aboutUser, websiteUrl,
+					randomPhoneNumber, invalidPhoneNumberTest, wrongOTPTest, delayedOTPTest, randomUsername, setAvatar,
+					setAdditionalInfo, contactSyncTest });
+		}
+
+		return testDataList.iterator();
 	}
 
-
-	public class WriteJSONToFile{
+	public class WriteJSONToFile {
 
 		@SuppressWarnings("unchecked")
-		public static void save(
-				String countryCode, String countryName, String phoneNumber) {
+		public static void save(String countryCode, String countryName, String phoneNumber) {
 			// Create a JSON object to hold your data
 			JSONObject jsonObject = new JSONObject();
 
@@ -164,16 +248,12 @@ public class Test01_SignUp extends AndroidTestBase {
 
 			try {
 				// Define the file path and name
-//				String filePath = "your_file_path.json";
 				String jsonFilePath = System.getProperty("user.dir")
 						+ "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
-
 				// Create a FileWriter
 				FileWriter fileWriter = new FileWriter(jsonFilePath);
-
 				// Write the JSON data to the file
 				fileWriter.write(jsonArray.toJSONString());
-
 				// Close the FileWriter
 				fileWriter.close();
 
@@ -184,5 +264,4 @@ public class Test01_SignUp extends AndroidTestBase {
 		}
 	}
 
-	
 }

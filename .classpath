@@ -77,5 +77,15 @@
 			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Marcelino Sileoni/.m2/repository/com/squareup/okhttp3/okhttp/3.14.9/okhttp-3.14.9.jar" sourcepath="C:/Users/Marcelino Sileoni/.m2/repository/com/squareup/okhttp3/okhttp/3.14.9/okhttp-3.14.9-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="com.squareup.okhttp3"/>
+			<attribute name="maven.artifactId" value="okhttp"/>
+			<attribute name="maven.version" value="3.14.9"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
