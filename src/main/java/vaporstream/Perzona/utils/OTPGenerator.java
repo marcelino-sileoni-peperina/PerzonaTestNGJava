@@ -96,7 +96,7 @@ public class OTPGenerator {
 			} catch (Exception e) {
 				System.out.println("Error getting OTP: " + e.getMessage());
 				intentos--;
-				Thread.sleep(500);
+				Thread.sleep(2000);
 			}
 		}
 

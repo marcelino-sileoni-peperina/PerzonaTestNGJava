@@ -1,5 +1,9 @@
 package vaporstream.Perzona.testUtils;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -20,6 +24,7 @@ public class Listeners implements ITestListener{
 	public void onTestStart(ITestResult result) {
 	//Obtiene el nombre del metodo del test y lo usa para dar nombre al test en el reporte
 		test = extent.createTest(result.getMethod().getMethodName()); 
+	// EXTENT REPORTS - ESTUDIAR
 	}
 
 	@Override
@@ -66,6 +71,14 @@ public class Listeners implements ITestListener{
 	@Override
 	public void onFinish(ITestContext context) {
 		extent.flush();
+		// Apertura Automática de Página de Reporte
+		File file = new File (System.getProperty("user.dir") + "\\reports\\index.html");
+		try {
+			Desktop.getDesktop().browse(file.toURI());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -66,7 +66,6 @@ public class ProfileScreen extends AndroidActions {
 //	@AndroidFindBy(xpath="//*[contains(@content-desc,'maleProfile.jpg')]")
 //	@AndroidFindBy(xpath="//*[contains(.,'maleProfile.jpg')]")
 	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"maleProfile.jpg, 18.83 kB, 6:41 PM\"]/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView[1]")
-
 	private WebElement profilePhoto;
 
 	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.appcompat.widget.LinearLayoutCompat/android.widget.TextView[3]")
