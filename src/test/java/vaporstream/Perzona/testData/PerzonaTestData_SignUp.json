@@ -5,6 +5,7 @@
 		"randomPhoneNumber": true,
 		"phoneNumber": "3490217",
 		"invalidPhoneNumberTest": false,
+		"editPhoneNumberTest": false,
 		"fullName": "Aut Test Germany 002",
 		"randomUsername": true,
 		"username": "AutTGerman001",

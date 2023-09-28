@@ -243,7 +243,7 @@ public class Test01_SignUp extends AndroidTestBase {
 
 			// Add the test data as an object array to the list
 			testDataList.add(new Object[] { countryCode, countryName, phoneNumber, fullName, username, aboutUser, websiteUrl,
-					randomPhoneNumber, invalidPhoneNumberTest, wrongOTPTest, delayedOTPTest, randomUsername, setAvatar,
+					randomPhoneNumber, invalidPhoneNumberTest, editPhoneNumberTest, wrongOTPTest, delayedOTPTest, randomUsername, setAvatar,
 					setAdditionalInfo, contactSyncTest });
 		}
 
