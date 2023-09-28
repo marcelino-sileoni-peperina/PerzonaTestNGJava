@@ -25,7 +25,7 @@ public class OnBoardingScreen extends AndroidActions{
 	
 	// LOCATORS
 	
-	@AndroidFindBy(accessibility="onBoardingScreen:getStarted")
+	@AndroidFindBy(accessibility="onBoardingScreen.getStarted")
 	private WebElement getStarted;
 
 	// ACTIONS METHODS

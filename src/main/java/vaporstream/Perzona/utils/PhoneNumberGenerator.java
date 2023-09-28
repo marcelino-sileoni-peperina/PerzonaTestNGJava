@@ -34,5 +34,19 @@ public class PhoneNumberGenerator {
 
 		return phoneNumber;
 	}
+	
+	public static String getPermutedPhoneNumber(String phoneNumber) {
+
+		if (phoneNumber.length()<2) {
+			return phoneNumber;
+		} else {
+			char[] charArray = phoneNumber.toCharArray();
+      char temp = charArray[phoneNumber.length()-1];
+      charArray[phoneNumber.length()-1] = charArray[phoneNumber.length()-2];
+      charArray[phoneNumber.length()-2] = temp;
+      return new String(charArray);
+		}
+
+	}
 
 }

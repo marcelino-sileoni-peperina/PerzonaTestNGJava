@@ -52,8 +52,8 @@ public class Test01_SignUp extends AndroidTestBase {
 	@Test(dataProvider = "userData")
 	public void SignUpTest(String countryCode, String countryName, String phoneNumber, String fullName, String username,
 			String aboutUser, String websiteUrl, boolean randomPhoneNumber, boolean invalidPhoneNumberTest,
-			boolean wrongOTPTest, boolean delayedOTPTest, boolean randomUsername, boolean setAvatar,
-			boolean setAdditionalInfo, boolean contactSyncTest) throws InterruptedException, IOException {
+			boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest, boolean randomUsername,
+			boolean setAvatar, boolean setAdditionalInfo, boolean contactSyncTest) throws InterruptedException, IOException {
 
 		System.out.println("---- SignUp Test Started ----");
 		System.out.println("Testing Paramaters:");
@@ -94,20 +94,35 @@ public class Test01_SignUp extends AndroidTestBase {
 //		boolean SignUped = User.validatePreviousSignUp(countryCode, phoneNumber);
 
 		// Sign up Screen
-		SignUpScreen singUpScreen = new SignUpScreen(driver);
-		singUpScreen.setCountrySelection(countryName, countryCode);
+		SignUpScreen signUpScreen = new SignUpScreen(driver);
+		signUpScreen.setCountrySelection(countryName, countryCode);
 
 		if (invalidPhoneNumberTest) {
 			System.out.println("--- Starting Invalid Phone Number Test ---");
 			String invalidPhoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, false);
-			singUpScreen.setPhoneNumber(invalidPhoneNumber);
-			singUpScreen.verifyInvalidPhoneMessage(softAssert);
-			singUpScreen.setPhoneNumber(phoneNumber);
+			signUpScreen.setPhoneNumber(invalidPhoneNumber);
+			signUpScreen.verifyInvalidPhoneMessage(softAssert);
+//			signUpScreen.setPhoneNumber(phoneNumber);
 			System.out.println("--- End of Invalid Phone Number Test ---");
 		} else {
 			System.out.println("--- Sign Up with Given Phone Number Test ---");
-			singUpScreen.setPhoneNumber(phoneNumber);
+//			signUpScreen.setPhoneNumber(phoneNumber);
 		}
+
+		if (editPhoneNumberTest) {
+			String permutedPhoneNuber = PhoneNumberGenerator.getPermutedPhoneNumber(phoneNumber);
+			signUpScreen.setPhoneNumber(permutedPhoneNuber);
+			signUpScreen.continueToVerifyPhoneNumber();
+			Thread.sleep(2000);
+			signUpScreen.editPhoneNumber();
+			Thread.sleep(1000);
+			;
+		}
+		signUpScreen.setPhoneNumber(phoneNumber);
+		Thread.sleep(2000);
+		signUpScreen.continueToVerifyPhoneNumber();
+		signUpScreen.continueToOTP();
+
 		System.out.println("--- Start of OTP Test ---");
 		// Get OTP Code
 		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
@@ -173,7 +188,7 @@ public class Test01_SignUp extends AndroidTestBase {
 		System.out.println("--- Starting Connections Screen Test ---");
 		ConnectionsScreen connectionsScreen = new ConnectionsScreen(driver);
 		if (contactSyncTest) {
-			// TODO:
+			// TODO: se debe incluir la posibilidad de enviar invitacion
 		} else {
 			connectionsScreen.continueWithoutSyncContacts();
 		}
@@ -218,6 +233,7 @@ public class Test01_SignUp extends AndroidTestBase {
 			String websiteUrl = element.getAsJsonObject().get("websiteUrl").getAsString();
 			boolean randomPhoneNumber = element.getAsJsonObject().get("randomPhoneNumber").getAsBoolean();
 			boolean invalidPhoneNumberTest = element.getAsJsonObject().get("invalidPhoneNumberTest").getAsBoolean();
+			boolean editPhoneNumberTest = element.getAsJsonObject().get("editPhoneNumberTest").getAsBoolean();
 			boolean wrongOTPTest = element.getAsJsonObject().get("wrongOTPTest").getAsBoolean();
 			boolean delayedOTPTest = element.getAsJsonObject().get("delayedOTPTest").getAsBoolean();
 			boolean randomUsername = element.getAsJsonObject().get("randomUsername").getAsBoolean();

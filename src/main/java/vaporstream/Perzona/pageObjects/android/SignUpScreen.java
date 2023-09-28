@@ -25,24 +25,45 @@ public class SignUpScreen extends AndroidActions {
 
 	// LOCATORS
 
-	@AndroidFindBy(accessibility = "singUpScreen:phoneInput")
+	@AndroidFindBy(accessibility = "singUpScreen.phoneInput")
 	private WebElement phoneInput;
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Your phone number is invalid']")
 	private WebElement invalidPhone;
 
-	// @AndroidFindBy(id="singUpScreen:countrySelector") // ID A CONFIRMAR
+	// @AndroidFindBy(id="singUpScreen.countryInput") // ID A AGREGAR
 	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.ImageView")
-	private WebElement countrySelector;
+	private WebElement countryInput;
 
-//	@AndroidFindBy(id="text-input-country-filter") // NO FUNCIONA
+	// @AndroidFindBy(id="singUpScreen.countryCode") // ID A AGREGAR
+	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.ImageView")
+	private WebElement countryCode;
+
+	// @AndroidFindBy(id="singUpScreen.notValidNumber") // ID A AGREGAR
+	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Your phone number is invalid']")
+	private WebElement notValidNumber;
+
+	// @AndroidFindBy(id="text-input-country-filter") // NO FUNCIONA
 	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText")
 	private WebElement countryFilter;
+
+	// @AndroidFindBy(accessibility="Continue") // VERIFICAR
+	@AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='Continue']")
+	private WebElement continueButton;
+
+	//
+//	@AndroidFindBy(xpath = "//android.view.ViewGroup[@text='Edit']") // VERIFICAR
+	@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"Edit\"]/android.widget.TextView") // VERIFICAR
+	private WebElement editPhoneButton;
+	
+//@AndroidFindBy(xpath = "//android.view.ViewGroup[@text='Continue']") // VERIFICAR
+@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"Continue\"]/android.widget.TextView") // VERIFICAR
+private WebElement continueCorrectPhoneButton;
 
 	// ACTIONS METHODS
 
 	public void setCountrySelection(String countryName, String countryCode) {
-		countrySelector.click();
+		countryInput.click();
 //		driver.findElement(By.id("text-input-country-filter")).sendKeys(countryName); //text-input-country-filter
 		countryFilter.sendKeys(countryName);
 		// scrollToText(countryName); // Se dejó de usar al usar el filtro de texto de
@@ -61,7 +82,20 @@ public class SignUpScreen extends AndroidActions {
 
 	public void verifyInvalidPhoneMessage(SoftAssert softAssert) {
 		String message = invalidPhone.getText();
-		softAssert.assertEquals(message, "Your phone number is invalid","Invalid Phone Number Message NOT IDENTICAL TO WHAT EXPECTED");
+		softAssert.assertEquals(message, "Your phone number is invalid",
+				"Invalid Phone Number Message NOT IDENTICAL TO WHAT EXPECTED");
 		System.out.println("Invalid Phone Number Message: verified.");
+	}
+
+	public void continueToVerifyPhoneNumber() {
+		continueButton.click();
+	}
+
+	public void editPhoneNumber() {
+		editPhoneButton.click();
+	}
+	
+	public void continueToOTP() {
+		continueCorrectPhoneButton.click();
 	}
 }
