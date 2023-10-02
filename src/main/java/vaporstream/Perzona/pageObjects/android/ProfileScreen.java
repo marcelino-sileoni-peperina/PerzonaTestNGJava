@@ -31,33 +31,36 @@ public class ProfileScreen extends AndroidActions {
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.EditText")
 //	@AndroidFindBy(xpath="//android.widget.EditText[@text='Your real name here']")
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.widget.EditText") // v60
-	@AndroidFindBy(accessibility="profileScreen.fullNameInput") // v67
+	@AndroidFindBy(accessibility = "profileScreen.fullNameInput") // v67
 	private WebElement fullNameField;
 
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[5]/android.widget.EditText")
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.EditText") // v60
-	@AndroidFindBy(xpath="//android.widget.EditText[@text='Set a username']") // v67
+//	@AndroidFindBy(xpath="//android.widget.EditText[@text='Set a username']") // v67 NO FUNCIONA 
+	@AndroidFindBy(xpath = "//android.widget.EditText[@hint='Set a username']") // v67
 	private WebElement usernameField;
 
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[5]/android.view.ViewGroup")
 //	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Verify'") //v60
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]/android.view.ViewGroup/android.widget.TextView") //v60
-	@AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='Verify']/android.widget.TextView") //v67
+	@AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='Verify']/android.widget.TextView") // v67
 	private WebElement verifyLink;
 
 //	@AndroidFindBy(xpath = "//android.widget.TextView[contains(@text,'already taken')]") //v60
-	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Username is already taken']") //v60
+	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Username is already taken']") // v60
 	private WebElement usernameTaken;
 
 //@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[2]") //v54
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup") //v60
-	@AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"profileScreen.setAvatar\"]/com.horcrux.svg.SvgView/com.horcrux.svg.GroupView/com.horcrux.svg.PathView") //v67
+	@AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"profileScreen.setAvatar\"]/com.horcrux.svg.SvgView/com.horcrux.svg.GroupView/com.horcrux.svg.PathView") // v67
 	private WebElement avatar;
 
-	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.Button[1]")
+//	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.Button[1]") 
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='While using the app']")
 	private WebElement whileUsingApp;
 
-	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.Button[1]")
+//	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.Button[1]")
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='GALLERY']")
 	private WebElement uploadFromGallery;
 
 //	@AndroidFindBy(xpath="//android.widget.LinearLayout[@content-desc='maleProfile.jpg, 18.83 kB, 8:59 PM']/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView")
@@ -72,25 +75,33 @@ public class ProfileScreen extends AndroidActions {
 // ver https://discuss.appium.io/t/get-value-of-content-desc/2486/8
 // https://medium.com/androiddevelopers/accessing-composables-from-uiautomator-cf316515edc2
 // https://stackoverflow.com/questions/26886800/how-to-click-on-a-button-using-content-desc	
-	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"maleProfile.jpg, 18.83 kB, Oct 2, 2022\"]/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView[1]")
-	private WebElement profilePhoto;
+//	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"maleProfile.jpg, 18.83 kB, Oct 2, 2022\"]/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView[1]")
+	@AndroidFindBy(xpath = "//android.widget.LinearLayout[contains(@content-desc,'maleProfile.jpg')]")
+	private WebElement maleProfilePhoto;
 
-	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.appcompat.widget.LinearLayoutCompat/android.widget.TextView[3]")
+	@AndroidFindBy(xpath = "//android.widget.LinearLayout[contains(@content-desc,'femaleProfile.jpg')]")
+	private WebElement femaleProfilePhoto;
+
+	@AndroidFindBy(xpath = "//android.widget.LinearLayout[contains(@content-desc,'bob-esponja.png')]")
+	private WebElement bobProfilePhoto;
+
+//	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.appcompat.widget.LinearLayoutCompat/android.widget.TextView[3]")
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='CROP']")
 	private WebElement cropImage;
 
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]") // v54
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[5]/android.view.ViewGroup") // v60
-	@AndroidFindBy(accessibility="profileScreen.addMoreInformation") // v67
+	@AndroidFindBy(accessibility = "profileScreen.addMoreInformation") // v67
 	private WebElement moreInformation;
 
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.widget.EditText") //v54
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[5]/android.widget.EditText") //v60
-	@AndroidFindBy(accessibility="profileScreen.aboutInput") //v67
+	@AndroidFindBy(accessibility = "profileScreen.aboutInput") // v67
 	private WebElement aboutYouField;
 
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.EditText") //v54
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]/android.widget.EditText") //v60
-	@AndroidFindBy(accessibility="profileScreen.websiteInput") //v67
+	@AndroidFindBy(accessibility = "profileScreen.websiteInput") // v67
 	private WebElement websiteField;
 // 
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[7]")
@@ -98,7 +109,7 @@ public class ProfileScreen extends AndroidActions {
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]")
 //	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Continue']") // v60
 //android.view.ViewGroup[@content-desc="Continue"] //v67
-	@AndroidFindBy(accessibility="Continue") //v67
+	@AndroidFindBy(accessibility = "Continue") // v67
 	private WebElement continueButton;
 
 	// ACTIONS METHODS
@@ -110,11 +121,17 @@ public class ProfileScreen extends AndroidActions {
 		driver.hideKeyboard();
 	}
 
-	public void setAvatar() {
+	public void setAvatar(String gender) {
 		avatar.click();
 		whileUsingApp.click();
 		uploadFromGallery.click();
-		profilePhoto.click();
+		if (gender == "male") {
+			maleProfilePhoto.click();
+		} else if (gender == "female") {
+			femaleProfilePhoto.click();
+		} else {
+			bobProfilePhoto.click();
+		}
 		cropImage.click();
 	}
 

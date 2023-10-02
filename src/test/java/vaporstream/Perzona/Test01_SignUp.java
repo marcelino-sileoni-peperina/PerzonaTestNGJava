@@ -51,7 +51,7 @@ public class Test01_SignUp extends AndroidTestBase {
 
 	@Test(dataProvider = "userData")
 	public void SignUpTest(String countryCode, String countryName, String phoneNumber, String fullName, String username,
-			String aboutUser, String websiteUrl, boolean randomPhoneNumber, boolean invalidPhoneNumberTest,
+			String aboutUser, String websiteUrl, String profileGender, boolean randomPhoneNumber, boolean invalidPhoneNumberTest,
 			boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest, boolean randomUsername,
 			boolean setAvatar, boolean setAdditionalInfo, boolean contactSyncTest) throws InterruptedException, IOException {
 
@@ -178,7 +178,7 @@ public class Test01_SignUp extends AndroidTestBase {
 		}
 
 		if (setAvatar) {
-			profileScreen.setAvatar();
+			profileScreen.setAvatar(profileGender);
 		}
 
 		if (setAdditionalInfo) {
@@ -186,6 +186,7 @@ public class Test01_SignUp extends AndroidTestBase {
 		}
 
 		profileScreen.continueToNextScreen();
+
 		System.out.println("--- End of Profile Screen Test ---");
 
 		// Connections Screen -------------------------
@@ -235,6 +236,7 @@ public class Test01_SignUp extends AndroidTestBase {
 			String username = element.getAsJsonObject().get("username").getAsString();
 			String aboutUser = element.getAsJsonObject().get("aboutUser").getAsString();
 			String websiteUrl = element.getAsJsonObject().get("websiteUrl").getAsString();
+			String profileGender = element.getAsJsonObject().get("profileGender").getAsString();
 			boolean randomPhoneNumber = element.getAsJsonObject().get("randomPhoneNumber").getAsBoolean();
 			boolean invalidPhoneNumberTest = element.getAsJsonObject().get("invalidPhoneNumberTest").getAsBoolean();
 			boolean editPhoneNumberTest = element.getAsJsonObject().get("editPhoneNumberTest").getAsBoolean();
@@ -247,8 +249,8 @@ public class Test01_SignUp extends AndroidTestBase {
 
 			// Add the test data as an object array to the list
 			testDataList.add(new Object[] { countryCode, countryName, phoneNumber, fullName, username, aboutUser, websiteUrl,
-					randomPhoneNumber, invalidPhoneNumberTest, editPhoneNumberTest, wrongOTPTest, delayedOTPTest, randomUsername, setAvatar,
-					setAdditionalInfo, contactSyncTest });
+					profileGender, randomPhoneNumber, invalidPhoneNumberTest, editPhoneNumberTest, wrongOTPTest, delayedOTPTest,
+					randomUsername, setAvatar, setAdditionalInfo, contactSyncTest });
 		}
 
 		return testDataList.iterator();
