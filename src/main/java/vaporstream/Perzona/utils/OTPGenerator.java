@@ -8,8 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
-
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class OTPGenerator {
 
@@ -46,58 +46,80 @@ public class OTPGenerator {
 	public static String getOTP(String countryCode, String phoneNumber) throws InterruptedException {
 		System.out.println("Asking for OTP");
 		String otpCode = "";
-		String jsonInputString = "{\"phoneNumber\": \"+" + countryCode + phoneNumber + "\"}";
-
 		String apiUrl2 = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/k6/otp";
 		String authorizationHeader = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzZTk0MzY0LTMzZDMtNDM3OC1iNDFkLWQ4YmVhMTFiMTNiNCIsImlhdCI6MTY5MTQxNzY0NiwiZXhwIjoxNjk2Njc3MjQ2LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cddSybV_pbTidUqPS5NvxtWKAJfsVAcAB042u2QLwQ1fbctOyUh5mdHL9VnDaFzGoUdbsM7ElEWm6rv3cwdHMaoXyV9BXjiY7SXLnKvcFn0FCBvEIwe8phLGWZbsccDlhwn5lfQiC56yrTfG-WtDhB7VQfqgG24HI6SohBZIA6bDNwLalw_Ux6_NKEMUikxZ1_HgJRq82NNNkFim9GUlLDUVZENZymar6b8PVx-SIDI5kRmTcuyV0iuVKMoUyXGr6GXgeQNa54Ol4ig_G_LD5SofXbXsTbux4QskAWRijXVRWVE4pigCDK0RHdjrRcnbp31FLHxG-L-htQeli87Yvg";
+
+		// Create the JSON request payload
+		JsonObject requestBody = new JsonObject();
+		requestBody.addProperty("phoneNumber", "+" + countryCode + phoneNumber);
+		// Convert the JSON payload to a string
+		String jsonInputString = requestBody.toString();
+
 		Integer intentos = 3;
+
 		while (intentos > 0) {
 			System.out.println("Getting OTP. Attempt " + (4 - intentos) + " de 3.");
 			try {
+				// Create the URL object and open a connection
 				URL url = new URL(apiUrl2);
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				Thread.sleep(2000);
+				// Set up the HTTP request
 				connection.setRequestMethod("POST");
 				connection.setRequestProperty("Content-Type", "application/json");
 				connection.setRequestProperty("Accept", "application/json");
 				connection.setRequestProperty("Authorization", authorizationHeader);
 				connection.setDoOutput(true);
+//				Thread.sleep(5000);
 
+				// Write the JSON payload to the request body
 				try (OutputStream os = connection.getOutputStream()) {
 					byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 					os.write(input, 0, input.length);
 				}
+//				Thread.sleep(3000);
 
+				// Get the HTTP response code
 				int responseCode = connection.getResponseCode();
-				if (responseCode == HttpURLConnection.HTTP_OK) {
-					System.out.println("Connected to OTP Service.");
-				} else {
-					System.out.println("Error Getting OTP from OTP service - Response Code: " + responseCode);
-				}
+//				Thread.sleep(5000);
 
 				if (responseCode == HttpURLConnection.HTTP_OK) {
+//					System.out.println("HTTP Response Code Obtained: " + responseCode);
+					// Read the JSON response from the input stream
 					InputStream responseStream = connection.getInputStream();
 					BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
 					StringBuilder responseBuilder = new StringBuilder();
 					String line;
+
 					while ((line = reader.readLine()) != null) {
 						responseBuilder.append(line);
 					}
-					reader.close();
 
+					// Parse the JSON response
 					String jsonResponse = responseBuilder.toString();
-//					System.out.println("jsonResponse: " + jsonResponse);
-					JSONObject jsonObject = new JSONObject(jsonResponse);
+					JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
 
-					otpCode = jsonObject.get("code").toString();
+					// Extract the value of the "code" key
+					otpCode = jsonObject.get("code").getAsString();
+
+					// Print the OTP code
 					System.out.println("OTP Code Obtained: " + otpCode);
+				} else {
+					System.out.println("Error Getting OTP from OTP service - Response Code: " + responseCode);
 				}
+
 				intentos = 0;
+
+				// Disconnect the connection
 				connection.disconnect();
 			} catch (Exception e) {
 				System.out.println("Error getting OTP: " + e.getMessage());
 				intentos--;
-				Thread.sleep(2000);
+//				Thread.sleep(2000);
+
+				e.printStackTrace();
 			}
+
 		}
 
 		return otpCode;

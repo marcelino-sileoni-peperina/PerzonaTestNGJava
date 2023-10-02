@@ -31,11 +31,11 @@ public class ConnectionsScreen extends AndroidActions{
 	@AndroidFindBy(accessibility="profileScreen.continueButton") // v67 - ESTA MAL - DEBERIA SER connectionScreen.continueButton
 	private WebElement continueButton;
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Skip for now']") // v60
-	@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"discoveryScreen.adviceBox.skipSync\"]/android.widget.TextView") // v67 - PENDIENTE DE PRUEBA AL 28/09/23
+//	@AndroidFindBy(xpath="//android.widget.TextView[@text='Skip for now']") // v60
+	@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"discoveryScreen.adviceBox.skipSync\"]/android.widget.TextView") // v67 - AL 01/10/23 FUNCIONA
 	private WebElement skipForNow;
 	
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sync contacts']") // v60
+//	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sync contacts']") // v60
 	@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"discoveryScreen.adviceBox.syncContacts\"]/android.widget.TextView") // v67 - PENDIENTE DE PRUEBA AL 28/09/23
 	private WebElement syncContacts;
 	

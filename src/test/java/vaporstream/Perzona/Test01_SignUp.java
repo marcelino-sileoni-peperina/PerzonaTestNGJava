@@ -63,6 +63,7 @@ public class Test01_SignUp extends AndroidTestBase {
 		if (!randomPhoneNumber)
 			System.out.println("Phone Number: " + phoneNumber);
 		System.out.println("Test Invalid Phone Number: " + (invalidPhoneNumberTest == true ? "Yes" : "No"));
+		System.out.println("Test Phone Number Edition: " + (editPhoneNumberTest == true ? "Yes" : "No"));
 		System.out.println("Test Invalid OTP: " + (wrongOTPTest == true ? "Yes" : "No"));
 		System.out.println("Test OTP timeout: " + (delayedOTPTest == true ? "Yes" : "No"));
 		System.out.println("Full Name: " + fullName);
@@ -112,15 +113,18 @@ public class Test01_SignUp extends AndroidTestBase {
 		if (editPhoneNumberTest) {
 			String permutedPhoneNuber = PhoneNumberGenerator.getPermutedPhoneNumber(phoneNumber);
 			signUpScreen.setPhoneNumber(permutedPhoneNuber);
+			Thread.sleep(500);
 			signUpScreen.continueToVerifyPhoneNumber();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			signUpScreen.editPhoneNumber();
 			Thread.sleep(1000);
 			;
 		}
 		signUpScreen.setPhoneNumber(phoneNumber);
-		Thread.sleep(2000);
+		Thread.sleep(500);
 		signUpScreen.continueToVerifyPhoneNumber();
+		// Go to OTP
+		Thread.sleep(1000); // SIN ESTA PAUSA NO FUNCIONA !!
 		signUpScreen.continueToOTP();
 
 		System.out.println("--- Start of OTP Test ---");

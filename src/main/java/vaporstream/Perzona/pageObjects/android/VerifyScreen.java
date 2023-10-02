@@ -20,7 +20,8 @@ public class VerifyScreen extends AndroidActions{
 	
 	// LOCATORS
 	
-	@AndroidFindBy(accessibility="verifyScreen:codeField")
+//	@AndroidFindBy(accessibility="verifyScreen:codeField") v.60
+	@AndroidFindBy(accessibility="verifyScreen.codeField")
 	private WebElement codeField;
 	
 	@AndroidFindBy(id="android:id/button1")

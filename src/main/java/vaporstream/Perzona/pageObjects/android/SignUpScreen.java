@@ -1,9 +1,12 @@
 package vaporstream.Perzona.pageObjects.android;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -49,15 +52,16 @@ public class SignUpScreen extends AndroidActions {
 
 	// @AndroidFindBy(accessibility="Continue") // VERIFICAR
 	@AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='Continue']")
-	private WebElement continueButton;
+	private WebElement continueToVerifyPhoneNumber;
 
 	//
 //	@AndroidFindBy(xpath = "//android.view.ViewGroup[@text='Edit']") // VERIFICAR
 	@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"Edit\"]/android.widget.TextView") // VERIFICAR
 	private WebElement editPhoneButton;
 	
-//@AndroidFindBy(xpath = "//android.view.ViewGroup[@text='Continue']") // VERIFICAR
-@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"Continue\"]/android.widget.TextView") // VERIFICAR
+//@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc=\"Continue\"]/android.widget.TextView") // VERIFICAR
+//@AndroidFindBy(xpath = "//android.view.ViewGroup[contains(@text,'Continue')]") // VERIFICAR
+	@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc='Continue']") // FUNCIONA
 private WebElement continueCorrectPhoneButton;
 
 	// ACTIONS METHODS
@@ -88,14 +92,18 @@ private WebElement continueCorrectPhoneButton;
 	}
 
 	public void continueToVerifyPhoneNumber() {
-		continueButton.click();
+		continueToVerifyPhoneNumber.click();
 	}
 
 	public void editPhoneNumber() {
+		System.out.println("Correcting Phone Number.");
 		editPhoneButton.click();
 	}
 	
 	public void continueToOTP() {
-		continueCorrectPhoneButton.click();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOf(continueCorrectPhoneButton)).click();;
+//		continueCorrectPhoneButton.click();
+		System.out.println("Pressing Correct Phone Button.");
 	}
 }
