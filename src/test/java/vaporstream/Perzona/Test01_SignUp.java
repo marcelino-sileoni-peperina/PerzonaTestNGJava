@@ -49,11 +49,12 @@ public class Test01_SignUp extends AndroidTestBase {
 //		driver.startActivity(firstPage);
 	}
 
-	@Test(dataProvider = "userData")
+	@Test(dataProvider = "userData", testName = "Sign-Up Test")
 	public void SignUpTest(String countryCode, String countryName, String phoneNumber, String fullName, String username,
-			String aboutUser, String websiteUrl, String profileGender, boolean randomPhoneNumber, boolean invalidPhoneNumberTest,
-			boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest, boolean randomUsername,
-			boolean setAvatar, boolean setAdditionalInfo, boolean contactSyncTest) throws InterruptedException, IOException {
+			String aboutUser, String websiteUrl, String profileGender, boolean randomPhoneNumber,
+			boolean invalidPhoneNumberTest, boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest,
+			boolean randomUsername, boolean setAvatar, boolean setAdditionalInfo, boolean contactSyncTest)
+			throws InterruptedException, IOException {
 
 		System.out.println("---- SignUp Test Started ----");
 		System.out.println("Testing Paramaters:");
@@ -71,6 +72,8 @@ public class Test01_SignUp extends AndroidTestBase {
 		if (!randomUsername)
 			System.out.println("User Name: " + username);
 		System.out.println("Include Avatar on Test: " + (setAvatar == true ? "Yes" : "No"));
+		if (setAvatar)
+			System.out.println("Profile Gender: " + profileGender);
 		System.out.println("Add User Additional Information: " + (setAdditionalInfo == true ? "Yes" : "No"));
 		if (setAdditionalInfo) {
 			System.out.println("About User Info: " + aboutUser);
@@ -195,6 +198,7 @@ public class Test01_SignUp extends AndroidTestBase {
 		if (contactSyncTest) {
 			// TODO: se debe incluir la posibilidad de enviar invitacion
 		} else {
+			Thread.sleep(3000);
 			connectionsScreen.continueWithoutSyncContacts();
 		}
 

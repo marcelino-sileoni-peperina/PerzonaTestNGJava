@@ -70,6 +70,8 @@ public class AppiumUtils {
 	}
 
 	public String getScreenshotPath(String testCaseName, AppiumDriver driver) throws IOException {
+		// Step 1 of 2: generate screenshot and save it to disk
+		// Step 2 of 2: add screenshot from file to report (see Listeners.java)
 		File source = driver.getScreenshotAs(OutputType.FILE);
 		String destinationFile = System.getProperty("user.dir") + "\\reports" + testCaseName + ".png";
 		FileUtils.copyFile(source, new File(destinationFile));

@@ -63,19 +63,6 @@ public class ProfileScreen extends AndroidActions {
 	@AndroidFindBy(xpath = "//android.widget.Button[@text='GALLERY']")
 	private WebElement uploadFromGallery;
 
-//	@AndroidFindBy(xpath="//android.widget.LinearLayout[@content-desc='maleProfile.jpg, 18.83 kB, 8:59 PM']/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView")
-//	@AndroidFindBy(xpath="//android.widget.LinearLayout[@content-desc='maleProfile.jpg, 18.83 kB, Sep 6']/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView[2]")
-//@AndroidFindBy(xpath="//android.widget.LinearLayout[@content-desc='maleProfile.jpg, 18.83 kB, Sep 11']/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView[1]")
-	//// *[contains(@id,'IPS')]
-//	@AndroidFindBy(xpath="//android.widget.ImageView[@content-desc='maleProfile.jpg, 18.83 kB, Sep 11']")
-//	@AndroidFindBy(xpath="//android.widget.ImageView[contains(@content-desc,'maleProfile.jpg')]")
-//	@AndroidFindBy(xpath="//*[contains(@content-desc,'maleProfile.jpg')]")
-//	@AndroidFindBy(xpath="//*[contains(.,'maleProfile.jpg')]")
-//	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"maleProfile.jpg, 18.83 kB, 6:41 PM\"]/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView[1]")
-// ver https://discuss.appium.io/t/get-value-of-content-desc/2486/8
-// https://medium.com/androiddevelopers/accessing-composables-from-uiautomator-cf316515edc2
-// https://stackoverflow.com/questions/26886800/how-to-click-on-a-button-using-content-desc	
-//	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@content-desc=\"maleProfile.jpg, 18.83 kB, Oct 2, 2022\"]/android.widget.RelativeLayout/android.widget.FrameLayout[1]/android.widget.ImageView[1]")
 	@AndroidFindBy(xpath = "//android.widget.LinearLayout[contains(@content-desc,'maleProfile.jpg')]")
 	private WebElement maleProfilePhoto;
 
@@ -85,7 +72,6 @@ public class ProfileScreen extends AndroidActions {
 	@AndroidFindBy(xpath = "//android.widget.LinearLayout[contains(@content-desc,'bob-esponja.png')]")
 	private WebElement bobProfilePhoto;
 
-//	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.appcompat.widget.LinearLayoutCompat/android.widget.TextView[3]")
 	@AndroidFindBy(xpath = "//android.widget.Button[@text='CROP']")
 	private WebElement cropImage;
 
@@ -108,7 +94,7 @@ public class ProfileScreen extends AndroidActions {
 //	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[8]/android.widget.TextView") // si se completan los campos previos en v60
 //	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[6]")
 //	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Continue']") // v60
-//android.view.ViewGroup[@content-desc="Continue"] //v67
+//android.view.ViewGroup[@content-desc="Continue"] //v67 
 	@AndroidFindBy(accessibility = "Continue") // v67
 	private WebElement continueButton;
 
@@ -122,14 +108,18 @@ public class ProfileScreen extends AndroidActions {
 	}
 
 	public void setAvatar(String gender) {
+		System.out.println("Avatar gender: " + gender);
 		avatar.click();
 		whileUsingApp.click();
 		uploadFromGallery.click();
-		if (gender == "male") {
+		switch (gender) {
+		case "male":
 			maleProfilePhoto.click();
-		} else if (gender == "female") {
+			break;
+		case "female":
 			femaleProfilePhoto.click();
-		} else {
+			break;
+		default:
 			bobProfilePhoto.click();
 		}
 		cropImage.click();
@@ -137,11 +127,8 @@ public class ProfileScreen extends AndroidActions {
 
 	public void setMoreInfo(String aboutUser, String websiteUrl) throws InterruptedException {
 		moreInformation.click();
-//		Thread.sleep(1000);
 		aboutYouField.sendKeys(aboutUser);
-//		Thread.sleep(1000);
 		websiteField.sendKeys(websiteUrl);
-//		Thread.sleep(1000);
 //		scrollToEndAction();
 //		scrollToText("Continue");
 	}
@@ -169,15 +156,16 @@ public class ProfileScreen extends AndroidActions {
 			String message = wait.until(ExpectedConditions.visibilityOf(usernameTaken)).getText();
 			System.out.println("Message after username introduced: " + message);
 			System.out.println("Username is TAKEN.");
-			softAssert.assertEquals(message, "Username is already taken",
+			// SCREEN CAPTURE EN CASO DE SOFTASSERTS
+			// https://www.testingdocs.com/how-to-take-screen-shot-with-testng-when-an-assert-fails/
+			// https://www.youtube.com/watch?v=BG28HEJv990
+			softAssert.assertEquals(message, "Username is already taken", 
 					"Username Taken Message NOT IDENTICAL TO WHAT EXPECTED");
 			usernameAlreadyTaken = true;
 		} catch (Exception ignored) {
-//			System.out.println("Username Taken Message NOT PRESENT.");
 			System.out.println("Username is NOT TAKEN.");
 		} finally {
-//			System.out.println("Username Taken Message Verified.");
-			Thread.sleep(3);
+			System.out.println("Username Taken Message Verified.");
 		}
 		return usernameAlreadyTaken;
 	}

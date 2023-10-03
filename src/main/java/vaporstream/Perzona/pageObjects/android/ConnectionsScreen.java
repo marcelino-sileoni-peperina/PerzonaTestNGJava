@@ -1,7 +1,11 @@
 package vaporstream.Perzona.pageObjects.android;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -27,8 +31,9 @@ public class ConnectionsScreen extends AndroidActions{
 	@AndroidFindBy(accessibility="discoveryScreen.inviteContactsManually") // v67 - ESTA MAL - DEBERIA SER connectionScreen.inviteContactsManually - NO coincide el nomobre de screen de este codigo con el de la App. Acá lo llamamos connectionScreen, en la app se llama discoveryScreen. VER
 	private WebElement inviteContactsManually;
 	
-//	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]")
-	@AndroidFindBy(accessibility="profileScreen.continueButton") // v67 - ESTA MAL - DEBERIA SER connectionScreen.continueButton
+//	@AndroidFindBy(xpath="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]") v60
+//	@AndroidFindBy(xpath="//android.view.ViewGroup[@content-desc='profileScreen.continueButton']") // v67
+	@AndroidFindBy(accessibility="profileScreen.continueButton") // v67 - ESTA MAL - DEBERIA SER connectionScreen.continueButton - NO coincide el nomobre de screen de este codigo con el de la App. Acá lo llamamos connectionScreen, en la app se llama discoveryScreen. VER
 	private WebElement continueButton;
 
 //	@AndroidFindBy(xpath="//android.widget.TextView[@text='Skip for now']") // v60
@@ -44,8 +49,9 @@ public class ConnectionsScreen extends AndroidActions{
 	
 	public void continueWithoutSyncContacts() {
 		System.out.println("Continue without Sync Contacts");
-		continueButton.click();
-		skipForNow.click();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+		wait.until(ExpectedConditions.visibilityOf(continueButton)).click();
+		wait.until(ExpectedConditions.visibilityOf(skipForNow)).click();
 	}
 	
 	public void shareInvitation() {

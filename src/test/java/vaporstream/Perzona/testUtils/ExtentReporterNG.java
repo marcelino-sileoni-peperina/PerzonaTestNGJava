@@ -10,12 +10,13 @@ public class ExtentReporterNG {
 		String path = System.getProperty("user.dir") + "\\reports\\index.html";
 		ExtentSparkReporter reporter = new ExtentSparkReporter(path);
 		reporter.config().setReportName("Perzona Automation Tests - Reports");
-		reporter.config().setDocumentTitle("Resultados de los Tests");
+		reporter.config().setDocumentTitle("Perzona Tests");
 
 		ExtentReports extent = new ExtentReports();
 		extent.attachReporter(reporter);
 		extent.setSystemInfo("Tester", "Peperina QA");
-		extent.setSystemInfo("Any System Info", "Any value");
+//		extent.setSystemInfo("Any System Info", "Any value");
+//		extent.setAnalysisStrategy(null); // Ver 
 		return extent;
 	}
 
