@@ -43,7 +43,7 @@ public class VerifyScreen extends AndroidActions{
 	}
 	
 	public void requestNewOTP() {
-		System.out.println("Asking for new OTP");
+		System.out.println("  Asking for new OTP");
 		newOTP.click();
 	}
 }

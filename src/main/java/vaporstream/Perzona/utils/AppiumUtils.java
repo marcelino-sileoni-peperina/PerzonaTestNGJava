@@ -19,6 +19,9 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class AppiumUtils {
 
 	// EN ESTA CLASE DEFINIREMOS OBJETOS Y METODOS COMUNES A ANDROID y IOS
@@ -36,7 +39,8 @@ public class AppiumUtils {
 	public AppiumDriverLocalService service;
 
 	public AppiumDriverLocalService startAppiumServer(String ipAddress, int port) {
-		// start Appium Server - Codigo comun tanto para pruebas con Android como con IOS
+		// start Appium Server - Codigo comun tanto para pruebas con Android como con
+		// IOS
 		service = new AppiumServiceBuilder()
 				.withAppiumJS(
 						new File("C:\\Users\\Marcelino Sileoni\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
@@ -73,8 +77,19 @@ public class AppiumUtils {
 		// Step 1 of 2: generate screenshot and save it to disk
 		// Step 2 of 2: add screenshot from file to report (see Listeners.java)
 		File source = driver.getScreenshotAs(OutputType.FILE);
-		String destinationFile = System.getProperty("user.dir") + "\\reports" + testCaseName + ".png";
+		String destinationFile = System.getProperty("user.dir") + "\\reports\\" + testCaseName + "-" + CurrentDateTime()
+				+ ".png";
 		FileUtils.copyFile(source, new File(destinationFile));
 		return destinationFile;
+	}
+
+	public static String CurrentDateTime() {
+		// Get the current date and time
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		// Define a date-time formatter to specify the desired format
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+		// Format the current date and time as a string
+		String formattedDateTime = currentDateTime.format(formatter);
+		return formattedDateTime;
 	}
 }

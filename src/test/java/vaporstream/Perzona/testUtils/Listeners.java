@@ -44,6 +44,18 @@ public class Listeners extends AppiumUtils implements ITestListener {
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		test.log(Status.PASS, "Test Passed");
+		try {
+			driver = (AppiumDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			test.addScreenCaptureFromPath(getScreenshotPath(result.getMethod().getMethodName(), driver),
+					result.getMethod().getMethodName());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

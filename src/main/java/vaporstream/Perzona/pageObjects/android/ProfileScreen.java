@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -159,8 +160,9 @@ public class ProfileScreen extends AndroidActions {
 			// SCREEN CAPTURE EN CASO DE SOFTASSERTS
 			// https://www.testingdocs.com/how-to-take-screen-shot-with-testng-when-an-assert-fails/
 			// https://www.youtube.com/watch?v=BG28HEJv990
-			softAssert.assertEquals(message, "Username is already taken", 
-					"Username Taken Message NOT IDENTICAL TO WHAT EXPECTED");
+//			softAssert.assertEquals(message, "Username is already taken", 
+//					"Username Taken Message NOT IDENTICAL TO WHAT EXPECTED");
+			Assert.assertEquals(message, "Username is already taken");
 			usernameAlreadyTaken = true;
 		} catch (Exception ignored) {
 			System.out.println("Username is NOT TAKEN.");

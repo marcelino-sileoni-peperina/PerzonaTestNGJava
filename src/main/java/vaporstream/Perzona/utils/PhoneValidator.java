@@ -21,13 +21,13 @@ public class PhoneValidator {
 
 			// if the phoneUtil is unable to parse any phone number an exception occurs and
 			// gets caught in this block
-			System.out.println("Unable to parse the given phone number: " + phone);
+			System.out.println(" Unable to parse the given phone number: " + phone);
 			e.printStackTrace();
 		}
 
 		boolean isValidNumber = phoneUtil.isValidNumber(phoneNumber);
 		if (isValidNumber) {
-			System.out.println("Valid Phone Number Type: " + phoneUtil.getNumberType(phoneNumber));
+			System.out.println(" Valid Phone Number Type: " + phoneUtil.getNumberType(phoneNumber));
 		}
 
 		// return the boolean value of the validation performed

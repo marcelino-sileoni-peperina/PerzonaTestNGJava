@@ -39,13 +39,13 @@ public class User {
 			// Check the response code
 			if (responseCode == 200) {
 				// The request was successful
-				System.out.println("In order to be sure we are testing a Sign Up Case we must delete the phone number from the previousle registered numbers in the DB.");
-				System.out.println("The phone number +" + countryCode + phoneNumber + " was successfully deleted in the DB.");
+				System.out.println(" In order to be sure we are testing a Sign Up Case we must delete the phone number \nfrom the previously registered numbers in the DB.");
+				System.out.println(" The phone number +" + countryCode + phoneNumber + " was successfully deleted in the DB.");
 
 			} else {
 				// The request failed
 				System.out.println(
-						"Can't delete phone number +" + countryCode + phoneNumber + " in DB. Response code: " + responseCode);
+						" Can't delete phone number +" + countryCode + phoneNumber + " in DB. Response code: " + responseCode);
 			}
 
 			// Disconnect from the server
@@ -83,7 +83,7 @@ public class User {
 			System.out.println("Response Code: " + responseCode);
 
 			if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
-				System.out.println("Phone Number NOT Registered");
+				System.out.println(" Phone Number NOT Registered");
 				validate = false;
 			}
 
@@ -131,7 +131,7 @@ public class User {
 			username.append(randomChar);
 		}
 		String usernameGenerated = "UN" + username.toString();
-		System.out.println("Username ramdomly generated: " + usernameGenerated);
+		System.out.println(" Username ramdomly generated: " + usernameGenerated);
 		return (usernameGenerated);
 	}
 }

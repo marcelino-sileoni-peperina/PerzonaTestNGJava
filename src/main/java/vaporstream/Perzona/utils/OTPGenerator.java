@@ -103,9 +103,9 @@ public class OTPGenerator {
 					otpCode = jsonObject.get("code").getAsString();
 
 					// Print the OTP code
-					System.out.println("OTP Code Obtained: " + otpCode);
+					System.out.println("  OTP Code Obtained: " + otpCode);
 				} else {
-					System.out.println("Error Getting OTP from OTP service - Response Code: " + responseCode);
+					System.out.println("  Error Getting OTP from OTP service - Response Code: " + responseCode);
 				}
 
 				intentos = 0;
@@ -113,7 +113,7 @@ public class OTPGenerator {
 				// Disconnect the connection
 				connection.disconnect();
 			} catch (Exception e) {
-				System.out.println("Error getting OTP: " + e.getMessage());
+				System.out.println("  Error getting OTP: " + e.getMessage());
 				intentos--;
 //				Thread.sleep(2000);
 
@@ -126,7 +126,7 @@ public class OTPGenerator {
 	}
 
 	public static String invalidOTP(String validOTPCode) throws InterruptedException {
-		System.out.println("Asking for Invalid OTP");
+		System.out.println("  Asking for Invalid OTP");
 		String invalidOTPCode = validOTPCode;
 		char[] charArray = validOTPCode.toCharArray();
 		if (charArray.length > 0) {
@@ -138,10 +138,10 @@ public class OTPGenerator {
 				}
 				invalidOTPCode = new String(charArray);
 			}
-			System.out.println("Valid OTP: " + validOTPCode);
-			System.out.println("Invalid OTP: " + invalidOTPCode);
+			System.out.println("  Valid OTP: " + validOTPCode);
+			System.out.println("  Invalid OTP: " + invalidOTPCode);
 		} else {
-			System.out.println("Input string is empty.");
+			System.out.println("  Input string is empty.");
 		}
 		return invalidOTPCode;
 	}

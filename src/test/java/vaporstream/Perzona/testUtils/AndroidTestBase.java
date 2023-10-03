@@ -18,14 +18,20 @@ public class AndroidTestBase extends AppiumUtils{
 
 	public AndroidDriver driver;
 
-	@BeforeClass
+	@BeforeClass (alwaysRun = true)
 	public void ConfigureAppium() throws IOException {
 		Properties prop = new Properties();
 		FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\vaporstream\\Perzona\\resources\\data.properties");
 		prop.load(fis);
-		String ipAddress = prop.getProperty("ipAddress");
-		String port = prop.getProperty("port");
-		//Start Appium Server
+		// System.getProperty(ipAddress) is not null if we introduce its value from command line:
+		// mvn test -PTESTIDENTIFIER -DipAddress=127.0.0.1
+		// This way we can override the default properties defined in data.properties file
+		String ipAddress = System.getProperty("ipAddress")!=null? System.getProperty("ipAddress") : prop.getProperty("ipAddress");
+		//		String ipAddress = prop.getProperty("ipAddress");
+		// mvn test -PTESTIDENTIFIER -Dport=4723
+		String port = System.getProperty("port")!=null? System.getProperty("port") : prop.getProperty("port");
+//		String port = prop.getProperty("port");
+		//Start Appium Server - Only if NOT started from outside this code
 //		service = startAppiumServer(ipAddress,Integer.parseInt(port));
 //		service = startAppiumServer("127.0.0.1",4723);
 		//Set Up Android Driver
@@ -44,14 +50,14 @@ public class AndroidTestBase extends AppiumUtils{
 //		options.setCapability("fullReset", fullReset);
 //		driver = new AndroidDriver(service.getUrl(), options);
 		driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
-		// Fijamos un timeout para la busqueda de elementos de 10 segundos:
+		// Fijamos un timeout para la busqueda de elementos de 5 segundos:
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); 
 //		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90));
 //		driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(90));
 	}
 	
 
-	@AfterClass
+	@AfterClass (alwaysRun = true)
 	public void tearDownAndroidDriver() {
 		//Cerramos la app en el celular:
 //		driver.resetApp();
@@ -59,7 +65,7 @@ public class AndroidTestBase extends AppiumUtils{
 
 	}
 	
-	@AfterClass
+	@AfterClass (alwaysRun = true)
 	public void tearDownAppiumServer() {
 //	Stop Appium Server - COMENTADO PORQUE SE COMENTO EL ARRANQE DEL SERVICIO ARRIBA
 //	service.stop();

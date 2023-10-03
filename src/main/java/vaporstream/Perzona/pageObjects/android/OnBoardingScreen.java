@@ -33,6 +33,5 @@ public class OnBoardingScreen extends AndroidActions{
 	public void getStartedClick() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
 		wait.until(ExpectedConditions.visibilityOf(getStarted)).click();
-//		getStarted.click();
 	}
 }
