@@ -103,17 +103,17 @@ public class Test01_SignUp extends AndroidTestBase {
 		signUpScreen.setCountrySelection(countryName, countryCode);
 
 		if (invalidPhoneNumberTest) {
-			System.out.println(" --- Starting Invalid Phone Number Test ---");
+			System.out.println("--- Starting Invalid Phone Number Test ---");
 			String invalidPhoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, false);
 			signUpScreen.setPhoneNumber(invalidPhoneNumber);
 			signUpScreen.verifyInvalidPhoneMessage(softAssert);
-			System.out.println(" --- End of Invalid Phone Number Test ---");
+			System.out.println("--- End of Invalid Phone Number Test ---");
 		} else {
-			System.out.println(" --- Sign Up with Given Phone Number Test ---");
+			System.out.println("--- Sign Up with Given Phone Number Test ---");
 		}
 
 		if (editPhoneNumberTest) {
-			System.out.println("  --- Starting Phone Number Edition Test ---");
+			System.out.println("--- Starting Phone Number Edition Test ---");
 			String permutedPhoneNuber = PhoneNumberGenerator.getPermutedPhoneNumber(phoneNumber);
 			signUpScreen.setPhoneNumber(permutedPhoneNuber);
 			Thread.sleep(500);
@@ -121,7 +121,7 @@ public class Test01_SignUp extends AndroidTestBase {
 			Thread.sleep(500);
 			signUpScreen.editPhoneNumber();
 			Thread.sleep(500);
-			System.out.println("  --- Ending Phone Number Edition Test ---");
+			System.out.println("--- Ending Phone Number Edition Test ---");
 		}
 		signUpScreen.setPhoneNumber(phoneNumber);
 		Thread.sleep(500);

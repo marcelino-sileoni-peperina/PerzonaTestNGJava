@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="vaporstream.Perzona.testUtils.Listeners"></listener>
 	</listeners>
-	<test thread-count="5" name="Sign Up Test">
+	<test thread-count="5" name="SignUp Test">
 		<classes>
 			<class name="vaporstream.Perzona.Test01_SignUp" />
 		</classes>

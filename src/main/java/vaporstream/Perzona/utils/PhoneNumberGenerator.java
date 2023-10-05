@@ -28,7 +28,7 @@ public class PhoneNumberGenerator {
 
 			if (satisfied) {
 				System.out.println(
-						(isValidPhoneNumber == true ? "  V" : "  Inv") + "alid Phone Number Generated: " + completePhoneNumber);
+						(isValidPhoneNumber == true ? "V" : "Inv") + "alid Phone Number Generated: " + completePhoneNumber);
 			}
 		}
 
