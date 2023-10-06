@@ -26,9 +26,10 @@ public class PhoneValidator {
 		}
 
 		boolean isValidNumber = phoneUtil.isValidNumber(phoneNumber);
-		if (isValidNumber) {
-			System.out.println(" Valid Phone Number Type: " + phoneUtil.getNumberType(phoneNumber));
-		}
+//		if (isValidNumber) {
+//			System.out.println("Valid Phone Number Type: " + phoneUtil.getNumberType(phoneNumber));
+//		}
+		System.out.println("Phone Number Type: " + phoneUtil.getNumberType(phoneNumber));
 
 		// return the boolean value of the validation performed
 		return isValidNumber;

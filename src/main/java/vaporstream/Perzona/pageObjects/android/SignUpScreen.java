@@ -79,7 +79,7 @@ private WebElement continueCorrectPhoneButton;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		System.out.println("  Introducing Phone Number: " + phoneNumber);
+		System.out.println("Introducing Phone Number: " + phoneNumber);
 		phoneInput.sendKeys(phoneNumber);
 		driver.hideKeyboard();
 	}
@@ -88,7 +88,7 @@ private WebElement continueCorrectPhoneButton;
 		String message = invalidPhone.getText();
 		softAssert.assertEquals(message, "Your phone number is invalid",
 				"Invalid Phone Number Message NOT IDENTICAL TO WHAT EXPECTED");
-		System.out.println("  Invalid Phone Number Message: verified.");
+		System.out.println("Invalid Phone Number Message: verified.");
 	}
 
 	public void continueToVerifyPhoneNumber() {
@@ -96,7 +96,7 @@ private WebElement continueCorrectPhoneButton;
 	}
 
 	public void editPhoneNumber() {
-		System.out.println("  Correcting Phone Number.");
+		System.out.println("Correcting Phone Number.");
 		editPhoneButton.click();
 	}
 	
@@ -104,6 +104,6 @@ private WebElement continueCorrectPhoneButton;
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOf(continueCorrectPhoneButton)).click();;
 //		continueCorrectPhoneButton.click();
-		System.out.println("  Pressing Correct Phone Button.");
+		System.out.println("Pressing Correct Phone Button.");
 	}
 }

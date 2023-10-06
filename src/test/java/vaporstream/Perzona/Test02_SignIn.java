@@ -50,7 +50,7 @@ public class Test02_SignIn extends AndroidTestBase {
 		System.out.println("SignIn Test Started ----------------------");
 		System.out.println("Phone Number: +" + countryCode + phoneNumber);
 		// GET OTP CODE
-		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
+		String otpCode = ExternalServices.getOTP(countryCode, phoneNumber);
 
 		// On Boarding Screen
 		OnBoardingScreen onBoardingScreen = new OnBoardingScreen(driver);

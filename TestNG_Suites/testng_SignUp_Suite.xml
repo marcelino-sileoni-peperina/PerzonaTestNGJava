@@ -8,5 +8,5 @@
 		<classes>
 			<class name="vaporstream.Perzona.Test01_SignUp" />
 		</classes>
-	</test> 
+	</test>
 </suite> 

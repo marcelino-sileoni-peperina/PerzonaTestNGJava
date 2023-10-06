@@ -1,25 +1,20 @@
 package vaporstream.Perzona;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import io.appium.java_client.android.Activity;
 import vaporstream.Perzona.pageObjects.android.*;
 import vaporstream.Perzona.testUtils.AndroidTestBase;
 import vaporstream.Perzona.utils.*;
@@ -27,11 +22,6 @@ import vaporstream.Perzona.utils.*;
 import java.io.FileWriter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Test01_SignUp extends AndroidTestBase {
 
@@ -85,35 +75,38 @@ public class Test01_SignUp extends AndroidTestBase {
 
 		SoftAssert softAssert = new SoftAssert();
 		// On Boarding Screen
+		System.out.println(">---- Starting SignUp Test ----");
+		System.out.println("Pressing Get Started");
 		OnBoardingScreen onBoardingScreen = new OnBoardingScreen(driver);
 		onBoardingScreen.getStartedClick();
 
 		// Aleatory Phone Number Generator
 		if (randomPhoneNumber) {
+			System.out.println("Generating Random Phone Number");
 			phoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, true);
 		}
 		// Delete Phone Number Registered from Database
-		User.deletePhoneNumberFromDB(countryCode, phoneNumber);
+		ExternalServices.deletePhoneNumberFromDB(countryCode, phoneNumber);
 
 		// Validate Pre-existing User
-//		boolean SignUped = User.validatePreviousSignUp(countryCode, phoneNumber);
+//		boolean SignUped = ExternalServices.validatePreviousSignUp(countryCode, phoneNumber);
 
 		// Sign up Screen
 		SignUpScreen signUpScreen = new SignUpScreen(driver);
 		signUpScreen.setCountrySelection(countryName, countryCode);
 
 		if (invalidPhoneNumberTest) {
-			System.out.println("--- Starting Invalid Phone Number Test ---");
+			System.out.println(">-- Starting Invalid Phone Number Test ---");
 			String invalidPhoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, false);
 			signUpScreen.setPhoneNumber(invalidPhoneNumber);
 			signUpScreen.verifyInvalidPhoneMessage(softAssert);
-			System.out.println("--- End of Invalid Phone Number Test ---");
+			System.out.println("<--- End of Invalid Phone Number Test ---");
 		} else {
-			System.out.println("--- Sign Up with Given Phone Number Test ---");
+			System.out.println(">--- Sign Up with Given Phone Number Test ---");
 		}
 
 		if (editPhoneNumberTest) {
-			System.out.println("--- Starting Phone Number Edition Test ---");
+			System.out.println(">>--- Starting Phone Number Edition Test ---");
 			String permutedPhoneNuber = PhoneNumberGenerator.getPermutedPhoneNumber(phoneNumber);
 			signUpScreen.setPhoneNumber(permutedPhoneNuber);
 			Thread.sleep(500);
@@ -121,7 +114,7 @@ public class Test01_SignUp extends AndroidTestBase {
 			Thread.sleep(500);
 			signUpScreen.editPhoneNumber();
 			Thread.sleep(500);
-			System.out.println("--- Ending Phone Number Edition Test ---");
+			System.out.println("<<--- Ending Phone Number Edition Test ---");
 		}
 		signUpScreen.setPhoneNumber(phoneNumber);
 		Thread.sleep(500);
@@ -130,38 +123,38 @@ public class Test01_SignUp extends AndroidTestBase {
 		Thread.sleep(1000); // SIN ESTA PAUSA NO FUNCIONA !!
 		signUpScreen.continueToOTP();
 
-		System.out.println(" --- Start of OTP Test ---");
+		System.out.println(">--- Start of OTP Test ---");
 		// Get OTP Code
-		String otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
+		String otpCode = ExternalServices.getOTP(countryCode, phoneNumber);
 
 		// Verify Screen (OTP Validation)
 		VerifyScreen verifyScreen = new VerifyScreen(driver);
 		// Wrong OTP TEST
 		if (wrongOTPTest) {
-			System.out.println("  --- Starting Invalid OTP Test ---");
-			String invalidOtpCode = OTPGenerator.invalidOTP(otpCode);
+			System.out.println(">>--- Starting Invalid OTP Test ---");
+			String invalidOtpCode = ExternalServices.invalidOTP(otpCode);
 			verifyScreen.setCodeField(invalidOtpCode);
 //			Thread.sleep(1000);
 			verifyScreen.clickOK();
-			System.out.println("  --- End of Invalid OTP Test ---");
+			System.out.println("<<--- End of Invalid OTP Test ---");
 		}
 		// Delayed OTP TEST
 		if (delayedOTPTest) {
-			System.out.println("  --- Starting Timeout OTP Test ---");
+			System.out.println(">>--- Starting Timeout OTP Test ---");
 			Thread.sleep(55000); // ESTA SALTANDO POR TIMEOUT TODO EL SCRIPT - REVISAR !!!
 //			verifyScreen.setCodeField(otpCode); // ESTE DEBERIA FALLAR PERO AL 19/09/23 NO FALLA PORQUE LO HAN CONFIGURADO ASI EN LA APP
 //			verifyScreen.clickOK(); // SE COMENTA HASTA QUE SE RESUELVA LO COMENTADO ARRIBA
 			verifyScreen.requestNewOTP();
 			Thread.sleep(2000);
-			otpCode = OTPGenerator.getOTP(countryCode, phoneNumber);
-			System.out.println("  --- End of Timeout OTP Test ---");
+			otpCode = ExternalServices.getOTP(countryCode, phoneNumber);
+			System.out.println("<<--- End of Timeout OTP Test ---");
 		}
 		// Normal OTP Test
 		verifyScreen.setCodeField(otpCode);
-		System.out.println(" --- End of OTP Test ---");
+		System.out.println("<--- End of OTP Test ---");
 
 		// Your Information Screen -------------------------
-		System.out.println(" --- Starting Profile Screen Test ---");
+		System.out.println(">--- Starting Profile Screen Test ---");
 		ProfileScreen profileScreen = new ProfileScreen(driver);
 
 		profileScreen.setFullName(fullName); // Set Full Name
@@ -190,10 +183,10 @@ public class Test01_SignUp extends AndroidTestBase {
 
 		profileScreen.continueToNextScreen();
 
-		System.out.println(" --- End of Profile Screen Test ---");
+		System.out.println("<--- End of Profile Screen Test ---");
 
 		// Connections Screen -------------------------
-		System.out.println(" --- Starting Connections Screen Test ---");
+		System.out.println(">--- Starting Connections Screen Test ---");
 		ConnectionsScreen connectionsScreen = new ConnectionsScreen(driver);
 		if (contactSyncTest) {
 			// TODO: se debe incluir la posibilidad de enviar invitacion
@@ -208,9 +201,9 @@ public class Test01_SignUp extends AndroidTestBase {
 		WriteJSONToFile.save(countryCode, countryName, phoneNumber);
 
 		Thread.sleep(500);
-		System.out.println(" --- End of Connections Screen Test ---");
+		System.out.println("<--- End of Connections Screen Test ---");
 
-		System.out.println("---- SignUp Test Finished ----");
+		System.out.println("<---- SignUp Test Finished ----");
 	}
 
 //	@AfterMethod
