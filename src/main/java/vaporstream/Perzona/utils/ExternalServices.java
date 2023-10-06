@@ -10,10 +10,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
+//import org.json.JSONObject;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 
 public class ExternalServices {
 
@@ -59,29 +61,27 @@ public class ExternalServices {
 		// Convert the JSON payload to a string
 		String jsonInputString = requestBody.toString();
 
-		Integer intentos = 3;
-
-		while (intentos > 0) {
-			System.out.println("Getting OTP. Attempt " + (4 - intentos) + " de 3.");
+//		Integer intentos = 3;
+//
+//		while (intentos > 0) {
+//			System.out.println("Getting OTP. Attempt " + (4 - intentos) + " de 3.");
 			try {
 				// Create the URL object and open a connection
 				URL url = new URL(apiUrl2);
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				// Set up the HTTP request
 				connection.setRequestMethod("POST");
 				connection.setRequestProperty("Content-Type", "application/json");
 				connection.setRequestProperty("Accept", "application/json");
 				connection.setRequestProperty("Authorization", authorizationHeader);
 				connection.setDoOutput(true);
-//				Thread.sleep(5000);
 
 				// Write the JSON payload to the request body
 				try (OutputStream os = connection.getOutputStream()) {
 					byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 					os.write(input, 0, input.length);
 				}
-//				Thread.sleep(3000);
 
 				// Get the HTTP response code
 				int responseCode = connection.getResponseCode();
@@ -98,33 +98,26 @@ public class ExternalServices {
 					while ((line = reader.readLine()) != null) {
 						responseBuilder.append(line);
 					}
-
 					// Parse the JSON response
 					String jsonResponse = responseBuilder.toString();
 					JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
-
 					// Extract the value of the "code" key
 					otpCode = jsonObject.get("code").getAsString();
-
 					// Print the OTP code
 					System.out.println("OTP Code Obtained: " + otpCode);
 				} else {
 					System.out.println("Error Getting OTP from OTP service - Response Code: " + responseCode);
 				}
-
-				intentos = 0;
-
+//				intentos = 0;
 				// Disconnect the connection
 				connection.disconnect();
 			} catch (Exception e) {
 				System.out.println("Error getting OTP: " + e.getMessage());
-				intentos--;
-//				Thread.sleep(2000);
-
+//				intentos--;
 				e.printStackTrace();
 			}
 
-		}
+//		}
 
 		return otpCode;
 	}
@@ -142,10 +135,6 @@ public class ExternalServices {
 		// Convert the JSON payload to a string
 		String jsonInputString = requestBody.toString();
 
-		Integer intentos = 3;
-
-		while (intentos > 0) {
-			System.out.println("Getting TOKEN. Attempt " + (4 - intentos) + " de 3.");
 			try {
 				// Create the URL object and open a connection
 				URL url = new URL(apiUrl);
@@ -155,21 +144,14 @@ public class ExternalServices {
 				connection.setRequestMethod("POST");
 				connection.setRequestProperty("Content-Type", "application/json");
 				connection.setRequestProperty("Accept", "application/json");
-//				connection.setRequestProperty("Authorization", authorizationHeader);
 				connection.setDoOutput(true);
-//				Thread.sleep(5000);
-
 				// Write the JSON payload to the request body
 				try (OutputStream os = connection.getOutputStream()) {
 					byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
 					os.write(input, 0, input.length);
 				}
-//				Thread.sleep(3000);
-
 				// Get the HTTP response code
 				int responseCode = connection.getResponseCode();
-//				Thread.sleep(5000);
-
 				if (responseCode == HttpURLConnection.HTTP_OK) {
 //					System.out.println("HTTP Response Code Obtained: " + responseCode);
 					// Read the JSON response from the input stream
@@ -177,36 +159,28 @@ public class ExternalServices {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
 					StringBuilder responseBuilder = new StringBuilder();
 					String line;
-
 					while ((line = reader.readLine()) != null) {
 						responseBuilder.append(line);
 					}
-
 					// Parse the JSON response
 					String jsonResponse = responseBuilder.toString();
 					JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
-
 					// Extract the value of the "code" key
 					token = jsonObject.get("token").getAsString();
-
 					// Print the OTP code
 					System.out.println("  TOKEN Obtained: " + token);
 				} else {
 					System.out.println("  Error Getting TOKEN - Response Code: " + responseCode);
 				}
 
-				intentos = 0;
-
 				// Disconnect the connection
 				connection.disconnect();
 			} catch (Exception e) {
 				System.out.println("  Error getting TOKEN: " + e.getMessage());
-				intentos--;
-//				Thread.sleep(2000);
 
 				e.printStackTrace();
 			}
-		}
+//		}
 		return token;
 	}
 
@@ -288,41 +262,40 @@ public class ExternalServices {
 	}
 
 	public static boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws InterruptedException {
+		System.out.println("Starting process to obtain new TOKEN");
 		newOTP(countryCode,phoneNumber);
 		String otp = getOTP(countryCode,phoneNumber);
+		Thread.sleep(10000);
 		String jwt = getToken(countryCode,  phoneNumber, otp);
 		
-		boolean validate = true;
+		boolean validate = false;
 		try {
 			// URL for the GET request
-			String url = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/k6/phonenumber/+" + countryCode
+//			String url = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/k6/phonenumber/+" + countryCode
+//					+ phoneNumber;
+			String url = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/get-profiles/+" + countryCode
 					+ phoneNumber;
 			System.out.println("URL: " + url);
 
 			// Create a URL object
 			URL obj = new URL(url);
-
 			// Open a connection to the URL
 			HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-
 			// Set the HTTP request method to GET
 			connection.setRequestMethod("GET");
-
 			// Set request headers
-//			String AuthorizationHeader = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzMTllZWNjLTM3ZmYtNDg4NS04OGE1LWFhZDk2NWFlYWJiYSIsImlhdCI6MTY5NDQ0NzgxOSwiZXhwIjoyMjMyMzQ1NTYzOCwiaXNzIjoiXCJodHRwczovL3ZzLmlkZW50aXR5LmNvbVwiIn0.edVKUwj1qi4VkbNY3A4-XZlO6HPz1Mec8pZi0xqQsMuGJBtgLqROPJmIri-Ke_Gv-KTtSIMnpCIG4SyYhHEHkhWQjsvtve8U8z6p2ufeMGNv9hnSpqHV4MdKCn-PY_hljkxxa-5uu7k3yL7CU1ByYUFjTBfhL9s9e4X9PqJyEUY594E-4gBRxelKmPGKJzHR6019HyBS4q02q6chqeFYMI4PnNbcU5qq8AHqn_AFRgdnB_L7M2dcYpfdk8a1GYoXrQ2_8ZyO7EvfuxsDsf5g6rEKTwn9fWUJXKmq_QFwYIIASh6Bx86FlzXacgWIX02a4LzTmB4z8CIUSQwq1HNSGg";
 			String AuthorizationHeader = jwt;
 			connection.setRequestProperty("Authorization", AuthorizationHeader);
 			connection.setRequestProperty("Accept", "application/json");
 			connection.setRequestProperty("Content-Type", "application/json");
-
 			// Get the response code
 			int responseCode = connection.getResponseCode();
 			System.out.println("Response Code: " + responseCode);
 
-			if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
-				System.out.println("Phone Number NOT Registered");
-				validate = false;
-			}
+//			if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+//				System.out.println("Phone Number NOT Registered");
+//				validate = false;
+//			}
 
 			// Read the response
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -335,10 +308,14 @@ public class ExternalServices {
 
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				String jsonResponse = response.toString();
-				JSONObject jsonObject = new JSONObject(jsonResponse);
-				String token = jsonObject.get("token").toString();
-				System.out.println("Token: " + token);
-				if (token != null) {
+				JSONArray jsonArray = new JSONArray(jsonResponse);
+//				JSONObject jsonObject = new JSONObject(jsonResponse);
+//				String token = jsonObject.get("token").toString();
+//				System.out.println("Token: " + token);
+//				if (token != null) {
+//					validate = true;
+//				}
+				if (jsonArray.length()>0) {
 					validate = true;
 				}
 			}

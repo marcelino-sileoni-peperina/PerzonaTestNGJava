@@ -134,7 +134,6 @@ public class Test01_SignUp extends AndroidTestBase {
 			System.out.println(">>--- Starting Invalid OTP Test ---");
 			String invalidOtpCode = ExternalServices.invalidOTP(otpCode);
 			verifyScreen.setCodeField(invalidOtpCode);
-//			Thread.sleep(1000);
 			verifyScreen.clickOK();
 			System.out.println("<<--- End of Invalid OTP Test ---");
 		}
@@ -196,9 +195,10 @@ public class Test01_SignUp extends AndroidTestBase {
 		}
 
 		softAssert.assertAll();
-		
+
 		// Save Login Data Data to Test SignIN
-		WriteJSONToFile.save(countryCode, countryName, phoneNumber);
+		WriteJSONToFile.save(countryCode, countryName, phoneNumber, invalidPhoneNumberTest, editPhoneNumberTest,
+				wrongOTPTest, delayedOTPTest);
 
 		Thread.sleep(500);
 		System.out.println("<--- End of Connections Screen Test ---");
@@ -206,13 +206,8 @@ public class Test01_SignUp extends AndroidTestBase {
 		System.out.println("<---- SignUp Test Finished ----");
 	}
 
-//	@AfterMethod
-//	public void ScreenCaptureForFailures() {
-//		TakesScreenshot screenshot = (TakesScreenshot) driver;
-//		File source = screenshot.getScreenshotAs(OutputType.FILE);
-//		File destination = new File(System.getProperty("user.dir"));
-//	}
-
+//--------------------------------------------------------------------
+	
 	@DataProvider(name = "userData")
 	public static Iterator<Object[]> provideTestData() throws IOException {
 		List<Object[]> testDataList = new ArrayList<>();
@@ -256,7 +251,8 @@ public class Test01_SignUp extends AndroidTestBase {
 	public class WriteJSONToFile {
 
 		@SuppressWarnings("unchecked")
-		public static void save(String countryCode, String countryName, String phoneNumber) {
+		public static void save(String countryCode, String countryName, String phoneNumber, Boolean invalidPhoneNumberTest,
+				Boolean editPhoneNumberTest, Boolean wrongOTPTest, Boolean delayedOTPTest) {
 			// Create a JSON object to hold your data
 			JSONObject jsonObject = new JSONObject();
 
@@ -264,6 +260,10 @@ public class Test01_SignUp extends AndroidTestBase {
 			jsonObject.put("countryCode", countryCode);
 			jsonObject.put("countryName", countryName);
 			jsonObject.put("phoneNumber", phoneNumber);
+			jsonObject.put("invalidPhoneNumberTest", invalidPhoneNumberTest);
+			jsonObject.put("editPhoneNumberTest", editPhoneNumberTest);
+			jsonObject.put("wrongOTPTest", wrongOTPTest);
+			jsonObject.put("delayedOTPTest", delayedOTPTest);
 
 			// Create a JSON array to hold multiple objects if needed
 			JSONArray jsonArray = new JSONArray();
