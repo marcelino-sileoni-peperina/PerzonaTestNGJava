@@ -4,3 +4,4 @@ reports/
 target/
 src/test/java/resources/Perzona_latest.apk
 *.png
+*.properties

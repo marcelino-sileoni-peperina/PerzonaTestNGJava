@@ -22,6 +22,8 @@ import vaporstream.Perzona.utils.*;
 import java.io.FileWriter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONArray;
 
 public class Test01_SignUp extends AndroidTestBase {
 
@@ -44,8 +46,7 @@ public class Test01_SignUp extends AndroidTestBase {
 	public void SignUpTest(String countryCode, String countryName, String phoneNumber, String fullName, String username,
 			String aboutUser, String websiteUrl, String profileGender, boolean randomPhoneNumber,
 			boolean invalidPhoneNumberTest, boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest,
-			boolean randomUsername, boolean setAvatar, boolean setAdditionalInfo, boolean contactSyncTest)
-			throws InterruptedException, IOException {
+			boolean randomUsername, boolean setAvatar, boolean setAdditionalInfo, boolean contactSyncTest) throws Exception {
 //		System.out.println("");
 		System.out.println("\n---- SignUp Test Started ----");
 		System.out.println("Testing Paramaters:");
@@ -197,7 +198,7 @@ public class Test01_SignUp extends AndroidTestBase {
 		softAssert.assertAll();
 
 		// Save Login Data Data to Test SignIN
-		WriteJSONToFile.save(countryCode, countryName, phoneNumber, invalidPhoneNumberTest, editPhoneNumberTest,
+		WriteJSONToFile(countryCode, countryName, phoneNumber, invalidPhoneNumberTest, editPhoneNumberTest,
 				wrongOTPTest, delayedOTPTest);
 
 		Thread.sleep(500);
@@ -207,7 +208,7 @@ public class Test01_SignUp extends AndroidTestBase {
 	}
 
 //--------------------------------------------------------------------
-	
+
 	@DataProvider(name = "userData")
 	public static Iterator<Object[]> provideTestData() throws IOException {
 		List<Object[]> testDataList = new ArrayList<>();
@@ -248,10 +249,10 @@ public class Test01_SignUp extends AndroidTestBase {
 		return testDataList.iterator();
 	}
 
-	public class WriteJSONToFile {
+//	public class WriteJSONToFile {
 
 		@SuppressWarnings("unchecked")
-		public static void save(String countryCode, String countryName, String phoneNumber, Boolean invalidPhoneNumberTest,
+		public static void WriteJSONToFile (String countryCode, String countryName, String phoneNumber, Boolean invalidPhoneNumberTest,
 				Boolean editPhoneNumberTest, Boolean wrongOTPTest, Boolean delayedOTPTest) {
 			// Create a JSON object to hold your data
 			JSONObject jsonObject = new JSONObject();
@@ -268,7 +269,7 @@ public class Test01_SignUp extends AndroidTestBase {
 			// Create a JSON array to hold multiple objects if needed
 			JSONArray jsonArray = new JSONArray();
 			jsonArray.add(jsonObject);
-
+			
 			try {
 				// Define the file path and name
 				String jsonFilePath = System.getProperty("user.dir")
@@ -285,6 +286,6 @@ public class Test01_SignUp extends AndroidTestBase {
 				e.printStackTrace();
 			}
 		}
-	}
+	
 
 }

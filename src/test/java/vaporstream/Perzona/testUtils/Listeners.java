@@ -3,8 +3,6 @@ package vaporstream.Perzona.testUtils;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
-
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestContext;
@@ -14,7 +12,6 @@ import org.testng.ITestResult;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.CodeLanguage;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
@@ -30,7 +27,6 @@ public class Listeners extends AppiumUtils implements ITestListener, IHookable {
 	@Override
 	public void onTestStart(ITestResult result) {
 		test = extent.createTest(result.getMethod().getMethodName(), result.getTestContext().getName());
-		
 	}
 
 	@Override
@@ -41,7 +37,6 @@ public class Listeners extends AppiumUtils implements ITestListener, IHookable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		try {
 			test.addScreenCaptureFromPath(getScreenshotPath(result.getMethod().getMethodName(), driver),
 					result.getMethod().getMethodName() + " final screen");

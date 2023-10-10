@@ -1,6 +1,7 @@
 package vaporstream.Perzona.utils;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,16 +9,29 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 import java.util.Random;
 
-import org.json.JSONArray;
-//import org.json.JSONObject;
+import org.json.simple.JSONArray;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
 public class ExternalServices {
+//	public static String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5Njg4Nzk0MiwiZXhwIjoxNjk2ODkxNTQyLCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.QgXO0IelngVt31sJEWRP680oSBX3cwt-1_jRuQsKcXizs6HALLqmYzqakC3DBBTHekDftKsfg9xAs-LNSM1ycZhIXbHQVeY8r0uIpfRZxFTmA2D3WwPb_qUJyGfPMaNfyS8Nuqu_M2N2LV5Rwuv1jT3DqC__Y-o_ZY-ux2RHAgFWVFaxg0fpbrwNWNmYr-cZozUE9l42uX_EHLsAW8CdV4B2PQmJFTnYAVyq-XjFr8pxO_uj6WBMFCX3wRnY-DQTWs-mtgjNWt-fRn8levh1vfB-qowM31yxFtUi2MKhEKJ65TA7DPg62zxRscOM1Hi8OdTcyakI87Bv_csRLPdm-w";
+//	public static String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5Njg5NDEyMywiZXhwIjoxNjk2ODk3NzIzLCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.hZxpN2uFJxSC5ZMoZ3bpAh9pXcDMRa_y3Sg-xjOrWUBG6zlexvQQiuKMqqiawXrt6JaRb-sUEBef3b68QytvedM6C1s-zY75IyZBTKinWszRubcFNyiZukQxTHQGj3lGbOTnHTRedYCXDS5RH0EA0-f_bK-8_wu4SALfIdGg7Gx312_UCM2pOSK23OTXyFDH8oAm4JFo6PptoiVaazkhoFPYkhW3G1T4Olhoemz0coohM9G6TTiutt9OQzzJLzixYbDF3bWHSpcZ6kgACeGufKJzAP8vzSkcXaOBPzmcQzWXrwowyt6txxyb2NI8fmto0yy9oWroeKtERbLqAJAbMA";
+
+//	public ExternalServices() throws IOException {
+//		String JWT_Valido = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5Njg3NTM5MSwiZXhwIjoxNjk2ODc4OTkxLCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.MV438mlbm1kaCjMA8NOeUap3vf3vNWSdJeMOh0YrMhZDh3O4jEcurplU3-MhOWGUUB45MHI95neiLgkD6xDSggXta8VtVCryGCgM82doCBhQGNSy58kc9kgPVhonvxOCUKn2CcA55wNX9L_2ZeBm0X-k_iDb7U9SFbg-JXxrjRFnhZQmpPlD77GZUOSwU9BYpQezEfdh9545kN5egFFPwaXOZbgDvaDkJVdK9C0mtCv36TEcT2UeCxocIL6ngJNzrL5t5bBtgC7tRmsqvR0InMuzn8bYMVyOkjjjQG04tXSLxrrddtFn7Tokg1TzWCnf8epKWNQNf74Bo2c6J5mWAg";
+//		Properties prop = new Properties();
+//		FileInputStream fis = new FileInputStream(
+//				System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
+//		prop.load(fis);
+//		JWT = System.getProperty("JWT");
+//		System.out.println("JWT valido: " + JWT.equals(JWT_Valido));
+//	}
+
+//	public static String JWT = "";
 
 	public static void newOTP(String countryCode, String phoneNumber) throws InterruptedException {
 
@@ -40,7 +54,7 @@ public class ExternalServices {
 			if (responseCode == 204) {
 				System.out.println("Phone Number Registered - OTP Generated");
 			} else {
-				System.out.println("Error on Phone Number Resgistration - Response Code: " + responseCode);
+				System.out.println("Error on Phone Number Registration - Response Code: " + responseCode);
 			}
 
 			connection.disconnect();
@@ -49,11 +63,18 @@ public class ExternalServices {
 		}
 	}
 
-	public static String getOTP(String countryCode, String phoneNumber) throws InterruptedException {
+	public static String getOTP(String countryCode, String phoneNumber) throws Exception {
+		String JWT = "";
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
+		prop.load(fis);
+		JWT = System.getProperty("JWT");
+
 		System.out.println("Asking for OTP");
 		String otpCode = "";
 		String apiUrl2 = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/k6/otp";
-		String authorizationHeader = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzZTk0MzY0LTMzZDMtNDM3OC1iNDFkLWQ4YmVhMTFiMTNiNCIsImlhdCI6MTY5MTQxNzY0NiwiZXhwIjoxNjk2Njc3MjQ2LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cddSybV_pbTidUqPS5NvxtWKAJfsVAcAB042u2QLwQ1fbctOyUh5mdHL9VnDaFzGoUdbsM7ElEWm6rv3cwdHMaoXyV9BXjiY7SXLnKvcFn0FCBvEIwe8phLGWZbsccDlhwn5lfQiC56yrTfG-WtDhB7VQfqgG24HI6SohBZIA6bDNwLalw_Ux6_NKEMUikxZ1_HgJRq82NNNkFim9GUlLDUVZENZymar6b8PVx-SIDI5kRmTcuyV0iuVKMoUyXGr6GXgeQNa54Ol4ig_G_LD5SofXbXsTbux4QskAWRijXVRWVE4pigCDK0RHdjrRcnbp31FLHxG-L-htQeli87Yvg";
+		String authorizationHeader = JWT;
 
 		// Create the JSON request payload
 		JsonObject requestBody = new JsonObject();
@@ -65,68 +86,68 @@ public class ExternalServices {
 //
 //		while (intentos > 0) {
 //			System.out.println("Getting OTP. Attempt " + (4 - intentos) + " de 3.");
-			try {
-				// Create the URL object and open a connection
-				URL url = new URL(apiUrl2);
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				Thread.sleep(1000);
-				// Set up the HTTP request
-				connection.setRequestMethod("POST");
-				connection.setRequestProperty("Content-Type", "application/json");
-				connection.setRequestProperty("Accept", "application/json");
-				connection.setRequestProperty("Authorization", authorizationHeader);
-				connection.setDoOutput(true);
+		try {
+			// Create the URL object and open a connection
+			URL url = new URL(apiUrl2);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			Thread.sleep(1000);
+			// Set up the HTTP request
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty("Accept", "application/json");
+			connection.setRequestProperty("Authorization", authorizationHeader);
+			connection.setDoOutput(true);
 
-				// Write the JSON payload to the request body
-				try (OutputStream os = connection.getOutputStream()) {
-					byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-					os.write(input, 0, input.length);
-				}
+			// Write the JSON payload to the request body
+			try (OutputStream os = connection.getOutputStream()) {
+				byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+				os.write(input, 0, input.length);
+			}
 
-				// Get the HTTP response code
-				int responseCode = connection.getResponseCode();
+			// Get the HTTP response code
+			int responseCode = connection.getResponseCode();
 //				Thread.sleep(5000);
 
-				if (responseCode == HttpURLConnection.HTTP_OK) {
+			if (responseCode == HttpURLConnection.HTTP_OK) {
 //					System.out.println("HTTP Response Code Obtained: " + responseCode);
-					// Read the JSON response from the input stream
-					InputStream responseStream = connection.getInputStream();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
-					StringBuilder responseBuilder = new StringBuilder();
-					String line;
+				// Read the JSON response from the input stream
+				InputStream responseStream = connection.getInputStream();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
+				StringBuilder responseBuilder = new StringBuilder();
+				String line;
 
-					while ((line = reader.readLine()) != null) {
-						responseBuilder.append(line);
-					}
-					// Parse the JSON response
-					String jsonResponse = responseBuilder.toString();
-					JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
-					// Extract the value of the "code" key
-					otpCode = jsonObject.get("code").getAsString();
-					// Print the OTP code
-					System.out.println("OTP Code Obtained: " + otpCode);
-				} else {
-					System.out.println("Error Getting OTP from OTP service - Response Code: " + responseCode);
+				while ((line = reader.readLine()) != null) {
+					responseBuilder.append(line);
 				}
-//				intentos = 0;
-				// Disconnect the connection
-				connection.disconnect();
-			} catch (Exception e) {
-				System.out.println("Error getting OTP: " + e.getMessage());
-//				intentos--;
-				e.printStackTrace();
+				// Parse the JSON response
+				String jsonResponse = responseBuilder.toString();
+				JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
+				// Extract the value of the "code" key
+				otpCode = jsonObject.get("code").getAsString();
+				// Print the OTP code
+				System.out.println("OTP Code Obtained: " + otpCode);
+			} else {
+				System.out.println("Error Getting OTP from OTP service - Response Code: " + responseCode);
 			}
+//				intentos = 0;
+			// Disconnect the connection
+			connection.disconnect();
+		} catch (Exception e) {
+			System.out.println("Error getting OTP: " + e.getMessage());
+//				intentos--;
+			e.printStackTrace();
+		}
 
 //		}
 
 		return otpCode;
 	}
 
+	// 09/10/2023 getToken its not been used. New Timeout: 1 year
 	public static String getToken(String countryCode, String phoneNumber, String code) throws InterruptedException {
-		System.out.println("Asking for TOKEN");
+		System.out.println("Asking for JASON WEB TOKEN");
 		String token = "";
 		String apiUrl = "https://api-personas-t.vaporstream.com/auth/login-refresh/phone";
-//		String authorizationHeader = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzZTk0MzY0LTMzZDMtNDM3OC1iNDFkLWQ4YmVhMTFiMTNiNCIsImlhdCI6MTY5MTQxNzY0NiwiZXhwIjoxNjk2Njc3MjQ2LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cddSybV_pbTidUqPS5NvxtWKAJfsVAcAB042u2QLwQ1fbctOyUh5mdHL9VnDaFzGoUdbsM7ElEWm6rv3cwdHMaoXyV9BXjiY7SXLnKvcFn0FCBvEIwe8phLGWZbsccDlhwn5lfQiC56yrTfG-WtDhB7VQfqgG24HI6SohBZIA6bDNwLalw_Ux6_NKEMUikxZ1_HgJRq82NNNkFim9GUlLDUVZENZymar6b8PVx-SIDI5kRmTcuyV0iuVKMoUyXGr6GXgeQNa54Ol4ig_G_LD5SofXbXsTbux4QskAWRijXVRWVE4pigCDK0RHdjrRcnbp31FLHxG-L-htQeli87Yvg";
 
 		// Create the JSON request payload
 		JsonObject requestBody = new JsonObject();
@@ -135,51 +156,51 @@ public class ExternalServices {
 		// Convert the JSON payload to a string
 		String jsonInputString = requestBody.toString();
 
-			try {
-				// Create the URL object and open a connection
-				URL url = new URL(apiUrl);
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				Thread.sleep(2000);
-				// Set up the HTTP request
-				connection.setRequestMethod("POST");
-				connection.setRequestProperty("Content-Type", "application/json");
-				connection.setRequestProperty("Accept", "application/json");
-				connection.setDoOutput(true);
-				// Write the JSON payload to the request body
-				try (OutputStream os = connection.getOutputStream()) {
-					byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-					os.write(input, 0, input.length);
-				}
-				// Get the HTTP response code
-				int responseCode = connection.getResponseCode();
-				if (responseCode == HttpURLConnection.HTTP_OK) {
-//					System.out.println("HTTP Response Code Obtained: " + responseCode);
-					// Read the JSON response from the input stream
-					InputStream responseStream = connection.getInputStream();
-					BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
-					StringBuilder responseBuilder = new StringBuilder();
-					String line;
-					while ((line = reader.readLine()) != null) {
-						responseBuilder.append(line);
-					}
-					// Parse the JSON response
-					String jsonResponse = responseBuilder.toString();
-					JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
-					// Extract the value of the "code" key
-					token = jsonObject.get("token").getAsString();
-					// Print the OTP code
-					System.out.println("  TOKEN Obtained: " + token);
-				} else {
-					System.out.println("  Error Getting TOKEN - Response Code: " + responseCode);
-				}
-
-				// Disconnect the connection
-				connection.disconnect();
-			} catch (Exception e) {
-				System.out.println("  Error getting TOKEN: " + e.getMessage());
-
-				e.printStackTrace();
+		try {
+			// Create the URL object and open a connection
+			URL url = new URL(apiUrl);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			Thread.sleep(2000);
+			// Set up the HTTP request
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty("Accept", "application/json");
+			connection.setDoOutput(true);
+			// Write the JSON payload to the request body
+			try (OutputStream os = connection.getOutputStream()) {
+				byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+				os.write(input, 0, input.length);
 			}
+			// Get the HTTP response code
+			int responseCode = connection.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+//					System.out.println("HTTP Response Code Obtained: " + responseCode);
+				// Read the JSON response from the input stream
+				InputStream responseStream = connection.getInputStream();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(responseStream));
+				StringBuilder responseBuilder = new StringBuilder();
+				String line;
+				while ((line = reader.readLine()) != null) {
+					responseBuilder.append(line);
+				}
+				// Parse the JSON response
+				String jsonResponse = responseBuilder.toString();
+				JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
+				// Extract the value of the "code" key
+				token = jsonObject.get("token").getAsString();
+				// Print the OTP code
+				System.out.println("  TOKEN Obtained: " + token);
+			} else {
+				System.out.println("  Error Getting TOKEN - Response Code: " + responseCode);
+			}
+
+			// Disconnect the connection
+			connection.disconnect();
+		} catch (Exception e) {
+			System.out.println("  Error getting TOKEN: " + e.getMessage());
+
+			e.printStackTrace();
+		}
 //		}
 		return token;
 	}
@@ -217,7 +238,12 @@ public class ExternalServices {
 	}
 
 	public static void deletePhoneNumberFromDB(String countryCode, String phoneNumber) throws IOException {
-
+		String JWT = "";
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
+		prop.load(fis);
+		JWT = System.getProperty("JWT");
 		try {
 			// Set the request URL
 			String url = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/k6/phonenumber/+" + countryCode
@@ -230,7 +256,7 @@ public class ExternalServices {
 			connection.setRequestMethod("DELETE");
 
 			// Set the request headers
-			String authorizationHeader = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiOTU3YjVhLTc1MTAtNDRhZi04YWZhLWZiZTM4YTc4NDEzYyIsImlhdCI6MTY5NDA5MjU1MiwiZXhwIjozMzg4MTg4NzA0LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.K_ahYyTQh5pSBmiV6QNlZMht16PdG1BtiY6f68fVgXDlYGWVxfP4u1hpBp392dLeA7PYyOa-q8HuNc5RFbdCh96L4HGnWThVp1ct_aD3xcHfQJyLnxd5fDdWzSCkIhJjaXBqUoRP-I8tHgMfDtgGtc3cYB4LB8Yl7xv1UJxjrqxGMCoSPrfE1mUSQwoQ8MzlPFKs3c5dw4SVnHDk2G29I2sl7CdwrXLiYRUjkw5oEmYhXMht3rQIUu_nW0lz6u-ZmfcV4co0b71kYpz3kTShNGBU-kp3OT98umQnScU62cjNcX5g5xzjlC8I9PeHQ5RwSQhvvLJwhh3ZvWvIylVSyA";
+			String authorizationHeader = JWT;
 			connection.setRequestProperty("Authorization", authorizationHeader);
 			connection.setRequestProperty("Accept", "application/json");
 			connection.setRequestProperty("Content-Type", "application/json");
@@ -261,13 +287,16 @@ public class ExternalServices {
 		}
 	}
 
-	public static boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws InterruptedException {
-		System.out.println("Starting process to obtain new TOKEN");
-		newOTP(countryCode,phoneNumber);
-		String otp = getOTP(countryCode,phoneNumber);
-		Thread.sleep(10000);
-		String jwt = getToken(countryCode,  phoneNumber, otp);
+	public static boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws Exception {
+		String JWT = "";
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
+		prop.load(fis);
+		JWT = System.getProperty("JWT");
 		
+		System.out.println("Verifying previous Sign Up");
+
 		boolean validate = false;
 		try {
 			// URL for the GET request
@@ -275,7 +304,6 @@ public class ExternalServices {
 //					+ phoneNumber;
 			String url = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/get-profiles/+" + countryCode
 					+ phoneNumber;
-			System.out.println("URL: " + url);
 
 			// Create a URL object
 			URL obj = new URL(url);
@@ -284,7 +312,7 @@ public class ExternalServices {
 			// Set the HTTP request method to GET
 			connection.setRequestMethod("GET");
 			// Set request headers
-			String AuthorizationHeader = jwt;
+			String AuthorizationHeader = JWT;
 			connection.setRequestProperty("Authorization", AuthorizationHeader);
 			connection.setRequestProperty("Accept", "application/json");
 			connection.setRequestProperty("Content-Type", "application/json");
@@ -292,11 +320,10 @@ public class ExternalServices {
 			int responseCode = connection.getResponseCode();
 			System.out.println("Response Code: " + responseCode);
 
-//			if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
-//				System.out.println("Phone Number NOT Registered");
-//				validate = false;
-//			}
-
+			if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+				System.out.println("Phone Number NOT Registered");
+				validate = false;
+			}
 			// Read the response
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String inputLine;
@@ -305,26 +332,18 @@ public class ExternalServices {
 				response.append(inputLine);
 			}
 			in.close();
-
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				String jsonResponse = response.toString();
-				JSONArray jsonArray = new JSONArray(jsonResponse);
-//				JSONObject jsonObject = new JSONObject(jsonResponse);
-//				String token = jsonObject.get("token").toString();
-//				System.out.println("Token: " + token);
-//				if (token != null) {
+//				JSONArray jsonArray = new JSONArray(jsonResponse);
+//				if (jsonArray.length() > 0) { // If the response has no elements means the phone number is not registered
 //					validate = true;
 //				}
-				if (jsonArray.length()>0) {
-					validate = true;
-				}
 			}
-
 			connection.disconnect();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("Previous Sign Up: " + validate);
 		return validate;
 	}
 

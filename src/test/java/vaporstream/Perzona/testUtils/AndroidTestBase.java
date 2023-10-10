@@ -6,7 +6,6 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -26,15 +25,17 @@ public class AndroidTestBase extends AppiumUtils{
 		// System.getProperty(ipAddress) is not null if we introduce its value from command line:
 		// mvn test -PTESTIDENTIFIER -DipAddress=127.0.0.1
 		// This way we can override the default properties defined in data.properties file
+		@SuppressWarnings("unused")
 		String ipAddress = System.getProperty("ipAddress")!=null? System.getProperty("ipAddress") : prop.getProperty("ipAddress");
 		//		String ipAddress = prop.getProperty("ipAddress");
 		// mvn test -PTESTIDENTIFIER -Dport=4723
+		@SuppressWarnings("unused")
 		String port = System.getProperty("port")!=null? System.getProperty("port") : prop.getProperty("port");
 //		String port = prop.getProperty("port");
-		//Start Appium Server - Only if NOT started from outside this code
+		// Start Appium Server - Only if NOT started from outside this code
 //		service = startAppiumServer(ipAddress,Integer.parseInt(port));
 //		service = startAppiumServer("127.0.0.1",4723);
-		//Set Up Android Driver
+		// Set Up Android Driver
 		UiAutomator2Options options = new UiAutomator2Options();
 		String apk = prop.getProperty("apk");
 		options.setApp(apk);

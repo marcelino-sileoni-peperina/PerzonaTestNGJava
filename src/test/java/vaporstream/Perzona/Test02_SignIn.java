@@ -1,7 +1,6 @@
 package vaporstream.Perzona;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,16 +16,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import io.appium.java_client.android.Activity;
 import vaporstream.Perzona.pageObjects.android.*;
 import vaporstream.Perzona.testUtils.AndroidTestBase;
 import vaporstream.Perzona.utils.*;
 
-import java.io.FileWriter;
-import java.io.IOException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 public class Test02_SignIn extends AndroidTestBase {
 
@@ -48,7 +42,7 @@ public class Test02_SignIn extends AndroidTestBase {
 	@Test(dataProvider = "userData", testName = "Sign-In Test")
 	public void SignInTest(String phoneNumber, String countryCode, String countryName, boolean invalidPhoneNumberTest,
 			boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest)
-			throws MalformedURLException, InterruptedException {
+			throws Exception {
 
 		System.out.println("\n---- SignIn Test Started ----");
 		System.out.println("Phone Number: +" + countryCode + phoneNumber);
@@ -64,9 +58,9 @@ public class Test02_SignIn extends AndroidTestBase {
 
 		// Validate Pre-existing User
 		System.out.println("\nValidating Previous SignUp of Phone Number Provided.");
-//		boolean signedUp = false;
-//		signedUp = ExternalServices.validatePreviousSignUp(countryCode, phoneNumber);
-		boolean signedUp = true; // Puesto porque no funciona la verificacion de SignUp porque no se puede
+		boolean signedUp = false;
+		signedUp = ExternalServices.validatePreviousSignUp(countryCode, phoneNumber);
+//		boolean signedUp = true; // Puesto porque no funciona la verificacion de SignUp porque no se puede
 															// obtener el token
 		if (signedUp) {
 			SoftAssert softAssert = new SoftAssert();

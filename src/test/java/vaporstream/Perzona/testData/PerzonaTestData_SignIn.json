@@ -1,11 +1,1 @@
-[
-	{
-		"phoneNumber": "2603923391",
-		"countryCode": "1",
-		"wrongOTPTest": true,
-		"delayedOTPTest": false,
-		"editPhoneNumberTest": true,
-		"countryName": "United States",
-		"invalidPhoneNumberTest": false
-	}
-]
+[{"phoneNumber":"2603923391","countryCode":"1","wrongOTPTest":true,"delayedOTPTest":false,"editPhoneNumberTest":true,"countryName":"United States","invalidPhoneNumberTest":false}]
