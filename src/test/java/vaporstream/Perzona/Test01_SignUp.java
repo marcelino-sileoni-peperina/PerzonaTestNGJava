@@ -141,7 +141,7 @@ public class Test01_SignUp extends AndroidTestBase {
 		// Delayed OTP TEST
 		if (delayedOTPTest) {
 			System.out.println(">>--- Starting Timeout OTP Test ---");
-			Thread.sleep(55000); // ESTA SALTANDO POR TIMEOUT TODO EL SCRIPT - REVISAR !!!
+			Thread.sleep(55000); // ESTA SALTANDO POR TIMEOUT  - REVISAR !!!
 //			verifyScreen.setCodeField(otpCode); // ESTE DEBERIA FALLAR PERO AL 19/09/23 NO FALLA PORQUE LO HAN CONFIGURADO ASI EN LA APP
 //			verifyScreen.clickOK(); // SE COMENTA HASTA QUE SE RESUELVA LO COMENTADO ARRIBA
 			verifyScreen.requestNewOTP();

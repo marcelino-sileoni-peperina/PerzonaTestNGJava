@@ -28,13 +28,12 @@ public class AndroidTestBase extends AppiumUtils{
 		@SuppressWarnings("unused")
 		String ipAddress = System.getProperty("ipAddress")!=null? System.getProperty("ipAddress") : prop.getProperty("ipAddress");
 		//		String ipAddress = prop.getProperty("ipAddress");
-		// mvn test -PTESTIDENTIFIER -Dport=4723
+		// mvn test -PTestIdentifier -Dport=4723
 		@SuppressWarnings("unused")
 		String port = System.getProperty("port")!=null? System.getProperty("port") : prop.getProperty("port");
-//		String port = prop.getProperty("port");
 		// Start Appium Server - Only if NOT started from outside this code
-//		service = startAppiumServer(ipAddress,Integer.parseInt(port));
-//		service = startAppiumServer("127.0.0.1",4723);
+		//		service = startAppiumServer(ipAddress,Integer.parseInt(port));
+		//		service = startAppiumServer("127.0.0.1",4723);
 		// Set Up Android Driver
 		UiAutomator2Options options = new UiAutomator2Options();
 		String apk = prop.getProperty("apk");
@@ -45,23 +44,23 @@ public class AndroidTestBase extends AppiumUtils{
 		options.setPlatformName(PlatformName);
 		String platformVersion = prop.getProperty("platformVersion");
 		options.setCapability("platformVersion", platformVersion);
-//		String noReset = prop.getProperty("noReset");
-//		options.setCapability("noReset", noReset);
-//		String fullReset = prop.getProperty("fullReset");
-//		options.setCapability("fullReset", fullReset);
-//		driver = new AndroidDriver(service.getUrl(), options);
+		//		String noReset = prop.getProperty("noReset");
+		//		options.setCapability("noReset", noReset);
+		//		String fullReset = prop.getProperty("fullReset");
+		//		options.setCapability("fullReset", fullReset);
+		//		driver = new AndroidDriver(service.getUrl(), options);
 		driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
 		// Fijamos un timeout para la busqueda de elementos de 5 segundos:
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); 
-//		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90));
-//		driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(90));
+		//		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90));
+		//		driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(90));
 	}
 	
 
 	@AfterClass (alwaysRun = true)
 	public void tearDownAndroidDriver() {
 		//Cerramos la app en el celular:
-//		driver.resetApp();
+		//		driver.resetApp();
 		driver.quit(); 
 
 	}
