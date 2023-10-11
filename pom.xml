@@ -20,11 +20,10 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
-			<version>8.5.1</version>
+			<version>8.6.0</version>
 		</dependency>
 		<!--
 		https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support -->
@@ -33,21 +32,18 @@
 			<artifactId>selenium-support</artifactId>
 			<version>4.11.0</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.testng/testng 7.8.0 -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>7.8.0</version>
 		</dependency>
-
 		<!--https://mvnrepository.com/artifact/com.googlecode.libphonenumber/libphonenumber -->
 		<dependency>
 			<groupId>com.googlecode.libphonenumber</groupId>
 			<artifactId>libphonenumber</artifactId>
 			<version>8.13.18</version>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -103,8 +99,7 @@
 	<profiles>
 		<profile>
 			<!-- In order tu run the test from command line: mvn test -PSignUp -->
-			<!-- 03/10/23: today fails on saving the json file to use on the
-			SignIn script -->
+			<!-- 03/10/23: today fails on saving the json file to use on the SignIn script -->
 			<id>SignUp</id>
 			<build>
 				<pluginManagement>
@@ -125,8 +120,7 @@
 			</build>
 		</profile>
 		<profile>
-			<!-- In order tu run the test from command line: mvn test
-			-PSignUpSignIn -->
+			<!-- In order tu run the test from command line: mvn test -PSignUpSignIn -->
 			<id>SignUpSignIn</id>
 			<build>
 				<pluginManagement>
@@ -150,8 +144,7 @@
 
 	<build>
 		<pluginManagement>
-			<!-- lock down plugins versions to avoid using Maven defaults (may
-			be moved to parent pom) -->
+			<!-- lock down plugins versions to avoid using Maven defaults (maybe moved to parent pom) -->
 			<plugins>
 				<!-- clean lifecycle, see
 				https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
