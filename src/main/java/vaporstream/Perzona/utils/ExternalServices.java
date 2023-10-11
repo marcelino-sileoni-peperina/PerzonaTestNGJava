@@ -13,8 +13,7 @@ import java.util.Random;
 
 public class ExternalServices {
 	private static String JWT;
-	
-	public ExternalServices()  {
+  static {
 		Properties prop = new Properties();
     FileInputStream fis = null;
     try {
@@ -33,7 +32,7 @@ public class ExternalServices {
     System.out.println("JWT length obtained: " + JWT.length());
   }
   
-  public void newOTP(String countryCode, String phoneNumber) throws InterruptedException {
+  public static void newOTP(String countryCode, String phoneNumber) throws InterruptedException {
     
     String apiUrl1 = "https://api-personas-t.vaporstream.com/auth/login-tickets/phone";
     String jsonInputString = "{\"phoneNumber\": \"+" + countryCode + phoneNumber + "\"}";
@@ -63,7 +62,7 @@ public class ExternalServices {
     }
   }
   
-  public String getOTP(String countryCode, String phoneNumber) throws Exception {
+  public static String getOTP(String countryCode, String phoneNumber) throws Exception {
 /*    String JWT = "";
 
     Properties props = new Properties();
@@ -147,7 +146,7 @@ public class ExternalServices {
   }
   
   // 09/10/2023 getToken its not been used. New Timeout: 1 year
-  public  String getToken(String countryCode, String phoneNumber, String code) throws InterruptedException {
+  public static String getToken(String countryCode, String phoneNumber, String code) throws InterruptedException {
     System.out.println("Asking for JASON WEB TOKEN");
     String token = "";
     String apiUrl = "https://api-personas-t.vaporstream.com/auth/login-refresh/phone";
@@ -208,7 +207,7 @@ public class ExternalServices {
     return token;
   }
   
-  public String invalidOTP(String validOTPCode) throws InterruptedException {
+  public static String invalidOTP(String validOTPCode) throws InterruptedException {
     System.out.println("Asking for Invalid OTP");
     String invalidOTPCode = validOTPCode;
     char[] charArray = validOTPCode.toCharArray();
@@ -240,7 +239,7 @@ public class ExternalServices {
     return (char) randomAsciiValue;
   }
   
-  public  void deletePhoneNumberFromDB(String countryCode, String phoneNumber) throws IOException {
+  public static void deletePhoneNumberFromDB(String countryCode, String phoneNumber) throws IOException {
     String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5NjkzMzQwOCwiZXhwIjoxNzI4NDY5NDA4LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cMULy0QKsZjZHbQ0mhZx8D_N-m1Av1h3hkrgOGHCm4hXbC370J8jXUZn3E2vpJnCVufiXBCOWFIGogczCpo88xkUyJnJVwmZXSza_KUTxD0SOKvlakD72SYhIqcfK2JEljY0wmbinfGVWhIx8titx8SDQk62lJDNNFxIndeig_s5XBcZbjC5j4yUgM0KxWbBXsJ8W2HQfnH1VBqeMH8WhYwkrFMN443epctTiy2lnrNmNoMmx2AHK5rYJW7QD8wAZG_8-ON9RJuFMMiQC7cJIPNB49OnYiA0TKH2IoGkTWNdwC9yG4ztxmm3MwdBEmtALTAp4tXpfpondRSbaejpbg";
 /*
     Properties prop = new Properties();
@@ -292,7 +291,7 @@ public class ExternalServices {
     }
   }
   
-  public boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws Exception {
+  public static boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws Exception {
     String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5NjkzMzQwOCwiZXhwIjoxNzI4NDY5NDA4LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cMULy0QKsZjZHbQ0mhZx8D_N-m1Av1h3hkrgOGHCm4hXbC370J8jXUZn3E2vpJnCVufiXBCOWFIGogczCpo88xkUyJnJVwmZXSza_KUTxD0SOKvlakD72SYhIqcfK2JEljY0wmbinfGVWhIx8titx8SDQk62lJDNNFxIndeig_s5XBcZbjC5j4yUgM0KxWbBXsJ8W2HQfnH1VBqeMH8WhYwkrFMN443epctTiy2lnrNmNoMmx2AHK5rYJW7QD8wAZG_8-ON9RJuFMMiQC7cJIPNB49OnYiA0TKH2IoGkTWNdwC9yG4ztxmm3MwdBEmtALTAp4tXpfpondRSbaejpbg";
 /*
     Properties prop = new Properties();
