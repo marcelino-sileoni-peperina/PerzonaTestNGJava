@@ -8,25 +8,32 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 import java.util.Random;
 
 public class ExternalServices {
-//	public static String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5Njg4Nzk0MiwiZXhwIjoxNjk2ODkxNTQyLCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.QgXO0IelngVt31sJEWRP680oSBX3cwt-1_jRuQsKcXizs6HALLqmYzqakC3DBBTHekDftKsfg9xAs-LNSM1ycZhIXbHQVeY8r0uIpfRZxFTmA2D3WwPb_qUJyGfPMaNfyS8Nuqu_M2N2LV5Rwuv1jT3DqC__Y-o_ZY-ux2RHAgFWVFaxg0fpbrwNWNmYr-cZozUE9l42uX_EHLsAW8CdV4B2PQmJFTnYAVyq-XjFr8pxO_uj6WBMFCX3wRnY-DQTWs-mtgjNWt-fRn8levh1vfB-qowM31yxFtUi2MKhEKJ65TA7DPg62zxRscOM1Hi8OdTcyakI87Bv_csRLPdm-w";
-//	public static String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5Njg5NDEyMywiZXhwIjoxNjk2ODk3NzIzLCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.hZxpN2uFJxSC5ZMoZ3bpAh9pXcDMRa_y3Sg-xjOrWUBG6zlexvQQiuKMqqiawXrt6JaRb-sUEBef3b68QytvedM6C1s-zY75IyZBTKinWszRubcFNyiZukQxTHQGj3lGbOTnHTRedYCXDS5RH0EA0-f_bK-8_wu4SALfIdGg7Gx312_UCM2pOSK23OTXyFDH8oAm4JFo6PptoiVaazkhoFPYkhW3G1T4Olhoemz0coohM9G6TTiutt9OQzzJLzixYbDF3bWHSpcZ6kgACeGufKJzAP8vzSkcXaOBPzmcQzWXrwowyt6txxyb2NI8fmto0yy9oWroeKtERbLqAJAbMA";
-
-//	public ExternalServices() throws IOException {
-//		String JWT_Valido = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5Njg3NTM5MSwiZXhwIjoxNjk2ODc4OTkxLCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.MV438mlbm1kaCjMA8NOeUap3vf3vNWSdJeMOh0YrMhZDh3O4jEcurplU3-MhOWGUUB45MHI95neiLgkD6xDSggXta8VtVCryGCgM82doCBhQGNSy58kc9kgPVhonvxOCUKn2CcA55wNX9L_2ZeBm0X-k_iDb7U9SFbg-JXxrjRFnhZQmpPlD77GZUOSwU9BYpQezEfdh9545kN5egFFPwaXOZbgDvaDkJVdK9C0mtCv36TEcT2UeCxocIL6ngJNzrL5t5bBtgC7tRmsqvR0InMuzn8bYMVyOkjjjQG04tXSLxrrddtFn7Tokg1TzWCnf8epKWNQNf74Bo2c6J5mWAg";
-//		Properties prop = new Properties();
-//		FileInputStream fis = new FileInputStream(
-//				System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
-//		prop.load(fis);
-//		JWT = System.getProperty("JWT");
-//		System.out.println("JWT valido: " + JWT.equals(JWT_Valido));
-//	}
-
-//	public static String JWT = "";
+	private static String JWT;
+	
+	public ExternalServices()  {
+		Properties prop = new Properties();
+    FileInputStream fis = null;
+    try {
+      fis = new FileInputStream(
+          System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+    try {
+      prop.load(fis);
+      fis.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    JWT = prop.getProperty("jwtToken");
+    System.out.println("JWT length obtained: " + JWT.length());
+  }
   
-  public static void newOTP(String countryCode, String phoneNumber) throws InterruptedException {
+  public void newOTP(String countryCode, String phoneNumber) throws InterruptedException {
     
     String apiUrl1 = "https://api-personas-t.vaporstream.com/auth/login-tickets/phone";
     String jsonInputString = "{\"phoneNumber\": \"+" + countryCode + phoneNumber + "\"}";
@@ -56,18 +63,16 @@ public class ExternalServices {
     }
   }
   
-  public static String getOTP(String countryCode, String phoneNumber) throws Exception {
-    String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5NjkzMzQwOCwiZXhwIjoxNzI4NDY5NDA4LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cMULy0QKsZjZHbQ0mhZx8D_N-m1Av1h3hkrgOGHCm4hXbC370J8jXUZn3E2vpJnCVufiXBCOWFIGogczCpo88xkUyJnJVwmZXSza_KUTxD0SOKvlakD72SYhIqcfK2JEljY0wmbinfGVWhIx8titx8SDQk62lJDNNFxIndeig_s5XBcZbjC5j4yUgM0KxWbBXsJ8W2HQfnH1VBqeMH8WhYwkrFMN443epctTiy2lnrNmNoMmx2AHK5rYJW7QD8wAZG_8-ON9RJuFMMiQC7cJIPNB49OnYiA0TKH2IoGkTWNdwC9yG4ztxmm3MwdBEmtALTAp4tXpfpondRSbaejpbg";
+  public String getOTP(String countryCode, String phoneNumber) throws Exception {
+/*    String JWT = "";
 
-/*
-    Properties prop = new Properties();
+    Properties props = new Properties();
     FileInputStream fis = new FileInputStream(
-            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
-    prop.load(fis);
-
-    JWT = System.getProperty("JWT");
-*/
+            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
+    props.load(fis);
+    JWT = props.getProperty("jwtToken");
     System.out.println("JWT obtained: " + JWT);
+    fis.close();*/
     
     System.out.println("Asking for OTP");
     String otpCode = "";
@@ -142,7 +147,7 @@ public class ExternalServices {
   }
   
   // 09/10/2023 getToken its not been used. New Timeout: 1 year
-  public static String getToken(String countryCode, String phoneNumber, String code) throws InterruptedException {
+  public  String getToken(String countryCode, String phoneNumber, String code) throws InterruptedException {
     System.out.println("Asking for JASON WEB TOKEN");
     String token = "";
     String apiUrl = "https://api-personas-t.vaporstream.com/auth/login-refresh/phone";
@@ -203,7 +208,7 @@ public class ExternalServices {
     return token;
   }
   
-  public static String invalidOTP(String validOTPCode) throws InterruptedException {
+  public String invalidOTP(String validOTPCode) throws InterruptedException {
     System.out.println("Asking for Invalid OTP");
     String invalidOTPCode = validOTPCode;
     char[] charArray = validOTPCode.toCharArray();
@@ -235,12 +240,12 @@ public class ExternalServices {
     return (char) randomAsciiValue;
   }
   
-  public static void deletePhoneNumberFromDB(String countryCode, String phoneNumber) throws IOException {
+  public  void deletePhoneNumberFromDB(String countryCode, String phoneNumber) throws IOException {
     String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5NjkzMzQwOCwiZXhwIjoxNzI4NDY5NDA4LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cMULy0QKsZjZHbQ0mhZx8D_N-m1Av1h3hkrgOGHCm4hXbC370J8jXUZn3E2vpJnCVufiXBCOWFIGogczCpo88xkUyJnJVwmZXSza_KUTxD0SOKvlakD72SYhIqcfK2JEljY0wmbinfGVWhIx8titx8SDQk62lJDNNFxIndeig_s5XBcZbjC5j4yUgM0KxWbBXsJ8W2HQfnH1VBqeMH8WhYwkrFMN443epctTiy2lnrNmNoMmx2AHK5rYJW7QD8wAZG_8-ON9RJuFMMiQC7cJIPNB49OnYiA0TKH2IoGkTWNdwC9yG4ztxmm3MwdBEmtALTAp4tXpfpondRSbaejpbg";
 /*
     Properties prop = new Properties();
     FileInputStream fis = new FileInputStream(
-            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
+            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
     prop.load(fis);
     JWT = System.getProperty("JWT");
 */
@@ -287,12 +292,12 @@ public class ExternalServices {
     }
   }
   
-  public static boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws Exception {
+  public boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws Exception {
     String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5NjkzMzQwOCwiZXhwIjoxNzI4NDY5NDA4LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cMULy0QKsZjZHbQ0mhZx8D_N-m1Av1h3hkrgOGHCm4hXbC370J8jXUZn3E2vpJnCVufiXBCOWFIGogczCpo88xkUyJnJVwmZXSza_KUTxD0SOKvlakD72SYhIqcfK2JEljY0wmbinfGVWhIx8titx8SDQk62lJDNNFxIndeig_s5XBcZbjC5j4yUgM0KxWbBXsJ8W2HQfnH1VBqeMH8WhYwkrFMN443epctTiy2lnrNmNoMmx2AHK5rYJW7QD8wAZG_8-ON9RJuFMMiQC7cJIPNB49OnYiA0TKH2IoGkTWNdwC9yG4ztxmm3MwdBEmtALTAp4tXpfpondRSbaejpbg";
 /*
     Properties prop = new Properties();
     FileInputStream fis = new FileInputStream(
-            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\es.properties");
+            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
     prop.load(fis);
     JWT = System.getProperty("JWT");
 */
