@@ -9,7 +9,7 @@
 		"fullName": "Aut Test USA 01",
 		"randomUsername": true,
 		"username": "AutTestUSA001",
-		"wrongOTPTest": true,
+		"wrongOTPTest": false,
 		"delayedOTPTest": false,
 		"setAvatar": false,
 		"profileGender": "female",

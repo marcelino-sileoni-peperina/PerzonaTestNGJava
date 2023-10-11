@@ -1,27 +1,26 @@
 package vaporstream.Perzona;
 
-import java.io.IOException;
-import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import vaporstream.Perzona.pageObjects.android.*;
 import vaporstream.Perzona.testUtils.AndroidTestBase;
-import vaporstream.Perzona.utils.*;
+import vaporstream.Perzona.utils.ExternalServices;
+import vaporstream.Perzona.utils.PhoneNumberGenerator;
+import vaporstream.Perzona.utils.User;
 
+import java.io.FileReader;
 import java.io.FileWriter;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 //import org.json.JSONArray;
 //import org.json.JSONArray;
 

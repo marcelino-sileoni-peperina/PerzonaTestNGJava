@@ -1,26 +1,25 @@
 package vaporstream.Perzona;
 
-import java.io.IOException;
-import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import vaporstream.Perzona.pageObjects.android.*;
+import vaporstream.Perzona.pageObjects.android.OnBoardingScreen;
+import vaporstream.Perzona.pageObjects.android.SignUpScreen;
+import vaporstream.Perzona.pageObjects.android.VerifyScreen;
 import vaporstream.Perzona.testUtils.AndroidTestBase;
-import vaporstream.Perzona.utils.*;
+import vaporstream.Perzona.utils.ExternalServices;
+import vaporstream.Perzona.utils.PhoneNumberGenerator;
 
-
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Test02_SignIn extends AndroidTestBase {
 
@@ -131,10 +130,10 @@ public class Test02_SignIn extends AndroidTestBase {
 			// Normal OTP Test
 			verifyScreen.setCodeField(otpCode);
 			System.out.println("<--- End of OTP Test ---");
-			System.out.println("\n--- SignIn Test Finished Succesfully ---");
+			System.out.println("\n--- SignIn Test Finished  ---");
 		} else {
 			System.out.println("\n--- Not possible to execute SignIn Test. User never SignedUp ---");
-			Assert.assertTrue(signedUp, "Not possible to execute SignIn Test. User never SignedUp");
+			Assert.assertTrue(false, "Not possible to execute SignIn Test. User never SignedUp");
 		}
 	}
 
