@@ -55,12 +55,10 @@ public class Test02_SignIn extends AndroidTestBase {
 		System.out.println("\tTest OTP timeout: " + (delayedOTPTest == true ? "Yes" : "No"));
 		System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 		
-		ExternalServices externalServices = new ExternalServices();
-		
 		// Validate Pre-existing User
 		System.out.println("\nValidating Previous SignUp of Phone Number Provided.");
 		boolean signedUp = false;
-		signedUp = externalServices.validatePreviousSignUp(countryCode, phoneNumber);
+		signedUp = ExternalServices.validatePreviousSignUp(countryCode, phoneNumber);
 //		boolean signedUp = true; // Puesto porque no funciona la verificacion de SignUp porque no se puede
 															// obtener el token
 		if (signedUp) {
@@ -106,14 +104,14 @@ public class Test02_SignIn extends AndroidTestBase {
 
 			System.out.println(">--- Start of OTP Test ---");
 			// Get OTP Code
-			String otpCode = externalServices.getOTP(countryCode, phoneNumber);
+			String otpCode = ExternalServices.getOTP(countryCode, phoneNumber);
 
 			// Verify Screen (OTP Validation)
 			VerifyScreen verifyScreen = new VerifyScreen(driver);
 			// Wrong OTP TEST
 			if (wrongOTPTest) {
 				System.out.println(">>--- Starting Invalid OTP Test ---");
-				String invalidOtpCode = externalServices.invalidOTP(otpCode);
+				String invalidOtpCode = ExternalServices.invalidOTP(otpCode);
 				verifyScreen.setCodeField(invalidOtpCode);
 				verifyScreen.clickOK();
 				System.out.println("<<--- End of Invalid OTP Test ---");
@@ -126,7 +124,7 @@ public class Test02_SignIn extends AndroidTestBase {
 //				verifyScreen.clickOK(); // SE COMENTA HASTA QUE SE RESUELVA LO COMENTADO ARRIBA
 				verifyScreen.requestNewOTP();
 				Thread.sleep(2000);
-				otpCode = externalServices.getOTP(countryCode, phoneNumber);
+				otpCode = ExternalServices.getOTP(countryCode, phoneNumber);
 				System.out.println("<<--- End of Timeout OTP Test ---");
 			}
 			// Normal OTP Test
