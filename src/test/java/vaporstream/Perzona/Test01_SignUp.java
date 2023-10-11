@@ -74,6 +74,8 @@ public class Test01_SignUp extends AndroidTestBase {
 		System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 
 		SoftAssert softAssert = new SoftAssert();
+		ExternalServices externalServices = new ExternalServices();
+		
 		// On Boarding Screen
 		System.out.println(">---- Starting SignUp Test ----");
 		System.out.println("Pressing Get Started");
@@ -86,7 +88,7 @@ public class Test01_SignUp extends AndroidTestBase {
 			phoneNumber = PhoneNumberGenerator.getNewPhoneNumber(countryCode, true);
 		}
 		// Delete Phone Number Registered from Database
-		ExternalServices.deletePhoneNumberFromDB(countryCode, phoneNumber);
+		externalServices.deletePhoneNumberFromDB(countryCode, phoneNumber);
 
 		// Validate Pre-existing User
 //		boolean SignUped = ExternalServices.validatePreviousSignUp(countryCode, phoneNumber);
@@ -125,14 +127,14 @@ public class Test01_SignUp extends AndroidTestBase {
 
 		System.out.println(">--- Start of OTP Test ---");
 		// Get OTP Code
-		String otpCode = ExternalServices.getOTP(countryCode, phoneNumber);
+		String otpCode = externalServices.getOTP(countryCode, phoneNumber);
 
 		// Verify Screen (OTP Validation)
 		VerifyScreen verifyScreen = new VerifyScreen(driver);
 		// Wrong OTP TEST
 		if (wrongOTPTest) {
 			System.out.println(">>--- Starting Invalid OTP Test ---");
-			String invalidOtpCode = ExternalServices.invalidOTP(otpCode);
+			String invalidOtpCode = externalServices.invalidOTP(otpCode);
 			verifyScreen.setCodeField(invalidOtpCode);
 			verifyScreen.clickOK();
 			System.out.println("<<--- End of Invalid OTP Test ---");
@@ -145,7 +147,7 @@ public class Test01_SignUp extends AndroidTestBase {
 //			verifyScreen.clickOK(); // SE COMENTA HASTA QUE SE RESUELVA LO COMENTADO ARRIBA
 			verifyScreen.requestNewOTP();
 			Thread.sleep(2000);
-			otpCode = ExternalServices.getOTP(countryCode, phoneNumber);
+			otpCode = externalServices.getOTP(countryCode, phoneNumber);
 			System.out.println("<<--- End of Timeout OTP Test ---");
 		}
 		// Normal OTP Test
