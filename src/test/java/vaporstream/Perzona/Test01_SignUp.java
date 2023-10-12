@@ -260,10 +260,10 @@ public class Test01_SignUp extends AndroidTestBase {
 			jsonObject.put("countryCode", countryCode);
 			jsonObject.put("countryName", countryName);
 			jsonObject.put("phoneNumber", phoneNumber);
-			jsonObject.put("invalidPhoneNumberTest", invalidPhoneNumberTest);
-			jsonObject.put("editPhoneNumberTest", editPhoneNumberTest);
-			jsonObject.put("wrongOTPTest", wrongOTPTest);
-			jsonObject.put("delayedOTPTest", delayedOTPTest);
+			jsonObject.put("invalidPhoneNumberTest", !invalidPhoneNumberTest);
+			jsonObject.put("editPhoneNumberTest", !editPhoneNumberTest);
+			jsonObject.put("wrongOTPTest", !wrongOTPTest);
+			jsonObject.put("delayedOTPTest", !delayedOTPTest);
 
 			// Create a JSON array to hold multiple objects if needed
 			JSONArray jsonArray = new JSONArray();
