@@ -1,24 +1,19 @@
 package vaporstream.Perzona.testUtils;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-import org.testng.IHookCallBack;
-import org.testng.IHookable;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-
 import io.appium.java_client.AppiumDriver;
+import org.testng.*;
 import vaporstream.Perzona.utils.AppiumUtils;
 
-public class Listeners extends AppiumUtils implements ITestListener, IHookable {
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
+public class SignUpListeners extends AppiumUtils implements ITestListener, IHookable {
 
 	ExtentReports extent = ExtentReporterNG.getReporterObject();
 	ExtentTest test;
@@ -118,21 +113,21 @@ public class Listeners extends AppiumUtils implements ITestListener, IHookable {
 		test.log(Status.INFO, MarkupHelper.createLabel("<b>Testing Paramaters</b>", ExtentColor.GREY));
 		test.log(Status.INFO, "Country Code: " + countryCode);
 		test.log(Status.INFO, "Country Name: " + countryName);
-		test.log(Status.INFO, "Use Aleatory Phone Number: " + (randomPhoneNumber == true ? "Yes" : "No"));
+		test.log(Status.INFO, "Use Aleatory Phone Number: " + (randomPhoneNumber ? "Yes" : "No"));
 		if (!randomPhoneNumber)
 			test.log(Status.INFO, "Phone Number: " + phoneNumber);
-		test.log(Status.INFO, "Test Invalid Phone Number: " + (invalidPhoneNumberTest == true ? "Yes" : "No"));
-		test.log(Status.INFO, "Test Phone Number Edition: " + (editPhoneNumberTest == true ? "Yes" : "No"));
-		test.log(Status.INFO, "Test Invalid OTP: " + (wrongOTPTest == true ? "Yes" : "No"));
-		test.log(Status.INFO, "Test OTP timeout: " + (delayedOTPTest == true ? "Yes" : "No"));
+		test.log(Status.INFO, "Test Invalid Phone Number: " + (invalidPhoneNumberTest ? "Yes" : "No"));
+		test.log(Status.INFO, "Test Phone Number Edition: " + (editPhoneNumberTest ? "Yes" : "No"));
+		test.log(Status.INFO, "Test Invalid OTP: " + (wrongOTPTest ? "Yes" : "No"));
+		test.log(Status.INFO, "Test OTP timeout: " + (delayedOTPTest ? "Yes" : "No"));
 		test.log(Status.INFO, "Full Name: " + fullName);
-		test.log(Status.INFO, "Use Aleatory Username Value: " + (randomUsername == true ? "Yes" : "No"));
+		test.log(Status.INFO, "Use Aleatory Username Value: " + (randomUsername ? "Yes" : "No"));
 		if (!randomUsername)
 			test.log(Status.INFO, "User Name: " + username);
-		test.log(Status.INFO, "Include Avatar on Test: " + (setAvatar == true ? "Yes" : "No"));
+		test.log(Status.INFO, "Include Avatar on Test: " + (setAvatar ? "Yes" : "No"));
 		if (setAvatar)
 			test.log(Status.INFO, "Profile Gender: " + profileGender);
-		test.log(Status.INFO, "Add User Additional Information: " + (setAdditionalInfo == true ? "Yes" : "No"));
+		test.log(Status.INFO, "Add User Additional Information: " + (setAdditionalInfo ? "Yes" : "No"));
 		if (setAdditionalInfo) {
 			test.log(Status.INFO, "About User Info: " + aboutUser);
 			test.log(Status.INFO, "WebSite of User: " + websiteUrl);
