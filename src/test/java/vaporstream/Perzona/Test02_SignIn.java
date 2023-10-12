@@ -39,7 +39,7 @@ public class Test02_SignIn extends AndroidTestBase {
 	}
 
 	@Test(dataProvider = "userData", testName = "Sign-In Test")
-	public void SignInTest(String phoneNumber, String countryCode, String countryName, boolean invalidPhoneNumberTest,
+	public void SignInTest(String countryCode, String countryName, String phoneNumber, boolean invalidPhoneNumberTest,
 			boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest)
 			throws Exception {
 
@@ -49,10 +49,10 @@ public class Test02_SignIn extends AndroidTestBase {
 		System.out.println("\tCountry Code: " + countryCode);
 		System.out.println("\tCountry Name: " + countryName);
 		System.out.println("\tPhone Number: " + phoneNumber);
-		System.out.println("\tTest Invalid Phone Number: " + (invalidPhoneNumberTest == true ? "Yes" : "No"));
-		System.out.println("\tTest Phone Number Edition: " + (editPhoneNumberTest == true ? "Yes" : "No"));
-		System.out.println("\tTest Invalid OTP: " + (wrongOTPTest == true ? "Yes" : "No"));
-		System.out.println("\tTest OTP timeout: " + (delayedOTPTest == true ? "Yes" : "No"));
+		System.out.println("\tTest Invalid Phone Number: " + (invalidPhoneNumberTest ? "Yes" : "No"));
+		System.out.println("\tTest Phone Number Edition: " + (editPhoneNumberTest ? "Yes" : "No"));
+		System.out.println("\tTest Invalid OTP: " + (wrongOTPTest ? "Yes" : "No"));
+		System.out.println("\tTest OTP timeout: " + (delayedOTPTest ? "Yes" : "No"));
 		System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 		
 		// Validate Pre-existing User

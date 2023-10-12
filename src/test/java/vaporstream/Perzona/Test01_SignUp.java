@@ -51,26 +51,26 @@ public class Test01_SignUp extends AndroidTestBase {
 		System.out.println("Testing Paramaters:");
 		System.out.println("\tCountry Code: " + countryCode);
 		System.out.println("\tCountry Name: " + countryName);
-		System.out.println("\tUse Aleatory Phone Number: " + (randomPhoneNumber == true ? "Yes" : "No"));
+		System.out.println("\tUse Aleatory Phone Number: " + (randomPhoneNumber ? "Yes" : "No"));
 		if (!randomPhoneNumber)
 			System.out.println("\tPhone Number: " + phoneNumber);
-		System.out.println("\tTest Invalid Phone Number: " + (invalidPhoneNumberTest == true ? "Yes" : "No"));
-		System.out.println("\tTest Phone Number Edition: " + (editPhoneNumberTest == true ? "Yes" : "No"));
-		System.out.println("\tTest Invalid OTP: " + (wrongOTPTest == true ? "Yes" : "No"));
-		System.out.println("\tTest OTP timeout: " + (delayedOTPTest == true ? "Yes" : "No"));
+		System.out.println("\tTest Invalid Phone Number: " + (invalidPhoneNumberTest ? "Yes" : "No"));
+		System.out.println("\tTest Phone Number Edition: " + (editPhoneNumberTest ? "Yes" : "No"));
+		System.out.println("\tTest Invalid OTP: " + (wrongOTPTest ? "Yes" : "No"));
+		System.out.println("\tTest OTP timeout: " + (delayedOTPTest ? "Yes" : "No"));
 		System.out.println("\tFull Name: " + fullName);
-		System.out.println("\tUse Aleatory Username Value: " + (randomUsername == true ? "Yes" : "No"));
+		System.out.println("\tUse Aleatory Username Value: " + (randomUsername ? "Yes" : "No"));
 		if (!randomUsername)
 			System.out.println("\t\tUser Name: " + username);
-		System.out.println("\tInclude Avatar on Test: " + (setAvatar == true ? "Yes" : "No"));
+		System.out.println("\tInclude Avatar on Test: " + (setAvatar ? "Yes" : "No"));
 		if (setAvatar)
 			System.out.println("\t\tProfile Gender: " + profileGender);
-		System.out.println("\tAdd User Additional Information: " + (setAdditionalInfo == true ? "Yes" : "No"));
+		System.out.println("\tAdd User Additional Information: " + (setAdditionalInfo ? "Yes" : "No"));
 		if (setAdditionalInfo) {
 			System.out.println("\t\tAbout User Info: " + aboutUser);
 			System.out.println("\t\tWebSite of User: " + websiteUrl);
 		}
-		System.out.println("\tAdd Contacts Syncronizaton Test: " + (contactSyncTest == true ? "Yes" : "No"));
+		System.out.println("\tAdd Contacts Syncronizaton Test: " + (contactSyncTest ? "Yes" : "No"));
 		System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 
 		SoftAssert softAssert = new SoftAssert();
