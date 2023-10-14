@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+Falla porque cada uno de las clases Test tiene un listener diferente y toma como valido el ultimo que lee de la lista, en este caso el de Test02_SignIn
+La diferencia entre ambos listeners es que esperamos una serie de parametros diferentes para ambos Test y por lo tanto lo que encuentra en uno no lo hace en el otro
+-->
+<suite name="Sign-Up then Sign-In Tests Suite">
+  <test thread-count="5" name="SignUp Test">
+    <classes>
+      <class name="vaporstream.Perzona.Test01_SignUp"/>
+    </classes>
+  </test>
+  <test thread-count="5" name="SignIn Test">
+    <classes>
+      <class name="vaporstream.Perzona.Test02_SignIn"/>
+    </classes>
+  </test>
+</suite> 

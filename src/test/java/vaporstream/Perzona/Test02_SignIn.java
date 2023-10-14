@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+//Comentamos la linea el Annotations del Listeners antes de la clase porque lo incluimos para todas las clases dentro de la definicion del Test Suite
+//@Listeners({vaporstream.Perzona.testUtils.SignInListeners.class})
 public class Test02_SignIn extends AndroidTestBase {
 
 	@SuppressWarnings("deprecation")
