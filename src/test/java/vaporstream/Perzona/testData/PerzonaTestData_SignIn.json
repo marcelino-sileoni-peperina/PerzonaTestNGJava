@@ -2,10 +2,10 @@
   {
     "phoneNumber": "2736320577",
     "countryCode": "64",
-    "wrongOTPTest": true,
-    "delayedOTPTest": false,
-    "editPhoneNumberTest": false,
+    "wrongOTPTest": false,
+    "delayedOTPTest": true,
+    "editPhoneNumberTest": true,
     "countryName": "New Zealand",
-    "invalidPhoneNumberTest": false
+    "invalidPhoneNumberTest": true
   }
 ]
