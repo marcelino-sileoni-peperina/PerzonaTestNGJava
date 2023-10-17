@@ -13,7 +13,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class SignInListeners extends AppiumUtils implements ITestListener, IHookable {
+public class SignInListeners extends AppiumUtils implements ITestListener {
 
 	ExtentReports extent = ExtentReporterNG.getReporterObject();
 	ExtentTest test;
@@ -22,6 +22,24 @@ public class SignInListeners extends AppiumUtils implements ITestListener, IHook
 	@Override
 	public void onTestStart(ITestResult result) {
 		test = extent.createTest(result.getMethod().getMethodName(), result.getTestContext().getName());
+		Object[] parameterValues = result.getParameters();
+		String countryCode = (String) parameterValues[0];
+		String countryName = (String) parameterValues[1];
+		String phoneNumber = (String) parameterValues[2];
+		Boolean invalidPhoneNumberTest = (Boolean) parameterValues[3];
+		Boolean editPhoneNumberTest = (Boolean) parameterValues[4];
+		Boolean wrongOTPTest = (Boolean) parameterValues[5];
+		Boolean delayedOTPTest = (Boolean) parameterValues[6];
+
+		test.log(Status.INFO, MarkupHelper.createLabel("<b>Testing Parameters</b>", ExtentColor.GREY));
+		test.log(Status.INFO, "Country Code: " + countryCode);
+		test.log(Status.INFO, "Country Name: " + countryName);
+		test.log(Status.INFO, "Phone Number: " + phoneNumber);
+		test.log(Status.INFO, "Test Invalid Phone Number: " + (invalidPhoneNumberTest ? "Yes" : "No"));
+		test.log(Status.INFO, "Test Phone Number Edition: " + (editPhoneNumberTest ? "Yes" : "No"));
+		test.log(Status.INFO, "Test Invalid OTP: " + (wrongOTPTest ? "Yes" : "No"));
+		test.log(Status.INFO, "Test OTP timeout: " + (delayedOTPTest ? "Yes" : "No"));
+
 	}
 
 	@Override
@@ -87,31 +105,6 @@ public class SignInListeners extends AppiumUtils implements ITestListener, IHook
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void run(IHookCallBack callBack, ITestResult testResult) {
-		// TODO Auto-generated method stub
-		Object[] parameterValues = callBack.getParameters();
-		String countryCode = (String) parameterValues[0];
-		String countryName = (String) parameterValues[1];
-		String phoneNumber = (String) parameterValues[2];
-		Boolean invalidPhoneNumberTest = (Boolean) parameterValues[3];
-		Boolean editPhoneNumberTest = (Boolean) parameterValues[4];
-		Boolean wrongOTPTest = (Boolean) parameterValues[5];
-		Boolean delayedOTPTest = (Boolean) parameterValues[6];
-
-		test.log(Status.INFO, MarkupHelper.createLabel("<b>Testing Paramaters</b>", ExtentColor.GREY));
-		test.log(Status.INFO, "Country Code: " + countryCode);
-		test.log(Status.INFO, "Country Name: " + countryName);
-		test.log(Status.INFO, "Phone Number: " + phoneNumber);
-		test.log(Status.INFO, "Test Invalid Phone Number: " + (invalidPhoneNumberTest ? "Yes" : "No"));
-		test.log(Status.INFO, "Test Phone Number Edition: " + (editPhoneNumberTest ? "Yes" : "No"));
-		test.log(Status.INFO, "Test Invalid OTP: " + (wrongOTPTest ? "Yes" : "No"));
-		test.log(Status.INFO, "Test OTP timeout: " + (delayedOTPTest ? "Yes" : "No"));
-
-		callBack.runTestMethod(testResult);
-	}
-
 }
 
 // PRUEBAS

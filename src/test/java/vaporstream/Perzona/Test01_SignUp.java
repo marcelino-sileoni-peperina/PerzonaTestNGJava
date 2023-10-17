@@ -210,6 +210,7 @@ public class Test01_SignUp extends AndroidTestBase {
 
 	@DataProvider(name = "userData")
 	public static Iterator<Object[]> provideTestData() throws IOException {
+//		List<Object[][]> testDataList = new ArrayList<>(); // REVISAR SI ES LO QUE ESTOY BUSCANDO
 		List<Object[]> testDataList = new ArrayList<>();
 
 		// Specify the path to your JSON file
@@ -240,9 +241,10 @@ public class Test01_SignUp extends AndroidTestBase {
 			boolean contactSyncTest = element.getAsJsonObject().get("contactSyncTest").getAsBoolean();
 
 			// Add the test data as an object array to the list
+//			testDataList.add(new Object[][] { {"countryCode",countryCode}}); // REVISAR SI ES LO QUE ESTOY BUSCANDO
 			testDataList.add(new Object[] { countryCode, countryName, phoneNumber, fullName, username, aboutUser, websiteUrl,
-					profileGender, randomPhoneNumber, invalidPhoneNumberTest, editPhoneNumberTest, wrongOTPTest, delayedOTPTest,
-					randomUsername, setAvatar, setAdditionalInfo, contactSyncTest });
+							profileGender, randomPhoneNumber, invalidPhoneNumberTest, editPhoneNumberTest, wrongOTPTest, delayedOTPTest,
+							randomUsername, setAvatar, setAdditionalInfo, contactSyncTest });
 		}
 
 		return testDataList.iterator();

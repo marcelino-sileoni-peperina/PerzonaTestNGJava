@@ -1,21 +1,21 @@
 [
 	{
-		"countryCode": "49",
-		"countryName": "Germany",
+		"countryCode": "64",
+		"countryName": "New Zealand",
 		"randomPhoneNumber": false,
-		"phoneNumber": "555998827",
+		"phoneNumber": "2736320577",
 		"invalidPhoneNumberTest": false,
 		"editPhoneNumberTest": false,
-		"fullName": "Aut Test Germany 001",
-		"randomUsername": true,
-		"username": "AutTGerman001",
-		"wrongOTPTest": false,
+		"fullName": "Aut Test NZ 001",
+		"randomUsername": false,
+		"username": "AuTestNZ001",
+		"wrongOTPTest": true,
 		"delayedOTPTest": false,
-		"setAvatar": false,
+		"setAvatar": true,
 		"profileGender": "male",
-		"setAdditionalInfo": false,
+		"setAdditionalInfo": true,
 		"aboutUser": "Automation Test User",
-		"websiteUrl": "www.vaporstream.com",
+		"websiteUrl": "www.my_website.com",
 		"contactSyncTest": false
 	}
 ]
