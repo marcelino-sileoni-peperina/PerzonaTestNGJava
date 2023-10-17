@@ -114,3 +114,42 @@
 08:43:19.731 [ApplicationImpl pooled thread 70] INFO  c.b.l.BrowserStackRunExtension - testng
 08:43:19.731 [ApplicationImpl pooled thread 70] INFO  com.browserstack.utils.Helpers - null
 08:43:19.731 [ApplicationImpl pooled thread 70] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+19:26:40.268 [ApplicationImpl pooled thread 25] INFO  c.b.l.BrowserStackRunExtension - testng
+19:26:40.296 [ApplicationImpl pooled thread 25] INFO  com.browserstack.utils.Helpers - null
+19:26:40.296 [ApplicationImpl pooled thread 25] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:06:35.754 [ApplicationImpl pooled thread 24] INFO  c.b.l.BrowserStackRunExtension - testng
+08:06:35.755 [ApplicationImpl pooled thread 24] INFO  com.browserstack.utils.Helpers - null
+08:06:35.757 [ApplicationImpl pooled thread 24] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:21:23.458 [ApplicationImpl pooled thread 39] INFO  c.b.l.BrowserStackRunExtension - testng
+08:21:23.458 [ApplicationImpl pooled thread 39] INFO  com.browserstack.utils.Helpers - null
+08:21:23.460 [ApplicationImpl pooled thread 39] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:34:59.143 [ApplicationImpl pooled thread 51] INFO  c.b.l.BrowserStackRunExtension - testng
+08:34:59.143 [ApplicationImpl pooled thread 51] INFO  com.browserstack.utils.Helpers - null
+08:34:59.144 [ApplicationImpl pooled thread 51] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:36:28.911 [ApplicationImpl pooled thread 53] INFO  c.b.l.BrowserStackRunExtension - testng
+08:36:28.911 [ApplicationImpl pooled thread 53] INFO  com.browserstack.utils.Helpers - null
+08:36:28.912 [ApplicationImpl pooled thread 53] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:44:06.278 [ApplicationImpl pooled thread 70] INFO  c.b.l.BrowserStackRunExtension - testng
+08:44:06.278 [ApplicationImpl pooled thread 70] INFO  com.browserstack.utils.Helpers - null
+08:44:06.279 [ApplicationImpl pooled thread 70] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:48:31.042 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - testng
+08:48:31.042 [ApplicationImpl pooled thread 76] INFO  com.browserstack.utils.Helpers - null
+08:48:31.043 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:50:05.767 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - testng
+08:50:05.767 [ApplicationImpl pooled thread 76] INFO  com.browserstack.utils.Helpers - null
+08:50:05.768 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:51:09.848 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - testng
+08:51:09.848 [ApplicationImpl pooled thread 76] INFO  com.browserstack.utils.Helpers - null
+08:51:09.848 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:57:11.556 [ApplicationImpl pooled thread 90] INFO  c.b.l.BrowserStackRunExtension - testng
+08:57:11.556 [ApplicationImpl pooled thread 90] INFO  com.browserstack.utils.Helpers - null
+08:57:11.557 [ApplicationImpl pooled thread 90] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+08:58:34.866 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - testng
+08:58:34.866 [ApplicationImpl pooled thread 76] INFO  com.browserstack.utils.Helpers - null
+08:58:34.867 [ApplicationImpl pooled thread 76] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+09:00:23.659 [ApplicationImpl pooled thread 95] INFO  c.b.l.BrowserStackRunExtension - testng
+09:00:23.659 [ApplicationImpl pooled thread 95] INFO  com.browserstack.utils.Helpers - null
+09:00:23.661 [ApplicationImpl pooled thread 95] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+09:02:59.457 [ApplicationImpl pooled thread 91] INFO  c.b.l.BrowserStackRunExtension - testng
+09:02:59.457 [ApplicationImpl pooled thread 91] INFO  com.browserstack.utils.Helpers - null
+09:02:59.457 [ApplicationImpl pooled thread 91] INFO  c.b.l.BrowserStackRunExtension - Agent path: null

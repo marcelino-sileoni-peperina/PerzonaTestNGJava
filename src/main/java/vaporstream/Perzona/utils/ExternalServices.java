@@ -12,13 +12,14 @@ import java.util.Properties;
 import java.util.Random;
 
 public class ExternalServices {
-	private static String JWT;
+  private static String JWT;
+  
   static {
-		Properties prop = new Properties();
+    Properties prop = new Properties();
     FileInputStream fis = null;
     try {
       fis = new FileInputStream(
-          System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
+              System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
@@ -240,14 +241,7 @@ public class ExternalServices {
   }
   
   public static void deletePhoneNumberFromDB(String countryCode, String phoneNumber) throws IOException {
-    String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5NjkzMzQwOCwiZXhwIjoxNzI4NDY5NDA4LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cMULy0QKsZjZHbQ0mhZx8D_N-m1Av1h3hkrgOGHCm4hXbC370J8jXUZn3E2vpJnCVufiXBCOWFIGogczCpo88xkUyJnJVwmZXSza_KUTxD0SOKvlakD72SYhIqcfK2JEljY0wmbinfGVWhIx8titx8SDQk62lJDNNFxIndeig_s5XBcZbjC5j4yUgM0KxWbBXsJ8W2HQfnH1VBqeMH8WhYwkrFMN443epctTiy2lnrNmNoMmx2AHK5rYJW7QD8wAZG_8-ON9RJuFMMiQC7cJIPNB49OnYiA0TKH2IoGkTWNdwC9yG4ztxmm3MwdBEmtALTAp4tXpfpondRSbaejpbg";
-/*
-    Properties prop = new Properties();
-    FileInputStream fis = new FileInputStream(
-            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
-    prop.load(fis);
-    JWT = System.getProperty("JWT");
-*/
+
     try {
       // Set the request URL
       String url = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/k6/phonenumber/+" + countryCode
@@ -292,14 +286,6 @@ public class ExternalServices {
   }
   
   public static boolean validatePreviousSignUp(String countryCode, String phoneNumber) throws Exception {
-    String JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwYzU4OTA3LWUzMzUtNGM3Yy04ZmM3LWYwYTMxMjdkNjg3YiIsImlhdCI6MTY5NjkzMzQwOCwiZXhwIjoxNzI4NDY5NDA4LCJpc3MiOiJcImh0dHBzOi8vdnMuaWRlbnRpdHkuY29tXCIifQ.cMULy0QKsZjZHbQ0mhZx8D_N-m1Av1h3hkrgOGHCm4hXbC370J8jXUZn3E2vpJnCVufiXBCOWFIGogczCpo88xkUyJnJVwmZXSza_KUTxD0SOKvlakD72SYhIqcfK2JEljY0wmbinfGVWhIx8titx8SDQk62lJDNNFxIndeig_s5XBcZbjC5j4yUgM0KxWbBXsJ8W2HQfnH1VBqeMH8WhYwkrFMN443epctTiy2lnrNmNoMmx2AHK5rYJW7QD8wAZG_8-ON9RJuFMMiQC7cJIPNB49OnYiA0TKH2IoGkTWNdwC9yG4ztxmm3MwdBEmtALTAp4tXpfpondRSbaejpbg";
-/*
-    Properties prop = new Properties();
-    FileInputStream fis = new FileInputStream(
-            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
-    prop.load(fis);
-    JWT = System.getProperty("JWT");
-*/
     
     System.out.println("Verifying previous Sign Up");
     
@@ -338,10 +324,10 @@ public class ExternalServices {
       in.close();
       if (responseCode == HttpURLConnection.HTTP_OK) {
         String jsonResponse = response.toString();
-				JSONArray jsonArray = new JSONArray(jsonResponse);
-				if (!jsonArray.isEmpty()) { // If the response has no elements means the phone number is not registered
-					validate = true;
-				}
+        JSONArray jsonArray = new JSONArray(jsonResponse);
+        if (!jsonArray.isEmpty()) { // If the response has no elements means the phone number is not registered
+          validate = true;
+        }
       }
       connection.disconnect();
     } catch (Exception e) {

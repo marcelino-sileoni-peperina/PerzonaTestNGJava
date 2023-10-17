@@ -1,11 +1,1 @@
-[
-  {
-    "countryCode": "54",
-    "countryName": "Argentina",
-    "phoneNumber": "6043218672",
-    "invalidPhoneNumberTest": true,
-    "editPhoneNumberTest": true,
-    "wrongOTPTest": true,
-    "delayedOTPTest": true
-  }
-]
+[{"phoneNumber":"2736320577","countryCode":"64","wrongOTPTest":true,"delayedOTPTest":false,"editPhoneNumberTest":false,"countryName":"New Zealand","invalidPhoneNumberTest":false}]
