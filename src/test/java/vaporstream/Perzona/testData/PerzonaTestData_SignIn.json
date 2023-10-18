@@ -1,11 +1,1 @@
-[
-  {
-    "phoneNumber": "2736320577",
-    "countryCode": "64",
-    "wrongOTPTest": false,
-    "delayedOTPTest": true,
-    "editPhoneNumberTest": true,
-    "countryName": "New Zealand",
-    "invalidPhoneNumberTest": true
-  }
-]
+[{"phoneNumber":"225399095","countryCode":"420","wrongOTPTest":true,"delayedOTPTest":false,"editPhoneNumberTest":false,"countryName":"Czechia","invalidPhoneNumberTest":true}]

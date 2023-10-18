@@ -1,28 +1,20 @@
 package vaporstream.Perzona;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import vaporstream.Perzona.pageObjects.android.*;
 import vaporstream.Perzona.testUtils.AndroidTestBase;
+import vaporstream.Perzona.testUtils.DataSupplier;
 import vaporstream.Perzona.utils.ExternalServices;
 import vaporstream.Perzona.utils.PhoneNumberGenerator;
 import vaporstream.Perzona.utils.User;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-//import org.json.JSONArray;
-//import org.json.JSONArray;
+
 
 public class Test01_SignUp extends AndroidTestBase {
   
@@ -41,7 +33,7 @@ public class Test01_SignUp extends AndroidTestBase {
 //		driver.startActivity(firstPage);
   }
   
-  @Test(dataProvider = "userData", testName = "Sign-Up Test")
+  @Test(testName = "Sign-Up Test", dataProviderClass = DataSupplier.class, dataProvider = "signUpData")
   public void SignUpTest(
           String countryCode,
           String countryName,
@@ -220,66 +212,6 @@ public class Test01_SignUp extends AndroidTestBase {
     
     System.out.println("<---- SignUp Test Finished ----");
   }
-
-//--------------------------------------------------------------------
-  
-  @DataProvider(name = "userData")
-  public static Iterator<Object[]> provideTestData() throws IOException {
-    
-    List<Object[]> testDataList = new ArrayList<>();
-    
-    // Specify the path to your JSON file
-    String jsonFilePath = System.getProperty("user.dir")
-            + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignUp.json";
-    
-    // Use Json to parse the JSON file
-    JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
-    JsonArray jsonArray = jsonData.getAsJsonArray();
-    
-    for (JsonElement element : jsonArray) {
-      String countryCode = element.getAsJsonObject().get("countryCode").getAsString();
-      String countryName = element.getAsJsonObject().get("countryName").getAsString();
-      String phoneNumber = element.getAsJsonObject().get("phoneNumber").getAsString();
-      String fullName = element.getAsJsonObject().get("fullName").getAsString();
-      String username = element.getAsJsonObject().get("username").getAsString();
-      String aboutUser = element.getAsJsonObject().get("aboutUser").getAsString();
-      String websiteUrl = element.getAsJsonObject().get("websiteUrl").getAsString();
-      String profileGender = element.getAsJsonObject().get("profileGender").getAsString();
-      boolean randomPhoneNumber = element.getAsJsonObject().get("randomPhoneNumber").getAsBoolean();
-      boolean invalidPhoneNumberTest = element.getAsJsonObject().get("invalidPhoneNumberTest").getAsBoolean();
-      boolean editPhoneNumberTest = element.getAsJsonObject().get("editPhoneNumberTest").getAsBoolean();
-      boolean wrongOTPTest = element.getAsJsonObject().get("wrongOTPTest").getAsBoolean();
-      boolean delayedOTPTest = element.getAsJsonObject().get("delayedOTPTest").getAsBoolean();
-      boolean randomUsername = element.getAsJsonObject().get("randomUsername").getAsBoolean();
-      boolean setAvatar = element.getAsJsonObject().get("setAvatar").getAsBoolean();
-      boolean setAdditionalInfo = element.getAsJsonObject().get("setAdditionalInfo").getAsBoolean();
-      boolean contactSyncTest = element.getAsJsonObject().get("contactSyncTest").getAsBoolean();
-      
-      // Add the test data as an object array to the list
-      testDataList.add(new Object[]{
-              countryCode,
-              countryName,
-              phoneNumber,
-              fullName,
-              username,
-              aboutUser,
-              websiteUrl,
-              profileGender,
-              randomPhoneNumber,
-              invalidPhoneNumberTest,
-              editPhoneNumberTest,
-              wrongOTPTest,
-              delayedOTPTest,
-              randomUsername,
-              setAvatar,
-              setAdditionalInfo,
-              contactSyncTest});
-    }
-    
-    return testDataList.iterator();
-  }
-
-//	public class WriteJSONToFile {
   
   @SuppressWarnings("unchecked")
   public static void WriteJSONToFile(

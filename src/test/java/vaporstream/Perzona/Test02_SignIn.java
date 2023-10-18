@@ -1,25 +1,16 @@
 package vaporstream.Perzona;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import vaporstream.Perzona.pageObjects.android.OnBoardingScreen;
 import vaporstream.Perzona.pageObjects.android.SignUpScreen;
 import vaporstream.Perzona.pageObjects.android.VerifyScreen;
 import vaporstream.Perzona.testUtils.AndroidTestBase;
+import vaporstream.Perzona.testUtils.DataSupplier;
 import vaporstream.Perzona.utils.ExternalServices;
 import vaporstream.Perzona.utils.PhoneNumberGenerator;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 //Comentamos la linea el Annotations del Listeners antes de la clase porque lo incluimos para todas las clases dentro de la definicion del Test Suite
 //@Listeners({vaporstream.Perzona.testUtils.SignInListeners.class})
@@ -41,7 +32,7 @@ public class Test02_SignIn extends AndroidTestBase {
     // driver.startActivity(firstPage);
   }
 
-  @Test(dataProvider = "userData", testName = "Sign-In Test")
+  @Test( testName = "Sign-In Test", dataProviderClass = DataSupplier.class, dataProvider = "signInData")
   public void SignInTest(String countryCode, String countryName, String phoneNumber, boolean invalidPhoneNumberTest,
       boolean editPhoneNumberTest, boolean wrongOTPTest, boolean delayedOTPTest)
       throws Exception {
@@ -142,36 +133,5 @@ public class Test02_SignIn extends AndroidTestBase {
       Assert.assertTrue(false, "Not possible to execute SignIn Test. User never SignedUp");
     }
   }
-
-  // --------------------------------------------------------------------
-
-  @DataProvider(name = "userData")
-  public static Iterator<Object[]> provideTestData() throws IOException {
-    List<Object[]> testDataList = new ArrayList<>();
-
-    // Specify the path to your JSON file
-    String jsonFilePath = System.getProperty("user.dir")
-        + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
-
-    // Use Gson to parse the JSON file
-    JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
-    JsonArray jsonArray = jsonData.getAsJsonArray();
-
-    for (JsonElement element : jsonArray) {
-      String phoneNumber = element.getAsJsonObject().get("phoneNumber").getAsString();
-      String countryCode = element.getAsJsonObject().get("countryCode").getAsString();
-      String countryName = element.getAsJsonObject().get("countryName").getAsString();
-      boolean invalidPhoneNumberTest = element.getAsJsonObject().get("invalidPhoneNumberTest").getAsBoolean();
-      boolean editPhoneNumberTest = element.getAsJsonObject().get("editPhoneNumberTest").getAsBoolean();
-      boolean wrongOTPTest = element.getAsJsonObject().get("wrongOTPTest").getAsBoolean();
-      boolean delayedOTPTest = element.getAsJsonObject().get("delayedOTPTest").getAsBoolean();
-
-      // Add the test data as an object array to the list
-      testDataList.add(new Object[] { countryCode, countryName, phoneNumber, invalidPhoneNumberTest,
-          editPhoneNumberTest, wrongOTPTest, delayedOTPTest });
-    }
-
-    return testDataList.iterator();
-  }
-
+  
 }

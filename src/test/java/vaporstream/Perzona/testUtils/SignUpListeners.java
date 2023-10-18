@@ -26,7 +26,7 @@ public class SignUpListeners extends AppiumUtils implements ITestListener {
 	@Override
 	public void onTestStart(ITestResult result) {
 		test = extent.createTest(result.getMethod().getMethodName(), result.getTestContext().getName());
-		// System.out.println(Arrays.toString(result.getParameters()));
+		// TODO : TAKING result.getTestContext().getName() AS SWITCH KEY SPLIT IN SIGNIN AND SIGNUP CASE
 		Object[] parameterValues = result.getParameters();
 		String countryCode = (String) parameterValues[0];
 		String countryName = (String) parameterValues[1];
