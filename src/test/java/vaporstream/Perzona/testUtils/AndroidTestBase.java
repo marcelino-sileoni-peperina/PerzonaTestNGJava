@@ -19,7 +19,7 @@ public class AndroidTestBase extends AppiumUtils {
   @BeforeClass(alwaysRun = true)
   public void ConfigureAppium() throws IOException {
     Properties prop = new Properties();
-    FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\data.properties");
+    FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/vaporstream/Perzona/resources/data.properties");
     prop.load(fis);
     // System.getProperty(ipAddress) is not null if we introduce its value from command line:
     // mvn test -PTESTIDENTIFIER -DipAddress=127.0.0.1

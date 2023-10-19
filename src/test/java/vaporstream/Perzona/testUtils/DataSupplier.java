@@ -19,7 +19,7 @@ public class DataSupplier {
     
     // Specify the path to your JSON file
     String jsonFilePath = System.getProperty("user.dir")
-            + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignUp.json";
+            + "/src/test/java/vaporstream/Perzona/testData/PerzonaTestData_SignUp.json";
     
     // Use Json to parse the JSON file
     JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
@@ -74,7 +74,7 @@ public class DataSupplier {
     
     // Specify the path to your JSON file
     String jsonFilePath = System.getProperty("user.dir")
-            + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
+            + "/src/test/java/vaporstream/Perzona/testData/PerzonaTestData_SignIn.json";
     
     // Use Gson to parse the JSON file
     JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));

@@ -19,7 +19,7 @@ public class ExternalServices {
     FileInputStream fis = null;
     try {
       fis = new FileInputStream(
-              System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
+              System.getProperty("user.dir") + "/src/main/java/vaporstream/Perzona/resources/extServ.properties");
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
@@ -68,7 +68,7 @@ public class ExternalServices {
 
     Properties props = new Properties();
     FileInputStream fis = new FileInputStream(
-            System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
+            System.getProperty("user.dir") + "/src/main/java/vaporstream/Perzona/resources/extServ.properties");
     props.load(fis);
     JWT = props.getProperty("jwtToken");
     System.out.println("JWT obtained: " + JWT);

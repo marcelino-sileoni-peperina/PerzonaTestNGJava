@@ -43,9 +43,9 @@ public class AppiumUtils {
 		// IOS
 		service = new AppiumServiceBuilder()
 				.withAppiumJS(
-						new File("C:\\Users\\Marcelino Sileoni\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+						new File("C:/Users/Marcelino Sileoni/AppData/Roaming/npm/node_modules/appium/build/lib/main.js"))
 				.withIPAddress(ipAddress).usingPort(port).build();
-//		service = new AppiumServiceBuilder().withAppiumJS(new File("C:\\Users\\Marcelino Sileoni\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+//		service = new AppiumServiceBuilder().withAppiumJS(new File("C:/Users/Marcelino Sileoni/AppData/Roaming/npm/node_modules/appium/build/lib/main.js"))
 //				.withIPAddress("127.0.0.1").usingPort(4723).build();
 		service.start();
 		return service;
@@ -53,7 +53,7 @@ public class AppiumUtils {
 
 	public List<HashMap<String, String>> getJsonData(String jsonFilePath) throws IOException {
 		// convert json file content to json string
-		// System.getProperty("user.dir")+"\\src\\test\\java\\org\\msGroupAppium\\testData\\eCommerce.json"
+		// System.getProperty("user.dir")+"/src/test/java/org/msGroupAppium/testData/eCommerce.json"
 //		String jsonContent = FileUtils.readFileToString(new File(jsonFilePath), StandardCharsets.UTF_8);
 		@SuppressWarnings("deprecation")
 		String jsonContent = FileUtils.readFileToString(new File(jsonFilePath));
@@ -77,7 +77,7 @@ public class AppiumUtils {
 		// Step 1 of 2: generate screenshot and save it to disk
 		// Step 2 of 2: add screenshot from file to report (see Listeners.java)
 		File source = driver.getScreenshotAs(OutputType.FILE);
-		String destinationFile = System.getProperty("user.dir") + "\\reports\\" + testCaseName + "-" + CurrentDateTime()
+		String destinationFile = System.getProperty("user.dir") + "/reports/" + testCaseName + "-" + CurrentDateTime()
 				+ ".png";
 		FileUtils.copyFile(source, new File(destinationFile));
 		return destinationFile;
