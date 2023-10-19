@@ -193,12 +193,12 @@ public class Test01_SignUp extends AndroidTestBase {
     
     // Connections Screen -------------------------
     System.out.println(">--- Starting Connections Screen Test ---");
-    ConnectionsScreen connectionsScreen = new ConnectionsScreen(driver);
+    DiscoveryScreen discoveryScreen = new DiscoveryScreen(driver);
     if (contactSyncTest) {
-      // TODO: must be included the possibility of sending invitations
+      discoveryScreen.syncContactsSwitchOn();
     } else {
       Thread.sleep(3000);
-      connectionsScreen.continueWithoutSyncContacts();
+      discoveryScreen.continueWithoutSyncContacts();
     }
     
     softAssert.assertAll();
