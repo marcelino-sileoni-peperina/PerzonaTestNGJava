@@ -43,9 +43,9 @@ public class AppiumUtils {
 		// IOS
 		service = new AppiumServiceBuilder()
 				.withAppiumJS(
-						new File("C:\\Users\\Marcelino Sileoni\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+						new File("C:" + File.separator + "Users" + File.separator + "Marcelino Sileoni" + File.separator + "AppData" + File.separator + "Roaming" + File.separator + "npm" + File.separator + "node_modules" + File.separator + "appium" + File.separator + "build" + File.separator + "lib" + File.separator + "main.js"))
 				.withIPAddress(ipAddress).usingPort(port).build();
-//		service = new AppiumServiceBuilder().withAppiumJS(new File("C:\\Users\\Marcelino Sileoni\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+//		service = new AppiumServiceBuilder().withAppiumJS(new File("C:" + File.separator + "Users" + File.separator + "Marcelino Sileoni" + File.separator + "AppData" + File.separator + "Roaming" + File.separator + "npm" + File.separator + "node_modules" + File.separator + "appium" + File.separator + "build" + File.separator + "lib" + File.separator + "main.js"))
 //				.withIPAddress("127.0.0.1").usingPort(4723).build();
 		service.start();
 		return service;
@@ -77,7 +77,7 @@ public class AppiumUtils {
 		// Step 1 of 2: generate screenshot and save it to disk
 		// Step 2 of 2: add screenshot from file to report (see Listeners.java)
 		File source = driver.getScreenshotAs(OutputType.FILE);
-		String destinationFile = System.getProperty("user.dir") + "\\reports\\" + testCaseName + "-" + CurrentDateTime()
+		String destinationFile = System.getProperty("user.dir") + "" + File.separator + "reports" + File.separator + "" + testCaseName + "-" + CurrentDateTime()
 				+ ".png";
 		FileUtils.copyFile(source, new File(destinationFile));
 		return destinationFile;

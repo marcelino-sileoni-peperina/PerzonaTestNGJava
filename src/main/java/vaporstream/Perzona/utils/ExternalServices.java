@@ -19,7 +19,7 @@ public class ExternalServices {
     FileInputStream fis = null;
     try {
       fis = new FileInputStream(
-              System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\extServ.properties");
+              System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "vaporstream" + File.separator + "Perzona" + File.separator + "resources" + File.separator + "extServ.properties");
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
