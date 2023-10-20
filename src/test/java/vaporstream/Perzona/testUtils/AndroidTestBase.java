@@ -6,6 +6,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import vaporstream.Perzona.utils.AppiumUtils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +20,7 @@ public class AndroidTestBase extends AppiumUtils {
   @BeforeClass(alwaysRun = true)
   public void ConfigureAppium() throws IOException {
     Properties prop = new Properties();
-    FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\java\\vaporstream\\Perzona\\resources\\data.properties");
+    FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "vaporstream" + File.separator + "Perzona" + File.separator + "resources" + File.separator + "data.properties");
     prop.load(fis);
     // System.getProperty(ipAddress) is not null if we introduce its value from command line:
     // mvn test -PTESTIDENTIFIER -DipAddress=127.0.0.1

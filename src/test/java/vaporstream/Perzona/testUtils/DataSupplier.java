@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.testng.annotations.DataProvider;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,8 +19,7 @@ public class DataSupplier {
     List<Object[]> testDataList = new ArrayList<>();
     
     // Specify the path to your JSON file
-    String jsonFilePath = System.getProperty("user.dir")
-            + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignUp.json";
+    String jsonFilePath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "vaporstream" + File.separator + "Perzona" + File.separator + "testData" + File.separator + "PerzonaTestData_SignUp.json";
     
     // Use Json to parse the JSON file
     JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
@@ -74,7 +74,7 @@ public class DataSupplier {
     
     // Specify the path to your JSON file
     String jsonFilePath = System.getProperty("user.dir")
-            + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
+            + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "vaporstream" + File.separator + "Perzona" + File.separator + "testData" + File.separator + "PerzonaTestData_SignIn.json";
     
     // Use Gson to parse the JSON file
     JsonElement jsonData = JsonParser.parseReader(new FileReader(jsonFilePath));
