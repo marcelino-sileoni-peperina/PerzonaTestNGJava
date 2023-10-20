@@ -57,7 +57,6 @@ public class Test01_SignUp extends AndroidTestBase {
           boolean setAdditionalInfo,
           boolean contactSyncTest
   ) throws Exception {
-//		System.out.println("");
     System.out.println("\n---- SignUp Test Started ----");
     System.out.println("Testing Paramaters:");
     System.out.println("\tCountry Code: " + countryCode);

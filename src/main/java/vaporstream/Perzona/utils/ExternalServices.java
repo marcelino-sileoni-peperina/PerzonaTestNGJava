@@ -69,13 +69,13 @@ public class ExternalServices {
     String otpCode = "";
     String apiUrl2 = "https://5eqr0uj731.execute-api.us-east-1.amazonaws.com/dev/k6/otp";
     String authorizationHeader = JWT;
-
+    
     // Create the JSON request payload
     JsonObject requestBody = new JsonObject();
     requestBody.addProperty("phoneNumber", "+" + countryCode + phoneNumber);
     // Convert the JSON payload to a string
     String jsonInputString = requestBody.toString();
-
+    
     try {
       URL url = new URL(apiUrl2);
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -121,15 +121,15 @@ public class ExternalServices {
     System.out.println("Asking for JSON WEB TOKEN");
     String token = "";
     String apiUrl = "https://api-personas-t.vaporstream.com/auth/login-refresh/phone";
-
+    
     JsonObject requestBody = new JsonObject();
     requestBody.addProperty("code", code);
     requestBody.addProperty("phoneNumber", "+" + countryCode + phoneNumber);
-
+    
     String jsonInputString = requestBody.toString();
     
     try {
-
+      
       URL url = new URL(apiUrl);
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
       Thread.sleep(2000);
