@@ -1,7 +1,9 @@
 package vaporstream.Perzona;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonWriter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -12,6 +14,8 @@ import vaporstream.Perzona.utils.ExternalServices;
 import vaporstream.Perzona.utils.PhoneNumberGenerator;
 import vaporstream.Perzona.utils.User;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -223,37 +227,60 @@ public class Test01_SignUp extends AndroidTestBase {
           Boolean wrongOTPTest,
           Boolean delayedOTPTest
   ) {
-    // Create a JSON object to hold your data
-    JSONObject jsonObject = new JSONObject();
+    // Define the file path and name
+    String jsonFilePath = System.getProperty("user.dir")
+            + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator
+            + "vaporstream" + File.separator + "Perzona" + File.separator + "testData" + File.separator
+            + "PerzonaTestData_SignIn.json";
     
-    // Add data to the JSON object
-    jsonObject.put("countryCode", countryCode);
-    jsonObject.put("countryName", countryName);
-    jsonObject.put("phoneNumber", phoneNumber);
-    jsonObject.put("invalidPhoneNumberTest", invalidPhoneNumberTest);
-    jsonObject.put("editPhoneNumberTest", editPhoneNumberTest);
-    jsonObject.put("wrongOTPTest", wrongOTPTest);
-    jsonObject.put("delayedOTPTest", delayedOTPTest);
-    
-    // Create a JSON array to hold multiple objects if needed
-    JSONArray jsonArray = new JSONArray();
-    jsonArray.add(jsonObject);
-    
-    try {
-      // Define the file path and name
-      String jsonFilePath = System.getProperty("user.dir")
-              + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
-      // Create a FileWriter
-      FileWriter fileWriter = new FileWriter(jsonFilePath);
-      // Write the JSON data to the file
-      fileWriter.write(jsonArray.toJSONString());
-      // Close the FileWriter
-      fileWriter.close();
-      
-      System.out.println("Data has been written to " + jsonFilePath);
+    // Read the existing JSON file and parse it into a JsonArray
+    JsonArray existingArray = null;
+    try (FileReader fileReader = new FileReader(jsonFilePath)) {
+      existingArray = JsonParser.parseReader(fileReader).getAsJsonArray();
     } catch (IOException e) {
       e.printStackTrace();
     }
+    
+    assert existingArray != null;
+    System.out.println("SignIn Json length: " + existingArray.size());
+// Create a JSON object to hold your data
+    JsonObject jsonObject = new JsonObject();
+
+// Add data to the JSON object
+    jsonObject.addProperty("countryCode", countryCode);
+    jsonObject.addProperty("countryName", countryName);
+    jsonObject.addProperty("phoneNumber", phoneNumber);
+    jsonObject.addProperty("invalidPhoneNumberTest", invalidPhoneNumberTest);
+    jsonObject.addProperty("editPhoneNumberTest", editPhoneNumberTest);
+    jsonObject.addProperty("wrongOTPTest", wrongOTPTest);
+    jsonObject.addProperty("delayedOTPTest", delayedOTPTest);
+    
+    // Add the new JsonObject to the JsonArray
+    existingArray.add(jsonObject);
+    
+    try {
+      // Create a FileWriter
+      FileWriter fileWriter = new FileWriter(jsonFilePath);
+      
+      // Create a JsonWriter to format the JSON output
+      JsonWriter jsonWriter = new JsonWriter(fileWriter);
+      jsonWriter.setIndent("  ");
+      
+      // Write the JSON data to the file
+      jsonWriter.beginArray();
+      for (int i = existingArray.size() < 5 ? 0 : existingArray.size() - 5; i < existingArray.size(); i++) {
+        jsonWriter.jsonValue(existingArray.get(i).toString());
+      }
+      jsonWriter.endArray();
+      System.out.println("JsonObject added to the existing JsonArray and saved to the file.");
+      // Close the JsonWriter and FileWriter
+      jsonWriter.close();
+      fileWriter.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    
   }
   
   
