@@ -8,9 +8,5 @@ In order to run these scripts :
 - IOS scripts are not finished. The .app or .ipa file couldn't be generated.
 - extServ.properties must be created on path src/main/java/vaporstream.Perzona/resources. On it must be save the JWT used to connect to backend services.
 - JWT con be regenerated with method getToken defined on externalServices
-- 
 
-### 27/09/23
 
-- Started working with version 0.0.67 of Perzona App.
-- Update of locators con each POM related to SignUp Suite Tests.
