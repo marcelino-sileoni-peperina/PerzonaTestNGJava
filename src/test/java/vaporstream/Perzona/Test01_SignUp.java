@@ -242,7 +242,7 @@ public class Test01_SignUp extends AndroidTestBase {
     try {
       // Define the file path and name
       String jsonFilePath = System.getProperty("user.dir")
-              + "/src/test/java/vaporstream/Perzona/testData/PerzonaTestData_SignIn.json";
+              + "\\src\\test\\java\\vaporstream\\Perzona\\testData\\PerzonaTestData_SignIn.json";
       // Create a FileWriter
       FileWriter fileWriter = new FileWriter(jsonFilePath);
       // Write the JSON data to the file
