@@ -60,3 +60,8 @@ In order to run these scripts :
   "phoneNumber": "+11234567890"
   }'`
 
+## External Resources:
+### SignUp / SignIn Screens and Components Perzona v0.67
+https://docs.google.com/presentation/d/1Zqdcggrvd2Snizs_B06enT8N20uV5bprRJcrkxWgaLE/edit?usp=sharing
+### Perzona Automation (15/10/23)
+https://docs.google.com/presentation/d/18rSpVIYGJTklYMzFHlygCpX-JkXv7FM1rXKQxuE1efo/edit?usp=sharing
